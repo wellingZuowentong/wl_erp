@@ -20,4 +20,7 @@ public class UserService {
         return userMapper.findAllUser();
 
     }
+    public User checkNamePass(User user){
+        return userMapper.checkNamePass(user);
+    }
 }

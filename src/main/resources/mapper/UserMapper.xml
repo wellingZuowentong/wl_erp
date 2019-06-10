@@ -13,5 +13,8 @@
     <select id="findAllUser" resultMap="result">
         SELECT * FROM user
     </select>
+    <select id="checkNamePass" resultType="com.weiling.wl_erp.bean.User" resultMap="result">
+        SELECT * FROM user where username=#{name} and password=#{password}
+    </select>
 
 </mapper>

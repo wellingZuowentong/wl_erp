@@ -36,7 +36,7 @@ public class UserController {
         user.setName(username);
         user.setPassword(password);
         User user1=userService.checkNamePass(user);
-        System.out.println(username+"..."+password);
+        System.out.println(username+"...."+password);
         if(user1!=null){
             session.setAttribute("username",username);
           //  mav.setView("index.html");

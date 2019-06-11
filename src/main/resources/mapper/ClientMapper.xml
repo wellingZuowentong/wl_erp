@@ -11,15 +11,15 @@
     </resultMap>
     <!--查询所有客户-->
     <select id="findAllClient" resultType="com.weiling.wl_erp.bean.Client">
-        SELECT id,cname,phone FROM client
+        SELECT * FROM client
     </select>
         <!--根据Id查询客户-->
     <select id="findClientById" resultMap="result">
         SELECT id,cname,phone FROM client where id=#{value}
     </select>
         <!--增加新客户-->
-    <insert id="insertClient">
-        insert into client(id,cname,phone) values(#(id),#(cname),#(phone))
+    <insert id="insertClient" parameterType="com.weiling.wl_erp.bean.Client">
+        insert into client(cname,phone) values(#{cname},#{phone})
     </insert>
 
 </mapper>

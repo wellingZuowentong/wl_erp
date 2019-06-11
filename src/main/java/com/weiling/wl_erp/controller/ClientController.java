@@ -47,7 +47,10 @@ public class ClientController {
         Client client = new Client();
         client.setCname(cname);
         client.setPhone(phone);
-        return clientService.insertClient(client);
+        if(cname!=null&&!cname.equals("")){
+            return clientService.insertClient(client);
+        }
+        return 0;
     }
 
 

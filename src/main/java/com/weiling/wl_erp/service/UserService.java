@@ -18,8 +18,8 @@ public class UserService {
 
     public List<User> findAllUser(){
         return userMapper.findAllUser();
-
     }
+
     public User checkNamePass(User user){
         return userMapper.checkNamePass(user);
     }

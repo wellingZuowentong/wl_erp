@@ -1,0 +1,29 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD com.example.Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weiling.wl_erp.mapper.ProductMapper">
+
+    <resultMap id="result" type="com.weiling.wl_erp.bean.Product">
+        <result property="id" column="id"/>
+        <result property="cname" column="cname" />
+        <result property="phone" column="phone" />
+    </resultMap>
+    <!--根据商品ID查询商品-->
+    <select id="findAllProduct" resultType="com.weiling.wl_erp.bean.Product">
+        SELECT id,pname,inprice,cid FROM client where id=#{value}
+    </select>
+    <!--查询所有商品-->
+    <select id="findAllProduct" resultType="com.weiling.wl_erp.bean.Product">
+        SELECT id,pname,inprice,cid FROM product
+    </select>
+        <!--根据客户ID查询商品-->
+    <select id="findAllProductByCid" resultMap="result">
+        SELECT id,pname,inprice,cid FROM client where cid=#{value}
+    </select>
+        <!--增加商品-->
+    <insert id="insertClientinsertProduct" parameterType="com.weiling.wl_erp.bean.Product">
+        insert into product(pname,inprice,cid) values(#{pname},#{inprice},#{cid})
+    </insert>
+
+</mapper>

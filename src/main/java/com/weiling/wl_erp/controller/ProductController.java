@@ -44,12 +44,27 @@ public class ProductController {
         return productService.insertProduct(product);
     }
 
-   /* @RequestMapping("/findAllProductByCid")
+    /*根据客户id查询商品列表*/
+    @RequestMapping("/findAllProductByCid")
     @ResponseBody
     public List<Product> findAllProductByCid(HttpServletRequest request){
         String scid = request.getParameter("cid");
-        Integer cid =
-    }*/
+        Integer cid =Integer.parseInt(scid);
+        return productService.findAllProductByCid(cid);
+    }
+    /*查询所有的商品*/
+    @RequestMapping("/findAllProduct")
+    @ResponseBody
+    public List<Product> findAllProduct(){
+        return productService.findAllProduct();
+    }
+    /*根据商品id查询商品*/
+    @RequestMapping("/findAllProductById")
+    @ResponseBody
+    public Product findProductById(HttpServletRequest request){
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        return productService.findProductById(id);
+    }
 
 
 

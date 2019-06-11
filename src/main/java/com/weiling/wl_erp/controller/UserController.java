@@ -24,12 +24,11 @@ public class UserController {
 
     /**
     *作者：王怀朋
-    *参数：
+    *参数：username,password
     *功能：校验用户名与密码
     */
-    @PostMapping("/checkNamePass")
-    public ModelAndView checkNamePass(HttpServletRequest request, HttpSession session){
-        ModelAndView mav=new ModelAndView();
+    @RequestMapping("/checkNamePass")
+    public String checkNamePass(HttpServletRequest request, HttpSession session){
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         User user=new User();
@@ -39,10 +38,9 @@ public class UserController {
         System.out.println(username+"...."+password);
         if(user1!=null){
             session.setAttribute("username",username);
-          //  mav.setView("index.html");
-            return mav;
+            return "index.html";
         }
-        return mav;
+        return "error.html";
     }
 
 

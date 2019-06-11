@@ -1,0 +1,25 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD com.example.Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weiling.wl_erp.mapper.ClientMapper">
+
+    <resultMap id="result" type="com.weiling.wl_erp.bean.Client">
+        <result property="id" column="id"/>
+        <result property="cname" column="cname" />
+        <result property="phone" column="phone" />
+    </resultMap>
+    <!--查询所有客户-->
+    <select id="findAllClient" resultType="com.weiling.wl_erp.bean.Client">
+        SELECT id,cname,phone FROM client
+    </select>
+        <!--根据Id查询客户-->
+    <select id="findClientById" resultMap="result">
+        SELECT id,cname,phone FROM client where id=#{value}
+    </select>
+        <!--增加新客户-->
+    <insert id="insertClient">
+        insert into client(id,cname,phone) values(#(id),#(cname),#(phone))
+    </insert>
+
+</mapper>

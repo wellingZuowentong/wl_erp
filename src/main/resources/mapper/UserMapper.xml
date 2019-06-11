@@ -6,15 +6,15 @@
 
     <resultMap id="result" type="com.weiling.wl_erp.bean.User">
         <result property="id" column="id"/>
-        <result property="name" column="name" />
+        <result property="name" column="username" />
         <result property="password" column="password" />
     </resultMap>
 
     <select id="findAllUser" resultMap="result">
-        SELECT * FROM user
+        SELECT id,username,password FROM user
     </select>
     <select id="checkNamePass" resultType="com.weiling.wl_erp.bean.User" resultMap="result">
-        SELECT * FROM user where username=#{name} and password=#{password}
+        SELECT id,username,password FROM user where username=#{name} and password=#{password}
     </select>
 
 </mapper>

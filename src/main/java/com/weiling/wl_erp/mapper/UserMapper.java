@@ -8,6 +8,7 @@ import java.util.List;
 /**
  * 作者：王怀朋
  * 日期：2019/6/10
+ * 用户校验与查询，添加接口
  */
 @Mapper
 public interface UserMapper {

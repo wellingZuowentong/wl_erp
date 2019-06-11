@@ -51,6 +51,23 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!--添加报表导出Ecxel相关依赖-->
+
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.9</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.3</version>
+        </dependency>
         <!--添加热部署-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

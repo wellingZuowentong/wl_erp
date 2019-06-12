@@ -16,7 +16,11 @@ import org.apache.poi.xssf.usermodel.extensions.XSSFCellBorder.BorderSide;
 
 import java.awt.Color;
 import java.net.URLEncoder;
-
+/**
+ * 作者:左文统
+ * 日期:2019/6/12
+ * 功能:Excel工具类
+ * */
 public class ExcelUtils {
     public static void exportExcel(HttpServletResponse response, String fileName, ExcelData data) throws Exception {
         // 告诉浏览器用什么软件可以打开此文件

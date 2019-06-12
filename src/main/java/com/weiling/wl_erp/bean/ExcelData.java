@@ -3,7 +3,11 @@ package com.weiling.wl_erp.bean;
 
 import java.io.Serializable;
 import java.util.List;
-
+/**
+ * 作者:左文统
+ * 日期:2019/6/12
+ * 功能:Excel数据组装实体类
+ * */
 public class ExcelData implements Serializable {
     private static final long serialVersionUID = 4444017239100620999L;
 

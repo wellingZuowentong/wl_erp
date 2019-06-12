@@ -5,9 +5,12 @@ import com.weiling.wl_erp.service.ShangPinService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -61,10 +64,20 @@ public class ShangPinController {
     }
 
     /*根据商品名和厂家名查找商品*/
-    @RequestMapping("/findShangPinByName")
+    @RequestMapping(value = "/findShangPinByName",method = RequestMethod.GET)
     @ResponseBody
-    public ShangPin findShangPinByName(String pname,String cname){
-        return shangPinService.findShangPinByName(pname,cname);
+    public ShangPin findShangPinByName(String pname, String cname, HttpServletRequest request){
+        try {
+            request.setCharacterEncoding("utf-8");
+            String p = request.getParameter("pname");
+            String c = request.getParameter("cname");
+            System.out.println(p);
+            System.out.println(c);
+            return shangPinService.findShangPinByName(p,c);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /*出售商品*/

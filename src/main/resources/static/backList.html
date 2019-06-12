@@ -25,16 +25,16 @@
             <div class="panel-body">
                 <form class="form-inline" role="form">
                     <div class="form-group">
-                        <label  for="bookname">商品名:</label>
+                        <label  for="pname">商品名:</label>
                         <input type="text" class="form-control"
-                               id="bookname" name="bookname"
-                               placeholder="书名">
+                               id="pname" name="pname"
+                               placeholder="输入商品名">
                     </div>
                     <div class="form-group">
-                        <label  for="caid">所在类别:</label>
-                        <select class="form-control"
-                                id="caid" name="caid"
-                        ></select>
+                        <label  for="caid">厂家:</label>
+                        <select class="form-control" id="caid" name="caid">
+                            <option value="0">=====请选择=====</option>
+                        </select>
                     </div>
                     <button type="button" onclick="queryByTj()" class="btn btn-primary">查询</button>
                     <button type="button" onclick="export2Excel()" class="btn btn-success">导出到EXCEL</button>
@@ -55,11 +55,10 @@
         <th>编号</th>
         <th>商品名</th>
         <th>厂家</th>
-        <th>在售数量</th>
-        <th>售出数量</th>
-        <th>xxx</th>
-        <th>xxx</th>
-        <th>xxx</th>
+        <th>价格</th>
+        <th>预售数量</th>
+        <th>规格</th>
+        <th>备注</th>
     </tr>
     </thead>
     <tbody id="data">
@@ -79,7 +78,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalLabel">书籍详细信息</h4>
+                <h4 class="modal-title" id="myModalLabel">商品详细信息</h4>
             </div>
             <div class="modal-body">
                 <form  method="POST" class="form-horizontal"
@@ -118,7 +117,7 @@
                     </div>
                     <!--所在类别 -->
                     <div class="form-group">
-                        <label for="category" class="col-sm-2 control-label">销售人：</label>
+                        <label for="xiaoshou" class="col-sm-2 control-label">销售人：</label>
                         <div class="col-sm-10">
                             <select class="form-control"
                                     id="categoryid" name="categoryid">
@@ -151,6 +150,8 @@
         </div>
     </div>
 </div>
+
+<script src="js/jquery.js"></script>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="js/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -158,30 +159,8 @@
 
 <script src="js/ajaxfileupload.js"></script>
 <script>
-    function export2Excel(){
-        window.location.href="book?method=export2Excel"+tj;
-    }
-    //完成异步文件上传的操作
-    function addpic(){
-        $.ajaxFileUpload({
-            type:"POST",
-            url:"pic",
-            fileElementId:"pic",//上传文件控件的id
-            data:{
-                "bookid":bookid
-            },//key=value {key:value}
-            dataType:"json",
-            success:function(msg){
-                if(msg.flag=="success"){
-                    queryBookInfo(bookid);
-                }
-            }
-        });
-    }
-    let pre,next,end;
-    let tj="";//条件
     $(function(){
-        //初始化下拉菜单
+        /*//初始化下拉菜单
         queryAllCas();
         //查询部分数据
         queryData(1,tj);
@@ -197,24 +176,48 @@
         });
         $("#end").on("click",function(){
             queryData(end,tj);
-        });
+        });*/
+
+        //查询所有商品
+        queryAllShangPin();
     });
-    //该方法负责 给条件赋值
+    
+    function queryAllShangPin() {
+        $.ajax({
+            type:'Post',
+            url:'findAllShangPin',
+            dataType:'json',
+            success:function(msg){
+                var a = 1;
+                for(var i = 0;i < msg.length;i++){
+                    $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg[i].id+"</th><th>"+msg[i].pname+"</th><th>"+msg[i].cname+"</th><th>"+msg[i].sellprice+"</th><th>"+msg[i].sellnum+"</th><th>"+msg[i].guige+"</th><th>"+msg[i].beizhu+"</th></tr>");
+                    $("#caid").append("<option value='"+msg[i].cname+"'>"+msg[i].cname+"</option>");
+                    a++;
+                }
+            }
+        });
+    }
+
+    //根据商品名和厂家查询
     function queryByTj(){
-        //重置条件
-        tj="";
-
-        let name=$("#bookname").val();
-        let caid = $("#caid").val();
-
-        if(name!=null && name!=""){
-            tj+="&name="+name;
-        }
-        if(caid!=null &&caid!="" && caid!="-1"){
-            tj+="&caid="+caid;
-        }
-        alert(tj);
-        queryData(1,tj);
+        var pname = $("#pname").val();
+        var cname = $("#caid").val();
+        console.log(pname);
+        console.log(cname);
+        $.ajax({
+            type:'Get',
+            url:'findShangPinByName',
+            data:{
+                'pname':pname,
+                'cname':cname
+            },
+            dataType:'json',
+            success:function(msg){
+                for(var i = 0;i < msg.length;i++){
+                    $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg[i].id+"</th><th>"+msg[i].pname+"</th><th>"+msg[i].cname+"</th><th>"+msg[i].sellprice+"</th><th>"+msg[i].sellnum+"</th><th>"+msg[i].guige+"</th><th>"+msg[i].beizhu+"</th></tr>");
+                }
+            }
+        });
     }
     // conds:表示条件
     function queryData(pn,conds){

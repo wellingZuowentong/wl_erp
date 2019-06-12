@@ -202,8 +202,8 @@
     function queryByTj(){
         var pname = $("#pname").val();
         var cname = $("#caid").val();
-        console.log(pname);
-        console.log(cname);
+        //console.log(pname);
+        //console.log(cname);
         $.ajax({
             type:'Get',
             url:'findShangPinByName',
@@ -213,9 +213,9 @@
             },
             dataType:'json',
             success:function(msg){
-                for(var i = 0;i < msg.length;i++){
-                    $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg[i].id+"</th><th>"+msg[i].pname+"</th><th>"+msg[i].cname+"</th><th>"+msg[i].sellprice+"</th><th>"+msg[i].sellnum+"</th><th>"+msg[i].guige+"</th><th>"+msg[i].beizhu+"</th></tr>");
-                }
+                $("#data").empty();
+                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg.id+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.sellprice+"</th><th>"+msg.sellnum+"</th><th>"+msg.guige+"</th><th>"+msg.beizhu+"</th></tr>");
+
             }
         });
     }

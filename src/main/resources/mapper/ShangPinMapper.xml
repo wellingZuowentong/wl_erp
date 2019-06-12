@@ -1,0 +1,50 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD com.example.Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weiling.wl_erp.mapper.ShangPinMapper">
+
+    <sql id="shangPin">
+        id,pname,cname,sellprice,sellnum,guige,beizhu
+    </sql>
+
+    <resultMap id="result" type="com.weiling.wl_erp.bean.ShangPin">
+        <result property="id" column="id"/>
+        <result property="pname" column="pname" />
+        <result property="cname" column="cname" />
+        <result property="sellprice" column="sellprice" />
+        <result property="sellnum" column="sellnum" />
+        <result property="guige" column="guige" />
+        <result property="beizhu" column="beizhu" />
+    </resultMap>
+
+    <!--增加商品-->
+    <insert id="insertShangPin" parameterType="com.weiling.wl_erp.bean.ShangPin">
+        insert into shangpin<include refid="shangPin" />values(#{id},#{pname},#{cname},#{sellprice},#{sellnum},#{guige},#{beizhu})
+    </insert>
+
+    <!--查询所有商品-->
+    <select id="findAllShangPin" resultType="com.weiling.wl_erp.bean.ShangPin">
+        SELECT <include refid="shangPin"/> FROM shangpin
+    </select>
+
+    <!--根据商品ID查询商品-->
+    <select id="findShangPinById" resultType="com.weiling.wl_erp.bean.ShangPin">
+        SELECT <include refid="shangPin"/> FROM shangpin where id=#{value}
+    </select>
+
+    <!--根据商品名和厂家名查询商品-->
+    <select id=" findShangPinByName" resultMap="result">
+        SELECT <include refid="shangPin"/> FROM shangpin where pname=#{param1} and cname=#{param2}
+    </select>
+
+    <!--根据id和商品信息修改商品-->
+    <update id="updateShangPinById" parameterType="com.weiling.wl_erp.bean.ShangPin">
+        update shangpin set sellnum=#{sellnum} where id=#{id}
+    </update>
+
+    <delete id="deleteShangPinById" parameterType="int">
+        delete from shangpin where id=#{id}
+    </delete>
+
+</mapper>

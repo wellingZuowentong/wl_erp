@@ -27,13 +27,13 @@ public class ShangPinController {
 
     }*/
    /*查询所有商品列表*/
-   @RequestMapping("findAllShangPin")
+   @RequestMapping("/findAllShangPin")
    @ResponseBody
     public List<ShangPin> findAllShangPin(){
        return shangPinService.findAllShangPin();
     }
     /*根据ID查询商品*/
-    @RequestMapping("findShangPinById")
+    @RequestMapping("/findShangPinById")
     @ResponseBody
     public ShangPin findShangPinById(HttpServletRequest request){
        Integer id=Integer.parseInt(request.getParameter("id"));
@@ -41,7 +41,7 @@ public class ShangPinController {
     }
 
     /*根据ID修改商品*/
-    @RequestMapping("updateShangPinById")
+    @RequestMapping("/updateShangPinById")
     @ResponseBody
     public int updateShangPinById(HttpServletRequest request){
         Integer id = Integer.parseInt(request.getParameter("id"));
@@ -52,7 +52,7 @@ public class ShangPinController {
     }
 
     /*根据ID删除商品*/
-    @RequestMapping("deleteShangPinById")
+    @RequestMapping("/deleteShangPinById")
     @ResponseBody
     public int deleteShangPinById(HttpServletRequest request){
         Integer id = Integer.parseInt(request.getParameter("id"));
@@ -60,6 +60,24 @@ public class ShangPinController {
         return shangPinService.deleteShangPinById(id);
     }
 
+    /*根据商品名和厂家名查找商品*/
+    @RequestMapping("/findShangPinByName")
+    @ResponseBody
+    public ShangPin findShangPinByName(String pname,String cname){
+        return shangPinService.findShangPinByName(pname,cname);
+    }
+
+    /*出售商品*/
+    @RequestMapping("/saleShangPinById")
+    @ResponseBody
+    public List<ShangPin> saleShangPinById(HttpServletRequest request){
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        Integer sellnum = Integer.parseInt(request.getParameter("salenum"));
+        ShangPin shangpin = shangPinService.findShangPinById(id);
+        shangpin.setSellnum(shangpin.getSellnum()-sellnum);
+        shangPinService.updateShangPinById(shangpin);
+        return shangPinService.findAllShangPin();
+    }
 
 
 

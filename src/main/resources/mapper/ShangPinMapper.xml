@@ -20,7 +20,7 @@
 
     <!--增加商品-->
     <insert id="insertShangPin" parameterType="com.weiling.wl_erp.bean.ShangPin">
-        insert into shangpin<include refid="shangPin" />values(#{id},#{pname},#{cname},#{sellprice},#{sellnum},#{guige},#{beizhu})
+        insert into shangpin(<include refid="shangPin" />)values(#{id},#{pname},#{cname},#{sellprice},#{sellnum},#{guige},#{beizhu})
     </insert>
 
     <!--查询所有商品-->
@@ -34,7 +34,7 @@
     </select>
 
     <!--根据商品名和厂家名查询商品-->
-    <select id=" findShangPinByName" resultMap="result">
+    <select id="findShangPinByName" resultType="com.weiling.wl_erp.bean.ShangPin">
         SELECT <include refid="shangPin"/> FROM shangpin where pname=#{param1} and cname=#{param2}
     </select>
 

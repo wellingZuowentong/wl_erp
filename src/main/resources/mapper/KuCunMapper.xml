@@ -1,0 +1,54 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD com.example.Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weiling.wl_erp.mapper.KuCunMapper">
+
+    <sql id="kuCun">
+        id,pname,cname,inprice,outprice,sellprice,vnum,sellnum,guige,sid,beizhu
+    </sql>
+
+   <resultMap id="result" type="com.weiling.wl_erp.bean.KuCun">
+        <result property="id" column="id"/>
+        <result property="pname" column="pname" />
+        <result property="cname" column="cname" />
+        <result property="inprice" column="inprice" />
+        <result property="outprice" column="outprice" />
+        <result property="sellprice" column="sellprice" />
+        <result property="vnum" column="vnum" />
+        <result property="sellnum" column="sellnum" />
+        <result property="guige" column="guige" />
+        <result property="sid" column="sid" />
+        <result property="beizhu" column="beizhu" />
+    </resultMap>
+    <!--增加库存-->
+    <insert id="insertKuCun" parameterType="com.weiling.wl_erp.bean.KuCun">
+        insert into kucun(<include refid="kuCun" />)values(#{id},#{pname},#{cname},#{inprice},#{outprice},#{sellprice},#{vnum},#{sellnum},#{guige},#{sid},#{beizhu})
+    </insert>
+
+    <!--查询所有库存-->
+    <select id="findAllKuCun" resultType="com.weiling.wl_erp.bean.KuCun">
+        SELECT <include refid="kuCun"/> FROM kucun
+    </select>
+
+    <!--根据库存ID查询库存-->
+    <select id="findKuCunById" resultType="com.weiling.wl_erp.bean.KuCun">
+        SELECT <include refid="kuCun"/> FROM kucun where id=#{value}
+    </select>
+
+    <!--根据商品名和厂家名查询库存-->
+    <select id="findKuCunByName" parameterType="String" resultType="com.weiling.wl_erp.bean.KuCun">
+        SELECT <include refid="kuCun"/> FROM kucun where pname=#{pname} and cname=#{cname}
+    </select>
+
+    <!--根据id和库存信息修改库存-->
+    <update id="updateKuCunById" parameterType="com.weiling.wl_erp.bean.KuCun">
+        update kucun set pname=#{pname},cname=#{cname},inprice=#{inprice},outprice=#{outprice},sellprice=#{sellprice},vnum=#{vnum},sellnum=#{sellnum},guige=#{guige},sid=#{sid},beizhu=#{beizhu} where id=#{id}
+    </update>
+
+    <!--根据id删除库存信息-->
+    <delete id="deleteKuCunById" parameterType="int">
+        delete from kucun where id=#{id}
+    </delete>
+
+</mapper>

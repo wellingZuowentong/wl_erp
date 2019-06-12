@@ -15,12 +15,13 @@ public class KuCun {
     private BigDecimal outprice;
     private BigDecimal sellprice;
     private Integer vnum;
-    private Integer snum;
+    private Integer sellnum;
     private String guige;
     private Integer sid;
     private String beizhu;
+    public KuCun(){}
 
-    public KuCun(Integer id, String pname, String cname, BigDecimal inprice, BigDecimal outprice, BigDecimal sellprice, Integer vnum, Integer snum, String guige, Integer sid, String beizhu) {
+    public KuCun(Integer id, String pname, String cname, BigDecimal inprice, BigDecimal outprice, BigDecimal sellprice, Integer vnum, Integer sellnum, String guige, Integer sid, String beizhu) {
         this.id = id;
         this.pname = pname;
         this.cname = cname;
@@ -28,7 +29,7 @@ public class KuCun {
         this.outprice = outprice;
         this.sellprice = sellprice;
         this.vnum = vnum;
-        this.snum = snum;
+        this.sellnum = sellnum;
         this.guige = guige;
         this.sid = sid;
         this.beizhu = beizhu;
@@ -90,12 +91,12 @@ public class KuCun {
         this.vnum = vnum;
     }
 
-    public Integer getSnum() {
-        return snum;
+    public Integer getSellnum() {
+        return sellnum;
     }
 
-    public void setSnum(Integer snum) {
-        this.snum = snum;
+    public void setSellnum(Integer sellnum) {
+        this.sellnum = sellnum;
     }
 
     public String getGuige() {
@@ -132,7 +133,7 @@ public class KuCun {
                 ", outprice=" + outprice +
                 ", sellprice=" + sellprice +
                 ", vnum=" + vnum +
-                ", snum=" + snum +
+                ", sellnum=" + sellnum +
                 ", guige='" + guige + '\'' +
                 ", sid=" + sid +
                 ", beizhu='" + beizhu + '\'' +

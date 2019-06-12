@@ -15,7 +15,7 @@ public class ShangPin {
     private Integer sellnum;
     private String guige;
     private String beizhu;
-
+    public ShangPin(){}
     public ShangPin(Integer id, String pname, String cname, BigDecimal sellprice, Integer sellnum, String guige, String beizhu) {
         this.id = id;
         this.pname = pname;

@@ -1,6 +1,7 @@
 package com.weiling.wl_erp.bean;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * 作者：王怀朋
@@ -17,10 +18,11 @@ public class Sell {
     private String guige;
     private String selluser;
     private Integer zhuangtai;
+    private Date selltime;
     private String beizhu;
     public Sell(){}
 
-    public Sell(Integer id, String pname, String cname, Integer oksell, BigDecimal sellprice, BigDecimal allprice, BigDecimal overprice, String guige, String selluser, Integer zhuangtai, String beizhu) {
+    public Sell(Integer id, String pname, String cname, Integer oksell, BigDecimal sellprice, BigDecimal allprice, BigDecimal overprice, String guige, String selluser, Integer zhuangtai, Date selltime, String beizhu) {
         this.id = id;
         this.pname = pname;
         this.cname = cname;
@@ -31,6 +33,7 @@ public class Sell {
         this.guige = guige;
         this.selluser = selluser;
         this.zhuangtai = zhuangtai;
+        this.selltime = selltime;
         this.beizhu = beizhu;
     }
 
@@ -114,6 +117,14 @@ public class Sell {
         this.zhuangtai = zhuangtai;
     }
 
+    public Date getSelltime() {
+        return selltime;
+    }
+
+    public void setSelltime(Date selltime) {
+        this.selltime = selltime;
+    }
+
     public String getBeizhu() {
         return beizhu;
     }
@@ -135,6 +146,7 @@ public class Sell {
                 ", guige='" + guige + '\'' +
                 ", selluser='" + selluser + '\'' +
                 ", zhuangtai=" + zhuangtai +
+                ", selltime=" + selltime +
                 ", beizhu='" + beizhu + '\'' +
                 '}';
     }

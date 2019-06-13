@@ -1,6 +1,8 @@
 package com.weiling.wl_erp.controller;
 
+import com.weiling.wl_erp.bean.Sell;
 import com.weiling.wl_erp.bean.ShangPin;
+import com.weiling.wl_erp.service.SellService;
 import com.weiling.wl_erp.service.ShangPinService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,7 +24,8 @@ import java.util.List;
 public class ShangPinController {
     @Autowired
     private ShangPinService shangPinService;
-
+    @Autowired
+    private SellService sellService;
 
    /* @RequestMapping("insertShangPin")
     @ResponseBody
@@ -73,9 +78,30 @@ public class ShangPinController {
     @ResponseBody
     public List<ShangPin> saleShangPinById(HttpServletRequest request){
         Integer id = Integer.parseInt(request.getParameter("id"));
-        Integer sellnum = Integer.parseInt(request.getParameter("salenum"));
+        String pname = request.getParameter("pname");
+        String cname = request.getParameter("cname");
+        Integer oksell = Integer.parseInt(request.getParameter("oksell"));
+        BigDecimal sellprice = new BigDecimal(request.getParameter("sellprice"));
+        String guige = request.getParameter("guige");
+        BigDecimal allprice = new BigDecimal(request.getParameter("allprice"));
+        BigDecimal overprice = new BigDecimal(request.getParameter("overprice"));
+        String selluser = request.getParameter("selluser");
+        String beizhu = request.getParameter("beizhu");
+        Sell sell =new Sell();
+        sell.setPname(pname);
+        sell.setCname(cname);
+        sell.setOksell(oksell);
+        sell.setSellprice(sellprice);
+        sell.setGuige(guige);
+        sell.setAllprice(allprice);
+        sell.setOverprice(overprice);
+        sell.setSelluser(selluser);
+        sell.setSelltime(new Date());
+        sell.setZhuangtai(0);
+        sell.setBeizhu(beizhu);
+        sellService.insertSell(sell);
         ShangPin shangpin = shangPinService.findShangPinById(id);
-        shangpin.setSellnum(shangpin.getSellnum()-sellnum);
+        shangpin.setSellnum(shangpin.getSellnum()-oksell);
         shangPinService.updateShangPinById(shangpin);
         return shangPinService.findAllShangPin();
     }

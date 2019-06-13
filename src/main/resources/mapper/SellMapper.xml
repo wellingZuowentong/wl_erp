@@ -5,7 +5,7 @@
 <mapper namespace="com.weiling.wl_erp.mapper.SellMapper">
 
     <sql id="sell">
-        id,pname,cname,oksell,sellprice,guige,allprice,overprice,selluser,zhuangtai,beizhu
+        id,pname,cname,oksell,sellprice,guige,allprice,overprice,selluser,selltime,zhuangtai,beizhu
     </sql>
 
    <resultMap id="result" type="com.weiling.wl_erp.bean.Sell">
@@ -18,12 +18,13 @@
         <result property="allprice" column="allprice" />
         <result property="overprice" column="overprice" />
         <result property="selluser" column="selluser" />
+        <result property="selltime" column="selltime" />
         <result property="zhuangtai" column="zhuangtai" />
         <result property="beizhu" column="beizhu" />
     </resultMap>
     <!--增加销售表-->
     <insert id="insertSell" parameterType="com.weiling.wl_erp.bean.Sell">
-        insert into sell(<include refid="sell" />)values(#{id},#{pname},#{cname},#{oksell},#{sellprice},#{guige},#{allprice},#{overprice},#{selluser},#{zhuangtai},#{beizhu})
+        insert into sell(<include refid="sell" />)values(#{id},#{pname},#{cname},#{oksell},#{sellprice},#{guige},#{allprice},#{overprice},#{selluser},#{selltime},#{zhuangtai},#{beizhu})
     </insert>
 
     <!--查询所有销售表-->
@@ -43,7 +44,7 @@
 
     <!--根据id和库存信息修改库存-->
     <update id="updateSellById" parameterType="com.weiling.wl_erp.bean.Sell">
-        update sell set pname=#{pname},cname=#{cname},oksell=#{oksell},sellprice=#{sellprice},guige=#{guige},allprice=#{allprice},overprice=#{overprice},selluser=#{selluser},beizhu=#{beizhu} where id=#{id}
+        update sell set pname=#{pname},cname=#{cname},oksell=#{oksell},sellprice=#{sellprice},guige=#{guige},allprice=#{allprice},overprice=#{overprice},selluser=#{selluser},selltime=#{selltime},beizhu=#{beizhu} where id=#{id}
     </update>
 
     <!--根据id删除库存信息-->

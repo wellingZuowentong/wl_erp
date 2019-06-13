@@ -1,4 +1,4 @@
-/*
+
 package com.weiling.wl_erp.controller;
 
 import com.weiling.wl_erp.bean.KuCun;
@@ -17,12 +17,12 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-*/
+
 /**
  * 作者：王怀朋
  * 日期：2019/6/12
  * 入库信息
- *//*
+ */
 
 @Controller
 public class RuKuController {
@@ -32,8 +32,8 @@ public class RuKuController {
     private KuCunService kuCunService;
 
 
-    */
-/*添加库存*//*
+
+/*添加库存*/
 
     @RequestMapping("insertRuKu")
     @ResponseBody
@@ -43,18 +43,42 @@ public class RuKuController {
         BigDecimal inprice = new BigDecimal(request.getParameter("inprice"));
         BigDecimal outprice = new BigDecimal(request.getParameter("outprice"));
         BigDecimal sellprice = new BigDecimal(request.getParameter("sellprice"));
-        Integer vnum = Integer.parseInt(request.getParameter(""));
+        Integer vnum = Integer.parseInt(request.getParameter("vnum"));
         String guige = request.getParameter("guige");
         Date rukutime = new Date();
         String username = request.getParameter("username");
         String beizhu = request.getParameter("beizhu");
         RuKu ruKu = new RuKu();
-
-
+        ruKu.setPname(pname);
+        ruKu.setCname(cname);
+        ruKu.setInprice(inprice);
+        ruKu.setOutprice(outprice);
+        ruKu.setSellprice(sellprice);
+        ruKu.setVnum(vnum);
+        ruKu.setGuige(guige);
+        ruKu.setBeizhu(beizhu);
+        ruKu.setRukutime(rukutime);
+        ruKu.setUsername(username);
+        ruKuService.insertRuKu(ruKu);
+        KuCun kuCun = kuCunService.findKuCunByName(pname,cname);
+        if(kuCun!=null){
+            kuCun.setVnum(kuCun.getVnum()+vnum);
+            return kuCunService.updateKuCunById(kuCun);
+        }else{
+            kuCun.setPname(pname);
+            kuCun.setCname(cname);
+            kuCun.setInprice(inprice);
+            kuCun.setOutprice(outprice);
+            kuCun.setSellprice(sellprice);
+            kuCun.setGuige(guige);
+            kuCun.setVnum(vnum);
+            kuCun.setBeizhu(beizhu);
+        }
+        return kuCunService.insertKuCun(kuCun);
     }
 
-    */
-/*查询所有入库列表*//*
+
+/*查询所有入库列表*/
 
     @RequestMapping("findAllRuKu")
     @ResponseBody
@@ -62,8 +86,8 @@ public class RuKuController {
         return ruKuService.findAllRuKu();
     }
 
-    */
-/*根据ID查询入库信息*//*
+
+/*根据ID查询入库信息*/
 
     @RequestMapping("findRuKuById")
     @ResponseBody
@@ -72,8 +96,8 @@ public class RuKuController {
         return ruKuService.findRuKuById(id);
     }
 
-    */
-/*根据ID修改入库信息*//*
+
+/*根据ID修改入库信息*/
 
     @RequestMapping("updateRuKuById")
     @ResponseBody
@@ -81,8 +105,8 @@ public class RuKuController {
         return 1;
     }
 
-    */
-/*根据ID删除库存*//*
+
+/*根据ID删除库存*/
 
     @RequestMapping("deleteRuKuById")
     @ResponseBody
@@ -91,17 +115,16 @@ public class RuKuController {
         return ruKuService.deleteRuKuById(id);
     }
 
-   */
-/* *//*
-*/
-/*根据入库ID添加库存表*//*
-*/
-/*
-    @RequestMapping("addKuCun")
+
+
+
+/*根据入库ID添加库存表*/
+
+    /*@RequestMapping("addKuCun")
     @ResponseBody
    public int addKuCun(){
 
-    }*//*
+    }*/
 
 
 
@@ -111,4 +134,4 @@ public class RuKuController {
 
 
 }
-*/
+

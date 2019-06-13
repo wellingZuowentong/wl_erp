@@ -72,7 +72,7 @@
     <button type='button' id="end" class="btn btn-danger">尾页</button>
 </div>
 
-<!-- Modal -->
+<!-- 出售模态框 -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -81,33 +81,33 @@
                 <h4 class="modal-title" id="myModalLabel">出售商品</h4>
             </div>
             <div class="modal-body">
-                <form action="saleShangPinById" method="POST" class="form-horizontal" role="form" >
+                <form action="saleShangPinById" method="post" class="form-horizontal" role="form" id="cs_form">
                     <input type="hidden" name="id" id="id" value="" />
                     <div class="form-group">
                         <label for="spname" class="col-sm-2 control-label">商品名：</label>
                         <div class="col-sm-10" id="sp_div">
-                            <input type="text" class="form-control" id="spname" name="pname" disabled>
+                            <input type="text" class="form-control" id="spname" name="pname" readonly="readonly">
                         </div>
                     </div>
                     <!-- 厂家 -->
                     <div class="form-group">
                         <label for="cname" class="col-sm-2 control-label">厂家：</label>
                         <div class="col-sm-10" id="cj_div">
-                            <input type="text" class="form-control" id="cname" name="cname" disabled>
+                            <input type="text" class="form-control" id="cname" name="cname" readonly="readonly">
                         </div>
                     </div>
                     <!-- 价格 -->
                     <div class="form-group">
                         <label for="sellprice" class="col-sm-2 control-label">价格：</label>
                         <div class="col-sm-10" id="jg_div">
-                            <input type="number" class="form-control" id="sellprice" name="sellprice" disabled>
+                            <input type="text" class="form-control" id="sellprice" name="sellprice" readonly="readonly">
                         </div>
                     </div>
                     <!-- 规格 -->
                     <div class="form-group">
                         <label for="guige" class="col-sm-2 control-label">规格：</label>
                         <div class="col-sm-10" id="gg_div">
-                            <input type="text" class="form-control" id="guige" name="guige" disabled>
+                            <input type="text" class="form-control" id="guige" name="guige" readonly="readonly">
                         </div>
                     </div>
 
@@ -115,7 +115,7 @@
                     <div class="form-group">
                         <label for="sellnum" class="col-sm-2 control-label">在售数量：</label>
                         <div class="col-sm-10" id="zssl_div">
-                            <input type="number" class="form-control" id="sellnum" name="sellnum" disabled>
+                            <input type="number" class="form-control" id="sellnum" name="sellnum" readonly="readonly">
                         </div>
                     </div>
                     <!-- 售出数量 -->
@@ -145,7 +145,7 @@
                     <div class="form-group">
                         <label for="allprice" class="col-sm-2 control-label">合计：</label>
                         <div class="col-sm-10" id="hj_div">
-                            <input type="text" class="form-control" id="allprice" name="allprice" disabled>
+                            <input type="text" class="form-control" id="allprice" name="allprice" readonly="readonly">
                         </div>
                     </div>
 
@@ -156,7 +156,7 @@
                             <input type="text" class="form-control" id="overprice" name="overprice" >
                         </div>
                     </div>
-                    
+
                     <!-- 状态 -->
                     <!--<div class="form-group">
                         <label for="status" class="col-sm-2 control-label">状态：</label>
@@ -171,7 +171,7 @@
 
                     <div class="form-group">
                         <div class="col-sm-offset-10 col-sm-10">
-                            <button type="submit" class="btn btn-default">提交</button>
+                            <button type="button" class="btn btn-default" onclick="tj()">提交</button>
                         </div>
                     </div>
                 </form>
@@ -180,12 +180,75 @@
     </div>
 </div>
 
+<!-- 修改商品模态框 -->
+<div class="modal fade" id="xgModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">修改商品</h4>
+            </div>
+            <div class="modal-body">
+                <form action="updateShangPinById" method="post" class="form-horizontal" role="form" id="xg_form">
+                    <input type="hidden" name="id" id="xgid" value="" />
+                    <div class="form-group">
+                        <label for="xgpname" class="col-sm-2 control-label">商品名：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="xgpname" name="pname" readonly="readonly">
+                        </div>
+                    </div>
+                    <!-- 厂家 -->
+                    <div class="form-group">
+                        <label for="xgcname" class="col-sm-2 control-label">厂家：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="xgcname" name="cname" readonly="readonly">
+                        </div>
+                    </div>
+                    <!-- 价格 -->
+                    <div class="form-group">
+                        <label for="xgsellprice" class="col-sm-2 control-label">价格：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="xgsellprice" name="sellprice">
+                        </div>
+                    </div>
+                    <!-- 规格 -->
+                    <div class="form-group">
+                        <label for="xgguige" class="col-sm-2 control-label">规格：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="xgguige" name="guige" readonly="readonly">
+                        </div>
+                    </div>
+
+                    <!-- 在售数量 -->
+                    <div class="form-group">
+                        <label for="xgsellnum" class="col-sm-2 control-label">在售数量：</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="xgsellnum" name="sellnum" readonly="readonly">
+                        </div>
+                    </div>
+                    <!-- 备注 -->
+                    <div class="form-group">
+                        <label for="xgbeizhu" class="col-sm-2 control-label">备注：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="xgbeizhu" name="beizhu" >
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-10 col-sm-10">
+                            <button type="button" class="btn btn-default" onclick="xg()">修改</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="js/jquery.js"></script>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="js/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="js/bootstrap.min.js"></script>
-
 <script src="js/ajaxfileupload.js"></script>
 <script>
     $(function(){
@@ -219,7 +282,7 @@
             success:function(msg){
                 var a = 1;
                 for(var i = 0;i < msg.length;i++){
-                    $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg[i].id+"</th><th>"+msg[i].pname+"</th><th>"+msg[i].cname+"</th><th>"+msg[i].sellprice+"</th><th>"+msg[i].sellnum+"</th><th>"+msg[i].guige+"</th><th>"+msg[i].beizhu+"</th><th><a href='#' onclick='showSellModul("+msg[i].id+")' style='text-decoration:none'>出售</a><br><a href='#' style='text-decoration:none'>修改</a></th></tr>");
+                    $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg[i].id+"</th><th>"+msg[i].pname+"</th><th>"+msg[i].cname+"</th><th>"+msg[i].sellprice+"</th><th>"+msg[i].sellnum+"</th><th>"+msg[i].guige+"</th><th>"+msg[i].beizhu+"</th><th><a href='#' onclick='showSellModul("+msg[i].id+")' style='text-decoration:none'>出售</a><br><a href='#' onclick='xiugai("+msg[i].id+")' style='text-decoration:none'>修改</a></th></tr>");
                     $("#caid").append("<option value='"+msg[i].cname+"'>"+msg[i].cname+"</option>");
                     a++;
                 }
@@ -243,7 +306,7 @@
             dataType:'json',
             success:function(msg){
                 $("#data").empty();
-                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg.id+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.sellprice+"</th><th>"+msg.sellnum+"</th><th>"+msg.guige+"</th><th>"+msg.beizhu+"</th><th><a href='#' style='text-decoration:none'>出售</a><br><a href='#' style='text-decoration:none'>修改</a></th></tr>");
+                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg.id+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.sellprice+"</th><th>"+msg.sellnum+"</th><th>"+msg.guige+"</th><th>"+msg.beizhu+"</th><th><a href='#' onclick='showSellModul("+msg.id+")' style='text-decoration:none'>出售</a><br><a href='#' style='text-decoration:none'>修改</a></th></tr>");
 
             }
         });
@@ -271,6 +334,28 @@
                 $("#sellnum").val(msg.sellnum);
             }
         });
+        modalNotNull();
+    }
+
+    function xiugai(flag) {
+        $("#xgModal").modal("show");
+        $.ajax({
+            type:'Post',
+            url:'findShangPinById',
+            data:{
+                'id':flag
+            },
+            dataType:'json',
+            success:function(msg){
+                $("#xgid").val(msg.id);
+                $("#xgpname").val(msg.pname);
+                $("#xgcname").val(msg.cname);
+                $("#xgsellprice").val(msg.sellprice);
+                $("#xgguige").val(msg.guige);
+                $("#xgsellnum").val(msg.sellnum);
+                $("#xgbeizhu").val(msg.beizhu);
+            }
+        });
     }
 
     //计算总价
@@ -282,6 +367,55 @@
         $("#allprice").val(hj);
     }
 
+    function tj() {
+        $.ajax({
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "saleShangPinById" ,//url
+            data: $('#cs_form').serialize(),
+            success: function (result) {
+                console.log(result);//打印服务端返回的数据(调试用)
+                $("#myModal").modal("hide");
+                queryAllShangPin();
+                alert("出售成功");
+            },
+            error : function() {
+                alert("异常！");
+            }
+
+        });
+    }
+
+    //修改商品信息
+    function xg() {
+        $.ajax({
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "updateShangPinById" ,//url
+            data: $('#xg_form').serialize(),
+            success: function (result) {
+                console.log(result);//打印服务端返回的数据(调试用)
+                $("#xgModal").modal("hide");
+                queryAllShangPin();
+                alert("修改成功");
+            },
+            error : function() {
+                alert("异常！");
+            }
+
+        });
+    }
+    //表单非空验证
+    /*function modalNotNull() {
+        if ($("#oksell").val() == "" || $("#oksell").val() == null){
+            alert("售出数量不能为空");
+            return false;
+        }else if ($("#selluser").val() == "" || $("#selluser").val() == null){
+            alert("销售人不能为空");
+            return false;
+        }
+        $("#cs_form").submit();
+    }*/
     // conds:表示条件
     function queryData(pn,conds){
         $.ajax({

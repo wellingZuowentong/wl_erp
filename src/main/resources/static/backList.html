@@ -86,28 +86,28 @@
                     <div class="form-group">
                         <label for="spname" class="col-sm-2 control-label">商品名：</label>
                         <div class="col-sm-10" id="sp_div">
-                            <!--<input type="text" class="form-control" id="spname" name="pname" disabled>-->
+                            <input type="text" class="form-control" id="spname" name="pname" disabled>
                         </div>
                     </div>
                     <!-- 厂家 -->
                     <div class="form-group">
                         <label for="cname" class="col-sm-2 control-label">厂家：</label>
                         <div class="col-sm-10" id="cj_div">
-                            <!--<input type="text" class="form-control" id="cname" name="cname" disabled>-->
+                            <input type="text" class="form-control" id="cname" name="cname" disabled>
                         </div>
                     </div>
                     <!-- 价格 -->
                     <div class="form-group">
                         <label for="sellprice" class="col-sm-2 control-label">价格：</label>
                         <div class="col-sm-10" id="jg_div">
-                            <!--<input type="number" class="form-control" id="sellprice" name="sellprice" disabled>-->
+                            <input type="number" class="form-control" id="sellprice" name="sellprice" disabled>
                         </div>
                     </div>
                     <!-- 规格 -->
                     <div class="form-group">
                         <label for="guige" class="col-sm-2 control-label">规格：</label>
                         <div class="col-sm-10" id="gg_div">
-                            <!--<input type="text" class="form-control" id="guige" name="guige" disabled>-->
+                            <input type="text" class="form-control" id="guige" name="guige" disabled>
                         </div>
                     </div>
 
@@ -115,7 +115,7 @@
                     <div class="form-group">
                         <label for="sellnum" class="col-sm-2 control-label">在售数量：</label>
                         <div class="col-sm-10" id="zssl_div">
-                            <!--<input type="number" class="form-control" id="sellnum" name="sellnum" disabled>-->
+                            <input type="number" class="form-control" id="sellnum" name="sellnum" disabled>
                         </div>
                     </div>
                     <!-- 售出数量 -->
@@ -145,7 +145,7 @@
                     <div class="form-group">
                         <label for="allprice" class="col-sm-2 control-label">合计：</label>
                         <div class="col-sm-10" id="hj_div">
-                            <!--<input type="text" class="form-control" id="heji" name="heji" disabled>-->
+                            <input type="text" class="form-control" id="allprice" name="allprice" disabled>
                         </div>
                     </div>
 
@@ -156,8 +156,7 @@
                             <input type="text" class="form-control" id="overprice" name="overprice" >
                         </div>
                     </div>
-
-
+                    
                     <!-- 状态 -->
                     <!--<div class="form-group">
                         <label for="status" class="col-sm-2 control-label">状态：</label>
@@ -264,20 +263,12 @@
             success:function(msg){
                 sj = msg.sellprice;
                 //console.log(msg.id);
-                $("#sp_div").empty();
-                $("#cj_div").empty();
-                $("#jg_div").empty();
-                $("#gg_div").empty();
-                $("#zssl_div").empty();
-                $("#hj_div").empty();
                 $("#id").val(msg.id);
-                //alert($("#id").val());
-                $("#sp_div").append("<input type='text' class='form-control' id='spname' name='pname' placeholder='"+msg.pname+"' disabled>");
-                $("#cj_div").append("<input type='text' class='form-control' id='cname' name='cname' placeholder='"+msg.cname+"' disabled>");
-                $("#jg_div").append("<input type='number' class='form-control' id='sellprice' name='sellprice' placeholder='"+msg.sellprice+"' disabled>");
-                $("#gg_div").append("<input type='text' class='form-control' id='guige' name='guige' placeholder='"+msg.guige+"' disabled>");
-                $("#zssl_div").append("<input type='number' class='form-control' id='sellnum' name='sellnum' placeholder='"+msg.sellnum+"' disabled>");
-                $("#hj_div").append("<input type='text' class='form-control' id='allprice' name='allprice' disabled>");
+                $("#spname").val(msg.pname);
+                $("#cname").val(msg.cname);
+                $("#sellprice").val(msg.sellprice);
+                $("#guige").val(msg.guige);
+                $("#sellnum").val(msg.sellnum);
             }
         });
     }
@@ -288,8 +279,7 @@
         var hj;
         scsl = $("#oksell").val();
         hj = sj*scsl;
-        $("#hj_div").empty();
-        $("#hj_div").append("<input type='text' class='form-control' id='allprice' name='allprice' placeholder='"+hj+"' disabled>");
+        $("#allprice").val(hj);
     }
 
     // conds:表示条件

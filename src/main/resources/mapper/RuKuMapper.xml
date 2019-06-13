@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC
         "-//mybatis.org//DTD com.example.Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.weiling.wl_erp.mapper.RuKuMapperuKuMapper">
+<mapper namespace="com.weiling.wl_erp.mapper.RuKuMapper">
 
     <sql id="ruKu">
         id,pname,cname,inprice,outprice,sellprice,vnum,sellnum,guige,rukutime,updatetime,username,sid,beizhu

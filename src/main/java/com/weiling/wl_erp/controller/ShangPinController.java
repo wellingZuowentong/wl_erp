@@ -64,18 +64,8 @@ public class ShangPinController {
     /*根据商品名和厂家名查找商品*/
     @RequestMapping(value = "/findShangPinByName",method = RequestMethod.GET)
     @ResponseBody
-    public ShangPin findShangPinByName(String pname, String cname, HttpServletRequest request){
-        try {
-            request.setCharacterEncoding("utf-8");
-            String p = request.getParameter("pname");
-            String c = request.getParameter("cname");
-            System.out.println(p);
-            System.out.println(c);
-            return shangPinService.findShangPinByName(p,c);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public ShangPin findShangPinByName(String pname, String cname){
+            return shangPinService.findShangPinByName(pname,cname);
     }
 
     /*出售商品*/

@@ -26,8 +26,7 @@
                 <form class="form-inline" role="form">
                     <div class="form-group">
                         <label  for="pname">商品名:</label>
-                        <input type="text" class="form-control"
-                               id="pname" name="pname"
+                        <input type="text" class="form-control" id="pname" name="pname"
                                placeholder="输入商品名">
                     </div>
                     <div class="form-group">
@@ -59,6 +58,7 @@
         <th>预售数量</th>
         <th>规格</th>
         <th>备注</th>
+        <th>操作</th>
     </tr>
     </thead>
     <tbody id="data">
@@ -78,52 +78,86 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalLabel">商品详细信息</h4>
+                <h4 class="modal-title" id="myModalLabel">出售商品</h4>
             </div>
             <div class="modal-body">
-                <form  method="POST" class="form-horizontal"
-                       role="form" >
-                    <input type="hidden" name="method" value="addbook" />
+                <form  method="POST" class="form-horizontal" role="form" >
+                    <!--<input type="hidden" name="method" value="addbook" />-->
                     <div class="form-group">
-                        <label for="name" class="col-sm-2 control-label">商品名：</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control"
-                                   id="name" name="name" placeholder="请输入名字">
+                        <label for="spname" class="col-sm-2 control-label">商品名：</label>
+                        <div class="col-sm-10" id="sp_div">
+                            <!--<input type="text" class="form-control" id="spname" name="pname" disabled>-->
                         </div>
                     </div>
-                    <!-- 作者 -->
+                    <!-- 厂家 -->
                     <div class="form-group">
-                        <label for="author" class="col-sm-2 control-label">厂家：</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control"
-                                   id="author" name="author" placeholder="请输入作者">
+                        <label for="cname" class="col-sm-2 control-label">厂家：</label>
+                        <div class="col-sm-10" id="cj_div">
+                            <!--<input type="text" class="form-control" id="cname" name="cname" disabled>-->
                         </div>
                     </div>
                     <!-- 价格 -->
                     <div class="form-group">
-                        <label for="price" class="col-sm-2 control-label">在售数量：</label>
-                        <div class="col-sm-10">
-                            <input type="number" class="form-control"
-                                   id="price" name="price" >
+                        <label for="sellprice" class="col-sm-2 control-label">价格：</label>
+                        <div class="col-sm-10" id="jg_div">
+                            <!--<input type="number" class="form-control" id="sellprice" name="sellprice" disabled>-->
                         </div>
                     </div>
-                    <!-- 出版日期 -->
+                    <!-- 规格 -->
                     <div class="form-group">
-                        <label for="publishdate" class="col-sm-2 control-label">售出数量：</label>
-                        <div class="col-sm-10">
-                            <input type="date" class="form-control"
-                                   id="publishdate" name="publishdate" >
+                        <label for="guige" class="col-sm-2 control-label">规格：</label>
+                        <div class="col-sm-10" id="gg_div">
+                            <!--<input type="text" class="form-control" id="guige" name="guige" disabled>-->
                         </div>
                     </div>
-                    <!--所在类别 -->
+
+                    <!-- 在售数量 -->
                     <div class="form-group">
-                        <label for="xiaoshou" class="col-sm-2 control-label">销售人：</label>
-                        <div class="col-sm-10">
-                            <select class="form-control"
-                                    id="categoryid" name="categoryid">
-                            </select>
+                        <label for="sellnum" class="col-sm-2 control-label">在售数量：</label>
+                        <div class="col-sm-10" id="zssl_div">
+                            <!--<input type="number" class="form-control" id="sellnum" name="sellnum" disabled>-->
                         </div>
                     </div>
+                    <!-- 售出数量 -->
+                    <div class="form-group">
+                        <label for="zsnum" class="col-sm-2 control-label">售出数量：</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="zsnum" name="zsnum" onblur="jisuan()">
+                        </div>
+                    </div>
+                    <!-- 销售人 -->
+                    <div class="form-group">
+                        <label for="xiaoshouren" class="col-sm-2 control-label">销售人：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="xiaoshouren" name="xiaoshouren" >
+                        </div>
+                    </div>
+
+                    <!-- 备注 -->
+                    <div class="form-group">
+                        <label for="beizhu" class="col-sm-2 control-label">备注：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="beizhu" name="beizhu" >
+                        </div>
+                    </div>
+
+                    <!-- 合计 -->
+                    <div class="form-group">
+                        <label for="heji" class="col-sm-2 control-label">合计：</label>
+                        <div class="col-sm-10" id="hj_div">
+                            <!--<input type="text" class="form-control" id="heji" name="heji" disabled>-->
+                        </div>
+                    </div>
+
+                    <!-- 实际总价 -->
+                    <div class="form-group">
+                        <label for="shijizj" class="col-sm-2 control-label">实际总价：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="shijizj" name="shijizj" >
+                        </div>
+                    </div>
+
+
                     <!-- 状态 -->
                     <!--<div class="form-group">
                         <label for="status" class="col-sm-2 control-label">状态：</label>
@@ -137,15 +171,11 @@
                     </div>-->
 
                     <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
+                        <div class="col-sm-offset-10 col-sm-10">
                             <button type="submit" class="btn btn-default">提交</button>
                         </div>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
@@ -190,7 +220,7 @@
             success:function(msg){
                 var a = 1;
                 for(var i = 0;i < msg.length;i++){
-                    $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg[i].id+"</th><th>"+msg[i].pname+"</th><th>"+msg[i].cname+"</th><th>"+msg[i].sellprice+"</th><th>"+msg[i].sellnum+"</th><th>"+msg[i].guige+"</th><th>"+msg[i].beizhu+"</th></tr>");
+                    $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg[i].id+"</th><th>"+msg[i].pname+"</th><th>"+msg[i].cname+"</th><th>"+msg[i].sellprice+"</th><th>"+msg[i].sellnum+"</th><th>"+msg[i].guige+"</th><th>"+msg[i].beizhu+"</th><th><a href='#' onclick='showSellModul("+msg[i].id+")' style='text-decoration:none'>出售</a><br><a href='#' style='text-decoration:none'>修改</a></th></tr>");
                     $("#caid").append("<option value='"+msg[i].cname+"'>"+msg[i].cname+"</option>");
                     a++;
                 }
@@ -214,11 +244,52 @@
             dataType:'json',
             success:function(msg){
                 $("#data").empty();
-                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg.id+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.sellprice+"</th><th>"+msg.sellnum+"</th><th>"+msg.guige+"</th><th>"+msg.beizhu+"</th></tr>");
+                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg.id+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.sellprice+"</th><th>"+msg.sellnum+"</th><th>"+msg.guige+"</th><th>"+msg.beizhu+"</th><th><a href='#' style='text-decoration:none'>出售</a><br><a href='#' style='text-decoration:none'>修改</a></th></tr>");
 
             }
         });
     }
+
+    var sj;
+    //展示出售模态框和内容
+    function showSellModul(flag) {
+        $("#myModal").modal("show");
+        $.ajax({
+            type:'Post',
+            url:'findShangPinById',
+            data:{
+                'id':flag
+            },
+            dataType:'json',
+            success:function(msg){
+                sj = msg.sellprice;
+                //console.log(msg.id);
+                $("#sp_div").empty();
+                $("#cj_div").empty();
+                $("#jg_div").empty();
+                $("#gg_div").empty();
+                $("#zssl_div").empty();
+                $("#hj_div").empty();
+                $("#sp_div").append("<input type='text' class='form-control' id='spname' name='pname' placeholder='"+msg.pname+"' disabled>");
+                $("#cj_div").append("<input type='text' class='form-control' id='cname' name='cname' placeholder='"+msg.cname+"' disabled>");
+                $("#jg_div").append("<input type='number' class='form-control' id='sellprice' name='sellprice' placeholder='"+msg.sellprice+"' disabled>");
+                $("#gg_div").append("<input type='text' class='form-control' id='guige' name='guige' placeholder='"+msg.guige+"' disabled>");
+                $("#zssl_div").append("<input type='number' class='form-control' id='sellnum' name='sellnum' placeholder='"+msg.sellnum+"' disabled>");
+                $("#hj_div").append("<input type='text' class='form-control' id='heji' name='heji' placeholder='"+hj+"' disabled>");
+            }
+        });
+    }
+
+    //计算总价
+    function jisuan() {
+        var scsl;
+        var hj;
+        scsl = $("#zsnum").val();
+        hj = sj*scsl;
+        $("#hj_div").empty();
+        $("#hj_div").append("<input type='text' class='form-control' id='heji' name='heji' placeholder='"+hj+"' disabled>");
+    }
+
     // conds:表示条件
     function queryData(pn,conds){
         $.ajax({

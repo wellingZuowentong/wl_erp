@@ -40,7 +40,7 @@
 
     <!--根据id和商品信息修改商品-->
     <update id="updateShangPinById" parameterType="com.weiling.wl_erp.bean.ShangPin">
-        update shangpin set sellnum=#{sellnum} where id=#{id}
+        update shangpin set sellnum=#{sellnum},sellprice=#{sellprice},beizhu=#{beizhu} where id=#{id}
     </update>
 
     <delete id="deleteShangPinById" parameterType="int">

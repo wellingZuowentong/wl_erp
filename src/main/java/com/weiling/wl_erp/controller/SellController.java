@@ -31,7 +31,7 @@ public class SellController {
     private KuCunService kuCunService;
 
     /*新增销售表*/
-    @RequestMapping("insertSell")
+   /* @RequestMapping("insertSell")
     @ResponseBody
     public int insertSell(HttpServletRequest request){
         String pname = request.getParameter("pname");
@@ -55,7 +55,7 @@ public class SellController {
         sell.setZhuangtai(0);
         sell.setBeizhu(beizhu);
         return sellService.insertSell(sell);
-    }
+    }*/
 
     /*查询所有销售表*/
     @RequestMapping("findAllSell")

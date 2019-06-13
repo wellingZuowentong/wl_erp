@@ -51,9 +51,11 @@ public class ShangPinController {
     @ResponseBody
     public int updateShangPinById(HttpServletRequest request){
         Integer id = Integer.parseInt(request.getParameter("id"));
-        Integer sellnum = Integer.parseInt(request.getParameter("sellnum"));
+        BigDecimal sellprice = new BigDecimal(request.getParameter("sellprice"));
+        String beizhu = request.getParameter("beizhu");
         ShangPin shangpin = shangPinService.findShangPinById(id);
-        shangpin.setSellnum(sellnum);
+        shangpin.setSellprice(sellprice);
+        shangpin.setBeizhu("beizhu");
         return shangPinService.updateShangPinById(shangpin);
     }
 
@@ -84,7 +86,11 @@ public class ShangPinController {
         BigDecimal sellprice = new BigDecimal(request.getParameter("sellprice"));
         String guige = request.getParameter("guige");
         BigDecimal allprice = new BigDecimal(request.getParameter("allprice"));
-        BigDecimal overprice = new BigDecimal(request.getParameter("overprice"));
+        String jiage = request.getParameter("overprice");
+        if(jiage==null||jiage.equals("")){
+            jiage = request.getParameter("allprice");
+        }
+        BigDecimal overprice = new BigDecimal(jiage);
         String selluser = request.getParameter("selluser");
         String beizhu = request.getParameter("beizhu");
         Sell sell =new Sell();

@@ -159,8 +159,58 @@
         <script>
             $(function(){
                 //查询所有销售列表
-                queryAllSell();
+                getAllSell(1);
+                $("#first").on("click",function(){
+                    getAllSell(1);
+                });
+                $("#pre").on("click",function(){
+                    if(pre==0){
+                        pre=1;
+                    }
+                    getAllSell(pre)
+                });
+                $("#next").on("click",function(){
+                    getAllSell(next)
+                });
+                $("#end").on("click",function(){
+                    getAllSell(end);
+                });
             });
+
+
+            //分页查询所有销售表
+            function  getAllSell(num){
+                $.ajax({
+                    type:'Post',
+                    url:'getAllSell',
+                    data:{
+                        pageNum:num
+                    },
+                    dataType:'json',
+                    success:function(msg){
+                        $("#data").empty();
+                        var zt = "";
+                        pre=msg.prePage;
+                        next=msg.nextPage;
+                        end=msg.lastPage;
+                        $.each(msg.list,function(i,msg){
+                            if(msg.zhuangtai==0){
+                                zt = '未出库';
+                                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg.id+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.oksell+"</th><th>"+msg.sellprice+"</th><th>"+msg.guige+"</th><th>"+msg.allprice+"</th><th>"+msg.selluser+"</th><th><p style='color: dodgerblue'>"+zt+"</p></th><th>"+msg.beizhu+"</th><th><a href='#' onclick='chuku("+msg.id+")' style='text-decoration:none'>出库</a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='bohui("+msg.id+")' style='text-decoration:none'>驳回</a></th></tr>");
+                            }else if (msg.zhuangtai==1){
+                                zt = '已出库';
+                                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg.id+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.oksell+"</th><th>"+msg.sellprice+"</th><th>"+msg.guige+"</th><th>"+msg.allprice+"</th><th>"+msg.selluser+"</th><th><p style='color: #3e8f3e'>"+zt+"</p></th><th>"+msg.beizhu+"</th><th><a class=\"disabled\" style='text-decoration:none'></a><label></label><a class=\"disabled\" style='text-decoration:none'></a></th></tr>");
+                            }else if (msg.zhuangtai==2){
+                                zt = '被驳回';
+                                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg.id+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.oksell+"</th><th>"+msg.sellprice+"</th><th>"+msg.guige+"</th><th>"+msg.allprice+"</th><th>"+msg.selluser+"</th><th><p style='color: red'>"+zt+"</p></th><th>"+msg.beizhu+"</th><th><a class=\"disabled\" style='text-decoration:none'></a><label></label><a class=\"disabled\" style='text-decoration:none'></a></th></tr>");
+                            }
+                        });
+
+                    }
+                });
+            }
+
+
 
             //查询所有销售列表
             function queryAllSell() {

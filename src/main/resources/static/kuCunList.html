@@ -84,43 +84,67 @@
                         <h4 class="modal-title">修改库存商品</h4>
                     </div>
                     <div class="modal-body">
-                        <form action="" method="post" class="form-horizontal" role="form" id="xg_form">
+                        <form action="updateKuCunById" method="post" class="form-horizontal" role="form" id="xg_form">
                             <input type="hidden" name="id" id="xgid"/>
                             <div class="form-group">
                                 <label for="xgpname" class="col-sm-2 control-label">商品名：</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="xgpname" name="pname" readonly="readonly">
+                                    <input type="text" class="form-control" id="xgpname" name="pname">
                                 </div>
                             </div>
                             <!-- 厂家 -->
                             <div class="form-group">
                                 <label for="xgcname" class="col-sm-2 control-label">厂家：</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="xgcname" name="cname" readonly="readonly">
+                                    <input type="text" class="form-control" id="xgcname" name="cname">
                                 </div>
                             </div>
-                            <!-- 价格 -->
+                            <!-- 进货价 -->
                             <div class="form-group">
                                 <label for="xginprice" class="col-sm-2 control-label">进货价：</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="xginprice" name="inprice">
+                                    <input type="number" class="form-control" id="xginprice" name="inprice">
                                 </div>
                             </div>
-                            <!-- 规格 -->
+                            <!-- 出库价 -->
                             <div class="form-group">
-                                <label for="xgguige" class="col-sm-2 control-label">规格：</label>
+                                <label for="xgoutprice" class="col-sm-2 control-label">出库价：</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="xgguige" name="guige" readonly="readonly">
+                                    <input type="number" class="form-control" id="xgoutprice" name="outprice">
                                 </div>
                             </div>
 
-                            <!-- 在售数量 -->
+                            <!-- 销售价 -->
                             <div class="form-group">
-                                <label for="xgsellnum" class="col-sm-2 control-label">在售数量：</label>
+                                <label for="xgsellprice" class="col-sm-2 control-label">销售价：</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" id="xgsellprice" name="sellprice">
+                                </div>
+                            </div>
+                            <!-- 库存数量 -->
+                            <div class="form-group">
+                                <label for="xgvnum" class="col-sm-2 control-label">库存数量：</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" id="xgvnum" name="vnum" readonly="readonly">
+                                </div>
+                            </div>
+
+                            <!-- 预售数量 -->
+                            <div class="form-group">
+                                <label for="xgsellnum" class="col-sm-2 control-label">预售数量：</label>
                                 <div class="col-sm-10">
                                     <input type="number" class="form-control" id="xgsellnum" name="sellnum" readonly="readonly">
                                 </div>
                             </div>
+
+                            <!-- 规格 -->
+                            <div class="form-group">
+                                <label for="xgguige" class="col-sm-2 control-label">规格：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="xgguige" name="guige">
+                                </div>
+                            </div>
+
                             <!-- 备注 -->
                             <div class="form-group">
                                 <label for="xgbeizhu" class="col-sm-2 control-label">备注：</label>
@@ -140,6 +164,51 @@
             </div>
         </div>
 
+        <!-- 预售商品列表模态框 -->
+        <div class="modal fade" id="ysModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">添加预售商品</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="addShangPin" method="post" class="form-horizontal" role="form" id="ys_form">
+                            <input type="hidden" name="id" id="ysid"/>
+                            <div class="form-group">
+                                <label for="yspname" class="col-sm-2 control-label">商品名：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="yspname" name="pname" readonly="readonly">
+                                </div>
+                            </div>
+
+                            <!-- 预售数量 -->
+                            <div class="form-group">
+                                <label for="yssellnum" class="col-sm-2 control-label">预售数量：</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" id="yssellnum" name="sellnum">
+                                </div>
+                            </div>
+
+                            <!-- 备注 -->
+                            <div class="form-group">
+                                <label for="ysbeizhu" class="col-sm-2 control-label">备注：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="ysbeizhu" name="beizhu">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-10 col-sm-10">
+                                    <button type="button" class="btn btn-default" onclick="ys()">预售</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script src="js/jquery.js"></script>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="js/jquery.min.js"></script>
@@ -148,10 +217,11 @@
         <script src="js/ajaxfileupload.js"></script>
         <script>
             $(function(){
-                //查询所有商品
+                //查询所有库存商品
                 queryAllKuCun();
             });
 
+            //查询所有库存商品
             function queryAllKuCun() {
                 $.ajax({
                     type:'Post',
@@ -160,9 +230,122 @@
                     success:function(msg){
                         $("#data").empty();
                         for(var i = 0;i < msg.length;i++){
-                            $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg[i].id+"</th><th>"+msg[i].pname+"</th><th>"+msg[i].cname+"</th><th>"+msg[i].inprice+"</th><th>"+msg[i].outprice+"</th><th>"+msg[i].sellprice+"</th><th>"+msg[i].vnum+"</th><th>"+msg[i].sellnum+"</th><th>"+msg[i].guige+"</th><th>"+msg[i].beizhu+"</th><th><a href='#' onclick='xiugai("+msg[i].id+")' style='text-decoration:none'>修改</a><br><a href='#' onclick='yushou("+msg[i].id+")' style='text-decoration:none'>预售</a></th></tr>");
+                            $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg[i].id+"</th><th>"+msg[i].pname+"</th><th>"+msg[i].cname+"</th><th>"+msg[i].inprice+"</th><th>"+msg[i].outprice+"</th><th>"+msg[i].sellprice+"</th><th>"+msg[i].vnum+"</th><th>"+msg[i].sellnum+"</th><th>"+msg[i].guige+"</th><th>"+msg[i].beizhu+"</th><th><a href='#' onclick='modify("+msg[i].id+")' style='text-decoration:none'>修改</a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='yushou("+msg[i].id+")' style='text-decoration:none'>预售</a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='shanchu("+msg[i].id+")' style='text-decoration:none'>删除</a></th></tr>");
                             //$("#caid").append("<option value='"+msg[i].cname+"'>"+msg[i].cname+"</option>");
                         }
+                    }
+                });
+            }
+
+            //根据id修改库存商品
+            function modify(flag) {
+                $("#xgModal").modal("show");
+                $("#xgpname").empty();
+                $("#xgcname").empty();
+                $("#xginprice").empty();
+                $("#xgoutprice").empty();
+                $("#xgsellprice").empty();
+                $("#xgvnum").empty();
+                $("#xgsellnum").empty();
+                $("#xgguige").empty();
+                $("#xgbeizhu").empty();
+                $.ajax({
+                    type:'Post',
+                    url:'findKuCunById',
+                    data:{
+                        'id':flag
+                    },
+                    dataType:'json',
+                    success:function(msg){
+                        console.log(msg);
+                        $("#xgid").val(msg.id);
+                        $("#xgpname").val(msg.pname);
+                        $("#xgcname").val(msg.cname);
+                        $("#xginprice").val(msg.inprice);
+                        $("#xgoutprice").val(msg.outprice);
+                        $("#xgsellprice").val(msg.sellprice);
+                        $("#xgvnum").val(msg.vnum);
+                        $("#xgsellnum").val(msg.sellnum);
+                        $("#xgguige").val(msg.guige);
+                        $("#xgbeizhu").val(msg.beizhu);
+                    }
+                });
+            }
+
+            function yushou(flag) {
+                $("#ysModal").modal("show");
+                $("#yspname").empty();
+                $("#yssellnum").empty();
+                $("#ysbeizhu").empty();
+                $.ajax({
+                    type:'Post',
+                    url:'findKuCunById',
+                    data:{
+                        'id':flag
+                    },
+                    dataType:'json',
+                    success:function(msg){
+                        console.log(msg);
+                        $("#ysid").val(msg.id);
+                        $("#yspname").val(msg.pname);
+                        $("#yssellnum").val(msg.sellnum);
+                        $("#ysbeizhu").val(msg.beizhu);
+                    }
+                });
+            }
+
+            function shanchu(flag) {
+                var del = confirm("确定删除此商品？");
+                if(del == true){
+                    $.ajax({
+                        type:'Post',
+                        url:'deleteKuCunById',
+                        data:{
+                            'id':flag
+                        },
+                        dataType:'json',
+                        success:function(msg){
+                            alert("删除成功");
+                            queryAllKuCun();
+                        }
+                    });
+                }else{
+                    return
+                }
+            }
+
+            //根据id修改库存商品
+            function xg() {
+                $.ajax({
+                    type: "POST",//方法类型
+                    dataType: "json",//预期服务器返回的数据类型
+                    url: "updateKuCunById" ,//url
+                    data: $('#xg_form').serialize(),
+                    success: function (result) {
+                        $("#xgModal").modal("hide");
+                        alert("修改成功");
+                        queryAllKuCun();
+                    },
+                    error : function() {
+                        alert("异常！");
+                    }
+                });
+            }
+
+            //添加预售商品
+            function ys() {
+                $.ajax({
+                    type: "POST",//方法类型
+                    dataType: "json",//预期服务器返回的数据类型
+                    url: "addShangPin" ,//url
+                    data: $('#ys_form').serialize(),
+                    success: function (result) {
+                        $("#ysModal").modal("hide");
+                        alert("添加成功");
+                        queryAllKuCun();
+                    },
+                    error : function() {
+                        alert("异常！");
                     }
                 });
             }

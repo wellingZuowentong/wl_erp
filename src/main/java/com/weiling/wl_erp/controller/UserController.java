@@ -43,37 +43,13 @@ public class UserController {
         }
         return "error.html";
     }
-
+    /*查询登陆人验证权限*/
     @RequestMapping("/checkqx")
     @ResponseBody
     public User checkqx(HttpSession session){
         User user = (User)session.getAttribute("username");
         return user;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     @RequestMapping(value="/ceshi")
     @ResponseBody

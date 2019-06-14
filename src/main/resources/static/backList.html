@@ -251,9 +251,9 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/ajaxfileupload.js"></script>
 <script>
+    var pre,next,end;
+    var tj="";//条件
     $(function(){
-        /*//初始化下拉菜单
-        queryAllCas();
         //查询部分数据
         queryData(1,tj);
         //~~~~~~~~~给分页按钮注册事件
@@ -268,12 +268,11 @@
         });
         $("#end").on("click",function(){
             queryData(end,tj);
-        });*/
-
+        });
         //查询所有商品
         queryAllShangPin();
     });
-    
+
     function queryAllShangPin() {
         $.ajax({
             type:'Post',
@@ -293,10 +292,20 @@
 
     //根据商品名和厂家查询
     function queryByTj(){
+        //重置条件
+        tj="";
         var pname = $("#pname").val();
         var cname = $("#caid").val();
-        //console.log(pname);
-        //console.log(cname);
+
+        if(pname!=null && pname != ""){
+            tj = pname;
+        }
+        if(cname!=null && cname != ""){
+            tj = cname;
+        }
+        alert(tj);
+        queryData(1,tj);
+
         $.ajax({
             type:'Get',
             url:'findShangPinByName',
@@ -308,6 +317,26 @@
             success:function(msg){
                 $("#data").empty();
                 $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg.id+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.sellprice+"</th><th>"+msg.sellnum+"</th><th>"+msg.guige+"</th><th>"+msg.beizhu+"</th><th><a href='#' onclick='showSellModul("+msg.id+")' style='text-decoration:none'>出售</a><br><a href='#' onclick='xiugai("+msg.id+")' style='text-decoration:none'>修改</a></th></tr>");
+            }
+        });
+    }
+
+    function queryData(sp,cj) {
+        $.ajax({
+            type:"POST",
+            url:"getAllShangPin",
+            data:{
+
+            },
+            dataType:"json",
+            success:function(msg){//msg-->page
+                pre = msg.pre;
+                next = msg.next;
+                end=msg.pages;
+                $.each(msg.pageSize,function(i,kucun){
+
+                });
+
             }
         });
     }
@@ -431,30 +460,20 @@
     function queryData(pn,conds){
         $.ajax({
             type:"POST",
-            url:"book",	//me...pageNumber=1 &name=xxx&caid=xx
-            data:"method=querySome&pageNumber="+pn+conds,
+            url:"",	//me...pageNumber=1 &name=xxx&caid=xx
+            data:{
+
+            },
             dataType:"json",
             success:function(msg){//msg-->page
                 pre = msg.pre;
                 next = msg.next;
                 end=msg.pageCount;
 
-                var trs="";
+
                 $.each(msg.rows,function(i,book){
-                    /* 	let year = book.publishdate.year+1900;
-                        let m = book.publishdate.month+1<10?("0"+(book.publishdate.month+1)):book.publishdate.month+1;
-                        let date = book.publishdate.date<10?("0"+book.publishdate.date):book.publishdate.date;
-                        let result = year+"-"+m+"-"+date; */
 
-                    trs+="<tr><td><input type='checkbox' name='et1806'></td>"+
-                        "<td>"+(msg.start+i+1)+"</td><td>"+book.name
-                        +"</td><td>"+book.author+"</td><td>"+book.price
-                        +"</td><td>"+book.ca.name+"</td><td>"+book.pdate
-                        +"</td><td>"+(book.status==1?"上架":"下架")
-                        +"</td><td><button class='btn btn-primary' onclick=\"queryBookInfo('"+book.id+"')\" type='button'>详情</button</td></tr>";
                 });
-                $("#data").html(trs);
-
             }
         });
     }

@@ -23,11 +23,21 @@ public class ChuKuService {
     public int insertChuKu(ChuKu chuKu){
         return chuKuMapper.insertChuKu(chuKu);
     }
-   /* public List<ChuKu> findAllChuKu();
-    public KuCun findChuKuById(Integer id);
-    public int updateChuKuById(ChuKu chuKu);
-    public KuCun findChuKuByName(@Param("pname") String pname, @Param("cname") String cname);
-    public int deleteChuKuById(Integer id);*/
+   public List<ChuKu> findAllChuKu(){
+        return chuKuMapper.findAllChuKu();
+    }
+    public KuCun findChuKuById(Integer id){
+        return chuKuMapper.findChuKuById(id);
+    }
+    public int updateChuKuById(ChuKu chuKu){
+        return chuKuMapper.updateChuKuById(chuKu);
+    }
+    public KuCun findChuKuByName(String pname,String cname){
+        return chuKuMapper.findChuKuByName(pname,cname);
+    }
+    public int deleteChuKuById(Integer id){
+        return chuKuMapper.deleteChuKuById(id);
+    }
 
 
 

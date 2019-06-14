@@ -1,9 +1,11 @@
 package com.weiling.wl_erp.controller;
 
+import com.weiling.wl_erp.bean.ChuKu;
 import com.weiling.wl_erp.bean.KuCun;
 import com.weiling.wl_erp.bean.Sell;
 import com.weiling.wl_erp.bean.ShangPin;
 import com.weiling.wl_erp.mapper.SellMapper;
+import com.weiling.wl_erp.service.ChuKuService;
 import com.weiling.wl_erp.service.KuCunService;
 import com.weiling.wl_erp.service.SellService;
 import com.weiling.wl_erp.service.ShangPinService;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,6 +32,8 @@ public class SellController {
     private ShangPinService shangPinService;
     @Autowired
     private KuCunService kuCunService;
+    @Autowired
+    private ChuKuService chuKuService;
 
     /*新增销售表*/
    /* @RequestMapping("insertSell")
@@ -72,17 +77,27 @@ public class SellController {
     }
 
     /*修改销售状态并修改库存状态*/
-    /*还未实现出库表生成！！！！！！！！！！！！！！！！！！！！！！！！！！！*/
     @RequestMapping("updateZhuangTai")
     @ResponseBody
-    public int updateZhuangTai(Integer id,Integer zhuangtai){
+    public int updateZhuangTai(Integer id,String outuser,String beizhu){
         Sell sell = sellService.findSellById(id);
         String pname = sell.getPname();
         String cname = sell.getCname();
         KuCun kuCun = kuCunService.findKuCunByName(pname,cname);
         kuCun.setSellnum(kuCun.getSellnum()-sell.getOksell());
         kuCunService.updateKuCunById(kuCun);
-        return sellService.updateZhuangTai(id,zhuangtai);
+        ChuKu chuKu = new ChuKu();
+        chuKu.setPname(pname);
+        chuKu.setCname(cname);
+        chuKu.setOutnum(sell.getOksell());
+        chuKu.setOutprice(sell.getSellprice());
+        chuKu.setOutallprice(sell.getOverprice());
+        chuKu.setGuige(sell.getGuige());
+        chuKu.setOutuser(outuser);
+        chuKu.setOuttime(new Date());
+        chuKu.setBeizhu(beizhu);
+        chuKuService.insertChuKu(chuKu);
+        return sellService.updateZhuangTai(id,1);
     }
 
     /*修改销售信息*/

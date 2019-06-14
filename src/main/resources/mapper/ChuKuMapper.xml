@@ -1,0 +1,54 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD com.example.Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weiling.wl_erp.mapper.ChuKuMapper">
+
+    <sql id="chuKu">
+        id,pname,cname,outnum,outprice,guige,outallprice,outuser,outtime,zhuangtai,beizhu
+    </sql>
+
+   <resultMap id="result" type="com.weiling.wl_erp.bean.ChuKu">
+        <result property="id" column="id"/>
+        <result property="pname" column="pname" />
+        <result property="cname" column="cname" />
+        <result property="outnum" column="outnum" />
+        <result property="outprice" column="outprice" />
+        <result property="guige" column="guige" />
+        <result property="outallprice" column="outallprice" />
+        <result property="outuser" column="outuser" />
+        <result property="outtime" column="outtime" />
+        <result property="zhuangtai" column="zhuangtai" />
+        <result property="beizhu" column="beizhu" />
+    </resultMap>
+    <!--增加库存-->
+    <insert id="insertChuKu" parameterType="com.weiling.wl_erp.bean.ChuKu">
+        insert into chuku(<include refid="chuKu" />)values(#{id},#{pname},#{cname},#{outnum},#{outprice},#{guige},#{outallprice},#{outuser},#{outtime},#{zhaungtai},#{beizhu})
+    </insert>
+
+    <!--查询所有库存-->
+    <select id="findAllChuKu" resultType="com.weiling.wl_erp.bean.ChuKu">
+        SELECT <include refid="chuKu"/> FROM chuku
+    </select>
+
+    <!--根据库存ID查询库存-->
+    <select id="findChuKuById" resultType="com.weiling.wl_erp.bean.ChuKu">
+        SELECT <include refid="chuKu"/> FROM chuku where id=#{value}
+    </select>
+
+    <!--根据商品名和厂家名查询库存-->
+    <select id="findChuKuByName" parameterType="String" resultType="com.weiling.wl_erp.bean.ChuKu">
+        SELECT <include refid="chuKu"/> FROM chuku where pname=#{pname} and cname=#{cname}
+    </select>
+
+    <!--根据id和库存信息修改库存-->
+    <update id="updateChuKuById" parameterType="com.weiling.wl_erp.bean.ChuKu">
+        update chuku set pname=#{pname},cname=#{cname},inprice=#{inprice},outprice=#{outprice},sellprice=#{sellprice},vnum=#{vnum},sellnum=#{sellnum},guige=#{guige},sid=#{sid},beizhu=#{beizhu} where id=#{id}
+    </update>
+
+    <!--根据id删除库存信息-->
+    <delete id="deleteChuKuById" parameterType="int">
+        delete from chuku where id=#{id}
+    </delete>
+
+</mapper>

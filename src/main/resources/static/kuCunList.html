@@ -1,10 +1,171 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>index</title>
+
+        <!-- Bootstrap -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    </head>
+    <body>
+        <!-- 查询区域 -->
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            条件查询
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+                        <form class="form-inline" role="form">
+                            <div class="form-group">
+                                <label  for="pname">商品名:</label>
+                                <input type="text" class="form-control" id="pname" name="pname"
+                                       placeholder="输入商品名">
+                            </div>
+                            <div class="form-group">
+                                <label  for="caid">厂家:</label>
+                                <select class="form-control" id="caid" name="caid">
+                                    <option value="0">=====请选择=====</option>
+                                </select>
+                            </div>
+                            <button type="button" onclick="queryByTj()" class="btn btn-primary">查询</button>
+                            <button type="button" onclick="export2Excel()" class="btn btn-success">导出到EXCEL</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 查询 end -->
+        <table class="table table-hover table-bordered
+            table-striped table-condensed">
+            <thead>
+            <tr>
+                <th>
+                    <input type="checkbox" id='checkall'>
+                    <label for='checkall'>全选</label>
+                </th>
+                <th>编号</th>
+                <th>商品名</th>
+                <th>厂家</th>
+                <th>进货价</th>
+                <th>出库价</th>
+                <th>销售价</th>
+                <th>库存数量</th>
+                <th>预售数量</th>
+                <th>规格</th>
+                <th>备注</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody id="data">
+
+            </tbody>
+        </table>
+        <div style="text-align:center">
+            <button type='button' id="first" class="btn btn-primary">首页</button>
+            <button type='button' id="pre" class="btn btn-success">上一页</button>
+            <button type='button' id="next" class="btn btn-info">下一页</button>
+            <button type='button' id="end" class="btn btn-danger">尾页</button>
+        </div>
+
+        <!-- 修改库存列表模态框 -->
+        <div class="modal fade" id="xgModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">修改库存商品</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="post" class="form-horizontal" role="form" id="xg_form">
+                            <input type="hidden" name="id" id="xgid"/>
+                            <div class="form-group">
+                                <label for="xgpname" class="col-sm-2 control-label">商品名：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="xgpname" name="pname" readonly="readonly">
+                                </div>
+                            </div>
+                            <!-- 厂家 -->
+                            <div class="form-group">
+                                <label for="xgcname" class="col-sm-2 control-label">厂家：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="xgcname" name="cname" readonly="readonly">
+                                </div>
+                            </div>
+                            <!-- 价格 -->
+                            <div class="form-group">
+                                <label for="xginprice" class="col-sm-2 control-label">进货价：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="xginprice" name="inprice">
+                                </div>
+                            </div>
+                            <!-- 规格 -->
+                            <div class="form-group">
+                                <label for="xgguige" class="col-sm-2 control-label">规格：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="xgguige" name="guige" readonly="readonly">
+                                </div>
+                            </div>
+
+                            <!-- 在售数量 -->
+                            <div class="form-group">
+                                <label for="xgsellnum" class="col-sm-2 control-label">在售数量：</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" id="xgsellnum" name="sellnum" readonly="readonly">
+                                </div>
+                            </div>
+                            <!-- 备注 -->
+                            <div class="form-group">
+                                <label for="xgbeizhu" class="col-sm-2 control-label">备注：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="xgbeizhu" name="beizhu">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-10 col-sm-10">
+                                    <button type="button" class="btn btn-default" onclick="xg()">修改</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/jquery.js"></script>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/ajaxfileupload.js"></script>
+        <script>
+            $(function(){
+                //查询所有商品
+                queryAllKuCun();
+            });
+
+            function queryAllKuCun() {
+                $.ajax({
+                    type:'Post',
+                    url:'findAllKuCun',
+                    dataType:'json',
+                    success:function(msg){
+                        $("#data").empty();
+                        for(var i = 0;i < msg.length;i++){
+                            $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg[i].id+"</th><th>"+msg[i].pname+"</th><th>"+msg[i].cname+"</th><th>"+msg[i].inprice+"</th><th>"+msg[i].outprice+"</th><th>"+msg[i].sellprice+"</th><th>"+msg[i].vnum+"</th><th>"+msg[i].sellnum+"</th><th>"+msg[i].guige+"</th><th>"+msg[i].beizhu+"</th><th><a href='#' onclick='xiugai("+msg[i].id+")' style='text-decoration:none'>修改</a><br><a href='#' onclick='yushou("+msg[i].id+")' style='text-decoration:none'>预售</a></th></tr>");
+                            //$("#caid").append("<option value='"+msg[i].cname+"'>"+msg[i].cname+"</option>");
+                        }
+                    }
+                });
+            }
+        </script>
+    </body>
 </html>

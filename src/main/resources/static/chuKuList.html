@@ -1,10 +1,109 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>index</title>
+
+        <!-- Bootstrap -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    </head>
+    <body>
+        <!-- 查询区域 -->
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            条件查询
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+                        <form class="form-inline" role="form">
+                            <div class="form-group">
+                                <label  for="pname">商品名:</label>
+                                <input type="text" class="form-control" id="pname" name="pname"
+                                       placeholder="输入商品名">
+                            </div>
+                            <div class="form-group">
+                                <label  for="caid">厂家:</label>
+                                <select class="form-control" id="caid" name="caid">
+                                    <option value="0">=====请选择=====</option>
+                                </select>
+                            </div>
+                            <button type="button" onclick="queryByTj()" class="btn btn-primary">查询</button>
+                            <button type="button" onclick="export2Excel()" class="btn btn-success">导出到EXCEL</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 查询 end -->
+        <table class="table table-hover table-bordered
+                        table-striped table-condensed">
+            <thead>
+            <tr>
+                <th>
+                    <input type="checkbox" id='checkall'>
+                    <label for='checkall'>全选</label>
+                </th>
+                <th>编号</th>
+                <th>商品名</th>
+                <th>厂家</th>
+                <th>出库数量</th>
+                <th>出库单价</th>
+                <th>规格</th>
+                <th>出库总价</th>
+                <th>出库人</th>
+                <th>出库时间</th>
+                <th>备注</th>
+            </tr>
+            </thead>
+            <tbody id="data">
+
+            </tbody>
+        </table>
+        <div style="text-align:center">
+            <button type='button' id="first" class="btn btn-primary">首页</button>
+            <button type='button' id="pre" class="btn btn-success">上一页</button>
+            <button type='button' id="next" class="btn btn-info">下一页</button>
+            <button type='button' id="end" class="btn btn-danger">尾页</button>
+        </div>
+
+        <script src="js/jquery.js"></script>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/ajaxfileupload.js"></script>
+        <script>
+            $(function(){
+                //查询所有出库列表
+                queryAllChuKu();
+            });
+
+            function queryAllChuKu() {
+                $.ajax({
+                    type:'Post',
+                    url:'findAllChuKu',
+                    dataType:'json',
+                    success:function(msg){
+                        $("#data").empty();
+                        var oldTime;
+                        var newTime;
+                        for(var i = 0;i < msg.length;i++){
+                            oldTime = new Date(msg[i].outtime).toJSON();
+                            newTime = new Date(+new Date(oldTime)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'');
+                            $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg[i].id+"</th><th>"+msg[i].pname+"</th><th>"+msg[i].cname+"</th><th>"+msg[i].outnum+"</th><th>"+msg[i].outprice+"</th><th>"+msg[i].guige+"</th><th>"+msg[i].outallprice+"</th><th>"+msg[i].outuser+"</th><th>"+newTime+"</th><th>"+msg[i].beizhu+"</th></tr>");
+                            //$("#caid").append("<option value='"+msg[i].cname+"'>"+msg[i].cname+"</option>");
+                        }
+                    }
+                });
+            }
+        </script>
+    </body>
 </html>

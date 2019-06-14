@@ -1,14 +1,17 @@
 package com.weiling.wl_erp.controller;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.weiling.wl_erp.bean.Sell;
 import com.weiling.wl_erp.bean.ShangPin;
 import com.weiling.wl_erp.service.SellService;
 import com.weiling.wl_erp.service.ShangPinService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
@@ -110,6 +113,19 @@ public class ShangPinController {
         shangpin.setSellnum(shangpin.getSellnum()-oksell);
         shangPinService.updateShangPinById(shangpin);
         return shangPinService.findAllShangPin();
+    }
+    /**
+     * 商品分页功能
+     * 作者:左文统
+     * 时间:2019/6/14
+     * */
+    @RequestMapping("/getAllShangPin")
+    @ResponseBody
+    public PageInfo<ShangPin> getAllPerson(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
+        PageHelper.startPage(pageNum,5);
+        List<ShangPin> list = shangPinService.findAllShangPin();
+        PageInfo<ShangPin> pageInfo = new PageInfo<ShangPin>(list);
+        return pageInfo;
     }
 
 

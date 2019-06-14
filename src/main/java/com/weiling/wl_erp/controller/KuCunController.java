@@ -1,6 +1,9 @@
 package com.weiling.wl_erp.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.weiling.wl_erp.bean.KuCun;
+import com.weiling.wl_erp.bean.RuKu;
 import com.weiling.wl_erp.bean.ShangPin;
 import com.weiling.wl_erp.service.KuCunService;
 import com.weiling.wl_erp.service.ShangPinService;
@@ -8,9 +11,11 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -40,14 +45,26 @@ public class KuCunController {
         return kuCunService.findKuCunById(id);
     }
 
-    /*根据ID修改库存*/
+    /*根据ID修改库存表*/
     @RequestMapping("updateKuCunById")
     @ResponseBody
     public int updateKuCunById(HttpServletRequest request){
         Integer id = Integer.parseInt(request.getParameter("id"));
-        Integer sellnum = Integer.parseInt(request.getParameter("sellnum"));
+        String pname = request.getParameter("pname");
+        String cname = request.getParameter("cname");
+        BigDecimal inprice = new BigDecimal(request.getParameter("inprice"));
+        BigDecimal outprice = new BigDecimal(request.getParameter("outprice"));
+        BigDecimal sellprice = new BigDecimal(request.getParameter("sellprice"));
+        String guige = request.getParameter("guige");
+        String beizhu = request.getParameter("beizhu");
         KuCun kuCun = kuCunService.findKuCunById(id);
-        kuCun.setSellnum(sellnum);
+        kuCun.setPname(pname);
+        kuCun.setCname(cname);
+        kuCun.setInprice(inprice);
+        kuCun.setOutprice(outprice);
+        kuCun.setSellprice(sellprice);
+        kuCun.setGuige(guige);
+        kuCun.setBeizhu(beizhu);
         return kuCunService.updateKuCunById(kuCun);
     }
 
@@ -60,12 +77,12 @@ public class KuCunController {
         return kuCunService.deleteKuCunById(id);
     }
 
-    /*根据库存ID添加商品表*/
+    /*根据库存ID添加预售商品表*/
     @RequestMapping("addShangPin")
     @ResponseBody
     public List<KuCun> addShangPin(Integer id,Integer sellnum,String beizhu){
         KuCun kuCun = kuCunService.findKuCunById(id);
-        kuCun.setVnum(kuCun.getVnum()-sellnum);
+        kuCun.setVnum(kuCun.getVnum()+kuCun.getSellnum()-sellnum);
         kuCun.setSellnum(sellnum);
         kuCunService.updateKuCunById(kuCun);
         ShangPin shangPin = new ShangPin();
@@ -87,7 +104,15 @@ public class KuCunController {
     }
 
 
-
+    /*分页查询所有库存表*/
+    @RequestMapping("/getAllKuCun")
+    @ResponseBody
+    public PageInfo<KuCun> getAllKuCun(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
+        PageHelper.startPage(pageNum,5);
+        List<KuCun> list = kuCunService.findAllKuCun();
+        PageInfo<KuCun> pageInfo = new PageInfo<KuCun>(list);
+        return pageInfo;
+    }
 
 
 

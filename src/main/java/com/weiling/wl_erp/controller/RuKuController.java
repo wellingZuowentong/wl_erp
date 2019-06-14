@@ -1,8 +1,11 @@
 
 package com.weiling.wl_erp.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.weiling.wl_erp.bean.KuCun;
 import com.weiling.wl_erp.bean.RuKu;
+import com.weiling.wl_erp.bean.Sell;
 import com.weiling.wl_erp.bean.ShangPin;
 import com.weiling.wl_erp.service.KuCunService;
 import com.weiling.wl_erp.service.RuKuService;
@@ -10,6 +13,7 @@ import com.weiling.wl_erp.service.ShangPinService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,6 +59,7 @@ public class RuKuController {
         ruKu.setOutprice(outprice);
         ruKu.setSellprice(sellprice);
         ruKu.setVnum(vnum);
+        ruKu.setSellnum(0);
         ruKu.setGuige(guige);
         ruKu.setBeizhu(beizhu);
         ruKu.setRukutime(rukutime);
@@ -116,7 +121,15 @@ public class RuKuController {
     }
 
 
-
+    /*分页查询所有入库表*/
+    @RequestMapping("/getAllRuKu")
+    @ResponseBody
+    public PageInfo<RuKu> getAllRuKu(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
+        PageHelper.startPage(pageNum,5);
+        List<RuKu> list = ruKuService.findAllRuKu();
+        PageInfo<RuKu> pageInfo = new PageInfo<RuKu>(list);
+        return pageInfo;
+    }
 
 /*根据入库ID添加库存表*/
 

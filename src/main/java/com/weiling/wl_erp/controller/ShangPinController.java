@@ -119,7 +119,7 @@ public class ShangPinController {
      * */
     @RequestMapping("/getAllShangPin")
     @ResponseBody
-    public PageInfo<ShangPin> getAllPerson(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
+    public PageInfo<ShangPin> getAllShangPin(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
         PageHelper.startPage(pageNum,5);
         List<ShangPin> list = shangPinService.findAllShangPin();
         PageInfo<ShangPin> pageInfo = new PageInfo<ShangPin>(list);

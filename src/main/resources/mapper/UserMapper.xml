@@ -8,13 +8,14 @@
         <result property="id" column="id"/>
         <result property="name" column="username" />
         <result property="password" column="password" />
+        <result property="qx" column="qx" />
     </resultMap>
 
     <select id="findAllUser" resultMap="result">
-        SELECT id,username,password FROM user
+        SELECT id,username,password qx FROM user
     </select>
-    <select id="checkNamePass" resultType="com.weiling.wl_erp.bean.User" resultMap="result">
-        SELECT id,username,password FROM user where username=#{name} and password=#{password}
+    <select id="checkNamePass" parameterType="com.weiling.wl_erp.bean.User" resultType="com.weiling.wl_erp.bean.User">
+        SELECT id,username,password,qx FROM user where username=#{name} and password=#{password}
     </select>
 
 </mapper>

@@ -1,5 +1,7 @@
 package com.weiling.wl_erp.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.weiling.wl_erp.bean.ChuKu;
 import com.weiling.wl_erp.bean.KuCun;
 import com.weiling.wl_erp.bean.Sell;
@@ -12,6 +14,7 @@ import com.weiling.wl_erp.service.ShangPinService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -76,10 +79,23 @@ public class SellController {
         return sellService.findSellById(id);
     }
 
-    /*修改销售状态并修改库存状态*/
-    @RequestMapping("updateZhuangTai")
+    /*销售驳回操作*/
+    @RequestMapping("backsell")
     @ResponseBody
-    public int updateZhuangTai(Integer id,String outuser,String beizhu){
+    public int backsell(Integer id,String outuser,String beizhu){
+        Sell sell = sellService.findSellById(id);
+        sell.setZhuangtai(2);
+        sellService.updateSellById(sell);
+        ShangPin shangPin = shangPinService.findShangPinByName(sell.getPname(),sell.getCname());
+        shangPin.setSellnum(shangPin.getSellnum()+sell.getOksell());
+        return shangPinService.updateShangPinById(shangPin);
+    }
+
+
+    /*销售出库操作*/
+    @RequestMapping("outsell")
+    @ResponseBody
+    public int outsell(Integer id,String outuser,String beizhu){
         Sell sell = sellService.findSellById(id);
         String pname = sell.getPname();
         String cname = sell.getCname();
@@ -134,6 +150,15 @@ public class SellController {
         return sellService.updateSellById(sell);
     }
 
+    /*分页查询所有销售表*/
+    @RequestMapping("/getAllSell")
+    @ResponseBody
+    public PageInfo<Sell> getAllShangPin(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
+        PageHelper.startPage(pageNum,5);
+        List<Sell> list = sellService.findAllSell();
+        PageInfo<Sell> pageInfo = new PageInfo<Sell>(list);
+        return pageInfo;
+    }
 
 
 

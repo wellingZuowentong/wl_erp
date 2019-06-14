@@ -1,5 +1,6 @@
 package com.weiling.wl_erp.controller;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.weiling.wl_erp.bean.User;
 import com.weiling.wl_erp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,16 +32,23 @@ public class UserController {
     public String checkNamePass(HttpServletRequest request, HttpSession session){
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+
         User user=new User();
         user.setName(username);
         user.setPassword(password);
         User user1=userService.checkNamePass(user);
-        System.out.println(username+"...."+password);
         if(user1!=null){
-            session.setAttribute("username",username);
+            session.setAttribute("username",user1);
             return "index.html";
         }
         return "error.html";
+    }
+
+    @RequestMapping("/checkqx")
+    @ResponseBody
+    public User checkqx(HttpSession session){
+        User user = (User)session.getAttribute("username");
+        return user;
     }
 
 

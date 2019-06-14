@@ -1,12 +1,16 @@
 package com.weiling.wl_erp.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.weiling.wl_erp.bean.ChuKu;
+import com.weiling.wl_erp.bean.KuCun;
 import com.weiling.wl_erp.bean.User;
 import com.weiling.wl_erp.service.ChuKuService;
 import com.weiling.wl_erp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +34,15 @@ public class ChuKuController {
         return chuKuService.findAllChuKu();
     }
 
-
+    /*分页查询所有出库信息*/
+    @RequestMapping("/getAllChuKu")
+    @ResponseBody
+    public PageInfo<ChuKu> getAllChuKu(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
+        PageHelper.startPage(pageNum,5);
+        List<ChuKu> list = chuKuService.findAllChuKu();
+        PageInfo<ChuKu> pageInfo = new PageInfo<ChuKu>(list);
+        return pageInfo;
+    }
 
 
 

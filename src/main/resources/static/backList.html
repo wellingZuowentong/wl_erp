@@ -281,8 +281,8 @@
             dataType:'json',
             success:function(msg){
                 var a = 1;
+                $("#data").empty();
                 for(var i = 0;i < msg.length;i++){
-                    $("#data").empty();
                     $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg[i].id+"</th><th>"+msg[i].pname+"</th><th>"+msg[i].cname+"</th><th>"+msg[i].sellprice+"</th><th>"+msg[i].sellnum+"</th><th>"+msg[i].guige+"</th><th>"+msg[i].beizhu+"</th><th><a href='#' onclick='showSellModul("+msg[i].id+")' style='text-decoration:none'>出售</a><br><a href='#' onclick='xiugai("+msg[i].id+")' style='text-decoration:none'>修改</a></th></tr>");
                     $("#caid").append("<option value='"+msg[i].cname+"'>"+msg[i].cname+"</option>");
                     a++;
@@ -307,8 +307,7 @@
             dataType:'json',
             success:function(msg){
                 $("#data").empty();
-                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg.id+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.sellprice+"</th><th>"+msg.sellnum+"</th><th>"+msg.guige+"</th><th>"+msg.beizhu+"</th><th><a href='#' onclick='showSellModul("+msg.id+")' style='text-decoration:none'>出售</a><br><a href='#' style='text-decoration:none'>修改</a></th></tr>");
-
+                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg.id+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.sellprice+"</th><th>"+msg.sellnum+"</th><th>"+msg.guige+"</th><th>"+msg.beizhu+"</th><th><a href='#' onclick='showSellModul("+msg.id+")' style='text-decoration:none'>出售</a><br><a href='#' onclick='xiugai("+msg.id+")' style='text-decoration:none'>修改</a></th></tr>");
             }
         });
     }
@@ -317,6 +316,10 @@
     //展示出售模态框和内容
     function showSellModul(flag) {
         $("#myModal").modal("show");
+        $("#oksell").empty();
+        $("#selluser").empty();
+        $("#beizhu").empty();
+        $("#overprice").empty();
         $.ajax({
             type:'Post',
             url:'findShangPinById',
@@ -340,6 +343,12 @@
 
     function xiugai(flag) {
         $("#xgModal").modal("show");
+        $("#xgpname").empty();
+        $("#xgcname").empty();
+        $("#xgsellprice").empty();
+        $("#xgguige").empty();
+        $("#xgsellnum").empty();
+        $("#xgbeizhu").empty();
         $.ajax({
             type:'Post',
             url:'findShangPinById',
@@ -378,8 +387,8 @@
             success: function (result) {
                 console.log(result);//打印服务端返回的数据(调试用)
                 $("#myModal").modal("hide");
-                queryAllShangPin();
                 alert("出售成功");
+                queryAllShangPin();
             },
             error : function() {
                 alert("异常！");
@@ -398,8 +407,8 @@
             success: function (result) {
                 console.log(result);//打印服务端返回的数据(调试用)
                 $("#xgModal").modal("hide");
-                queryAllShangPin();
                 alert("修改成功");
+                queryAllShangPin();
             },
             error : function() {
                 alert("异常！");

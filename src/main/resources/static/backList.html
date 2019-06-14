@@ -253,24 +253,56 @@
 <script>
     var pre,next,end;
     $(function(){
-        //~~~~~~~~~给分页按钮注册事件
+        getAllShangPin()
         $("#first").on("click",function(){
-            alert("2");
-            queryData(1);
+            getAllShangPin(1);
         });
         $("#pre").on("click",function(){
-            queryData(pre);
+            if(pre==0){
+                pre=1;
+            }
+            getAllShangPin(pre)
         });
         $("#next").on("click",function(){
-            queryData(next);
+            getAllShangPin(next)
         });
         $("#end").on("click",function(){
-            queryData(end);
+            getAllShangPin(end);
         });
-        //查询所有商品
-        queryAllShangPin();
     });
 
+
+    //分页查询所有商品
+    function getAllShangPin(num){
+        $.ajax({
+            type:'Post',
+            url:'getAllShangPin',
+            data:{
+                pageNum:num
+            },
+            dataType:'json',
+            success:function(msg){
+                $("#data").empty();
+                $("#caid").empty();
+                   pre=msg.prePage;
+                   next=msg.nextPage;
+                   end=msg.lastPage;
+                   $.each(msg.list,function(i,msg){
+                       $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg.id+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.sellprice+"</th><th>"+msg.sellnum+"</th><th>"+msg.guige+"</th><th>"+msg.beizhu+"</th><th><a href='#' onclick='showSellModul("+msg.id+")' style='text-decoration:none'>出售</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href='#' onclick='xiugai("+msg.id+")' style='text-decoration:none'>修改</a></th></tr>");
+                       $("#caid").append("<option value='"+msg.cname+"'>"+msg.cname+"</option>");
+                   });
+
+            }
+        });
+    }
+
+
+
+
+
+
+
+    //查询所有商品
     function queryAllShangPin() {
         $.ajax({
             type:'Post',
@@ -305,28 +337,6 @@
         });
     }
 
-    function queryData(flag) {
-        alert("1");
-        $.ajax({
-            type:"POST",
-            url:"getAllShangPin",
-            data:{
-                'pageNum':flag
-            },
-            dataType:"json",
-            success:function(msg){//msg-->page
-                pre = msg.pre;
-                next = msg.next;
-                end = msg.pages;
-                $.each(msg.pageSize,function(shangpin){
-                    console.log(shangpin);
-                    $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+shangpin[i].id+"</th><th>"+shangpin[i].pname+"</th><th>"+shangpin[i].cname+"</th><th>"+shangpin[i].sellprice+"</th><th>"+shangpin[i].sellnum+"</th><th>"+shangpin[i].guige+"</th><th>"+shangpin[i].beizhu+"</th><th><a href='#' onclick='showSellModul("+shangpin[i].id+")' style='text-decoration:none'>出售</a><br><a href='#' onclick='xiugai("+shangpin[i].id+")' style='text-decoration:none'>修改</a></th></tr>");
-                    $("#caid").append("<option value='"+shangpin[i].cname+"'>"+shangpin[i].cname+"</option>");
-                });
-            }
-        });
-    }
-
     var sj;
     //展示出售模态框和内容
     function showSellModul(flag) {
@@ -353,7 +363,6 @@
                 $("#sellnum").val(msg.sellnum);
             }
         });
-        modalNotNull();
     }
     //根据id修改商品
     function xiugai(flag) {
@@ -392,7 +401,7 @@
         $("#allprice").val(hj);
         $("#overprice").val(hj);
     }
-
+    //提交出售列表
     function tj() {
         $.ajax({
             type: "POST",//方法类型
@@ -431,114 +440,7 @@
 
         });
     }
-    //表单非空验证
-    /*function modalNotNull() {
-        if ($("#oksell").val() == "" || $("#oksell").val() == null){
-            alert("售出数量不能为空");
-            return false;
-        }else if ($("#selluser").val() == "" || $("#selluser").val() == null){
-            alert("销售人不能为空");
-            return false;
-        }
-        $("#cs_form").submit();
-    }*/
-    // conds:表示条件
-    function queryData(pn,conds){
-        $.ajax({
-            type:"POST",
-            url:"",	//me...pageNumber=1 &name=xxx&caid=xx
-            data:{
 
-            },
-            dataType:"json",
-            success:function(msg){//msg-->page
-                pre = msg.pre;
-                next = msg.next;
-                end=msg.pageCount;
-
-
-                $.each(msg.rows,function(i,book){
-
-                });
-            }
-        });
-    }
-    //bid表示点击详情的那本书的id 根据书籍的id查询书籍信息
-    function queryBookInfo(bid){
-        bookid=bid;
-        $.ajax({
-            type:"POST",
-            url:"book",
-            data:"method=queryBookById&bid="+bid,
-            dataType:"json",
-            success:function(msg){//msg--->book
-                $("#name").val(msg.name);
-                $("#price").val(msg.price);
-                $("#author").val(msg.author);
-                $("#status").val(msg.status);
-                $("#publishdate").val(msg.pdate);
-                $("#categoryid").val(msg.categoryid);
-                //拼装 图片
-                let pics="";
-                $.each(msg.bps,function(i,bp){
-                    pics+="<div class='col-sm-6 col-md-4'>"+
-                        "<div class='thumbnail'>"+
-                        "<img src='<%=path%>"+bp.savepath+"' >"+
-                        "<div class='caption'>"+
-                        "<button type='button' class='btn btn-"+(bp.fm==1?"danger":"primary")+"' onclick=\"setFM('"+bp.id+"')\">设置封面</button>"+
-                        "<button type='button' class='btn btn-danger' onclick=\"delpic('"+bp.id+"')\">删除</button>"+
-                        "</div>"+
-                        "</div>"+
-                        "</div>";
-                });
-                $("#pics").html(pics);
-
-
-                //展示模态框
-                $("#myModal").modal("show");
-
-            }
-        });
-    }
-    let bookid='';
-    function delpic(bpid){
-        $.post("book", //url
-            "method=delpic&bpid="+bpid,//params
-            function(msg){//后台返回flag=success
-                if(msg.flag=="success"){
-                    //重新查询书籍信息
-                    queryBookInfo(bookid);
-                }
-            },
-            "json");
-
-    }
-    function queryAllCas(){
-        $.ajax({
-            type:"post",
-            url:"book",
-            data:"method=queryAllCas",
-            dataType:"json",
-            success:function(msg){//List<Category>
-                var ops="<option value='-1'>==请选择==</option>";
-                $.each(msg,function(i,ca){
-                    ops+="<option value='"+ca.id+"'>"+ca.name+"</option>";
-                });
-                //給条件查询的下拉菜单初始化
-                $("#caid").html(ops);
-                //給模态框的下拉菜单初始化
-                $("#categoryid").html(ops);
-            }
-
-        });
-    }
-    function setFM(bpid){
-        $.post("book","method=setFM&bpid="+bpid+"&bookid="+bookid,function(msg){
-            if(msg.flag=="success"){
-                queryBookInfo(bookid);
-            }
-        },"json");
-    }
 </script>
 </body>
 

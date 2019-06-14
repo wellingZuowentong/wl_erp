@@ -23,7 +23,7 @@
     </resultMap>
     <!--增加库存-->
     <insert id="insertChuKu" parameterType="com.weiling.wl_erp.bean.ChuKu">
-        insert into chuku(<include refid="chuKu" />)values(#{id},#{pname},#{cname},#{outnum},#{outprice},#{guige},#{outallprice},#{outuser},#{outtime},#{zhaungtai},#{beizhu})
+        insert into chuku(<include refid="chuKu" />)values(#{id},#{pname},#{cname},#{outnum},#{outprice},#{guige},#{outallprice},#{outuser},#{outtime},#{zhuangtai},#{beizhu})
     </insert>
 
     <!--查询所有库存-->

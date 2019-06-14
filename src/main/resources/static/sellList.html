@@ -75,8 +75,81 @@
             <button type='button' id="end" class="btn btn-danger">尾页</button>
         </div>
 
+        <!-- 出库模态框 -->
+        <div class="modal fade" id="ckModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">修改库存商品</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="outsell" method="post" class="form-horizontal" role="form" id="ck_form">
+                            <input type="hidden" name="id" id="ckid"/>
+                            <!-- 出库人 -->
+                            <div class="form-group">
+                                <label for="ckoutuser" class="col-sm-2 control-label">出库人：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="ckoutuser" name="outuser">
+                                </div>
+                            </div>
 
+                            <!-- 备注 -->
+                            <div class="form-group">
+                                <label for="ckbeizhu" class="col-sm-2 control-label">备注：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="ckbeizhu" name="beizhu">
+                                </div>
+                            </div>
 
+                            <div class="form-group">
+                                <div class="col-sm-offset-10 col-sm-10">
+                                    <button type="button" class="btn btn-default" onclick="ck()">出库</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 驳回模态框 -->
+        <div class="modal fade" id="bhModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">修改库存商品</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="outsell" method="post" class="form-horizontal" role="form" id="bh_form">
+                            <input type="hidden" name="id" id="bhid"/>
+                            <!-- 出库人 -->
+                            <div class="form-group">
+                                <label for="bhoutuser" class="col-sm-2 control-label">出库人：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="bhoutuser" name="outuser">
+                                </div>
+                            </div>
+
+                            <!-- 备注 -->
+                            <div class="form-group">
+                                <label for="bhbeizhu" class="col-sm-2 control-label">备注：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="bhbeizhu" name="beizhu">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-10 col-sm-10">
+                                    <button type="button" class="btn btn-default" onclick="bh()">驳回</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         <script src="js/jquery.js"></script>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="js/jquery.min.js"></script>
@@ -111,6 +184,80 @@
                             }
                             //$("#caid").append("<option value='"+msg[i].cname+"'>"+msg[i].cname+"</option>");
                         }
+                    }
+                });
+            }
+
+            //出库
+            function chuku(flag) {
+                $("#ckModal").modal("show");
+                $("#ckoutser").empty();
+                $("#ckbeizhu").empty();
+                $.ajax({
+                    type:'Post',
+                    url:'findSellById',
+                    data:{
+                        'id':flag
+                    },
+                    dataType:'json',
+                    success:function(msg){
+                        $("#ckid").val(msg.id);
+
+                    }
+                });
+            }
+
+            //驳回
+            function bohui(flag) {
+                $("#bhModal").modal("show");
+                $("#bhoutser").empty();
+                $("#bhbeizhu").empty();
+                $.ajax({
+                    type:'Post',
+                    url:'findSellById',
+                    data:{
+                        'id':flag
+                    },
+                    dataType:'json',
+                    success:function(msg){
+                        $("#bhid").val(msg.id);
+
+                    }
+                });
+            }
+
+            //提交出库
+            function ck() {
+                $.ajax({
+                    type: "POST",//方法类型
+                    dataType: "json",//预期服务器返回的数据类型
+                    url: "outsell" ,//url
+                    data: $('#ck_form').serialize(),
+                    success: function (result) {
+                        $("#ckModal").modal("hide");
+                        alert("出库成功");
+                        queryAllSell();
+                    },
+                    error : function() {
+                        alert("异常！");
+                    }
+                });
+            }
+
+            //提交驳回
+            function bh() {
+                $.ajax({
+                    type: "POST",//方法类型
+                    dataType: "json",//预期服务器返回的数据类型
+                    url: "backsell" ,//url
+                    data: $('#bh_form').serialize(),
+                    success: function (result) {
+                        $("#bhModal").modal("hide");
+                        alert("驳回成功");
+                        queryAllSell();
+                    },
+                    error : function() {
+                        alert("异常！");
                     }
                 });
             }

@@ -6,7 +6,6 @@ import com.weiling.wl_erp.bean.ChuKu;
 import com.weiling.wl_erp.bean.KuCun;
 import com.weiling.wl_erp.bean.Sell;
 import com.weiling.wl_erp.bean.ShangPin;
-import com.weiling.wl_erp.mapper.SellMapper;
 import com.weiling.wl_erp.service.ChuKuService;
 import com.weiling.wl_erp.service.KuCunService;
 import com.weiling.wl_erp.service.SellService;
@@ -100,6 +99,8 @@ public class SellController {
         String pname = sell.getPname();
         String cname = sell.getCname();
         KuCun kuCun = kuCunService.findKuCunByName(pname,cname);
+        System.out.println(kuCun);
+        System.out.println(sell);
         kuCun.setSellnum(kuCun.getSellnum()-sell.getOksell());
         kuCunService.updateKuCunById(kuCun);
         ChuKu chuKu = new ChuKu();

@@ -190,7 +190,7 @@
             </div>
             <div class="modal-body">
                 <form action="updateShangPinById" method="post" class="form-horizontal" role="form" id="xg_form">
-                    <input type="hidden" name="id" id="xgid" value="" />
+                    <input type="hidden" name="id" id="xgid"/>
                     <div class="form-group">
                         <label for="xgpname" class="col-sm-2 control-label">商品名：</label>
                         <div class="col-sm-10">
@@ -230,7 +230,7 @@
                     <div class="form-group">
                         <label for="xgbeizhu" class="col-sm-2 control-label">备注：</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="xgbeizhu" name="beizhu" >
+                            <input type="text" class="form-control" id="xgbeizhu" name="beizhu">
                         </div>
                     </div>
 
@@ -282,6 +282,7 @@
             success:function(msg){
                 var a = 1;
                 for(var i = 0;i < msg.length;i++){
+                    $("#data").empty();
                     $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg[i].id+"</th><th>"+msg[i].pname+"</th><th>"+msg[i].cname+"</th><th>"+msg[i].sellprice+"</th><th>"+msg[i].sellnum+"</th><th>"+msg[i].guige+"</th><th>"+msg[i].beizhu+"</th><th><a href='#' onclick='showSellModul("+msg[i].id+")' style='text-decoration:none'>出售</a><br><a href='#' onclick='xiugai("+msg[i].id+")' style='text-decoration:none'>修改</a></th></tr>");
                     $("#caid").append("<option value='"+msg[i].cname+"'>"+msg[i].cname+"</option>");
                     a++;
@@ -365,6 +366,7 @@
         scsl = $("#oksell").val();
         hj = sj*scsl;
         $("#allprice").val(hj);
+        $("#overprice").val(hj);
     }
 
     function tj() {

@@ -252,22 +252,20 @@
 <script src="js/ajaxfileupload.js"></script>
 <script>
     var pre,next,end;
-    var tj="";//条件
     $(function(){
-        //查询部分数据
-        queryData(1,tj);
         //~~~~~~~~~给分页按钮注册事件
         $("#first").on("click",function(){
-            queryData(1,tj);
+            alert("2");
+            queryData(1);
         });
         $("#pre").on("click",function(){
-            queryData(pre,tj);
+            queryData(pre);
         });
         $("#next").on("click",function(){
-            queryData(next,tj);
+            queryData(next);
         });
         $("#end").on("click",function(){
-            queryData(end,tj);
+            queryData(end);
         });
         //查询所有商品
         queryAllShangPin();
@@ -292,20 +290,6 @@
 
     //根据商品名和厂家查询
     function queryByTj(){
-        //重置条件
-        tj="";
-        var pname = $("#pname").val();
-        var cname = $("#caid").val();
-
-        if(pname!=null && pname != ""){
-            tj = pname;
-        }
-        if(cname!=null && cname != ""){
-            tj = cname;
-        }
-        alert(tj);
-        queryData(1,tj);
-
         $.ajax({
             type:'Get',
             url:'findShangPinByName',
@@ -321,22 +305,24 @@
         });
     }
 
-    function queryData(sp,cj) {
+    function queryData(flag) {
+        alert("1");
         $.ajax({
             type:"POST",
             url:"getAllShangPin",
             data:{
-
+                'pageNum':flag
             },
             dataType:"json",
             success:function(msg){//msg-->page
                 pre = msg.pre;
                 next = msg.next;
-                end=msg.pages;
-                $.each(msg.pageSize,function(i,kucun){
-
+                end = msg.pages;
+                $.each(msg.pageSize,function(shangpin){
+                    console.log(shangpin);
+                    $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+shangpin[i].id+"</th><th>"+shangpin[i].pname+"</th><th>"+shangpin[i].cname+"</th><th>"+shangpin[i].sellprice+"</th><th>"+shangpin[i].sellnum+"</th><th>"+shangpin[i].guige+"</th><th>"+shangpin[i].beizhu+"</th><th><a href='#' onclick='showSellModul("+shangpin[i].id+")' style='text-decoration:none'>出售</a><br><a href='#' onclick='xiugai("+shangpin[i].id+")' style='text-decoration:none'>修改</a></th></tr>");
+                    $("#caid").append("<option value='"+shangpin[i].cname+"'>"+shangpin[i].cname+"</option>");
                 });
-
             }
         });
     }
@@ -369,7 +355,7 @@
         });
         modalNotNull();
     }
-
+    //根据id修改商品
     function xiugai(flag) {
         $("#xgModal").modal("show");
         $("#xgpname").empty();

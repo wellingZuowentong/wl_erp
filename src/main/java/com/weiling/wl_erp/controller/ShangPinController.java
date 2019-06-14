@@ -55,7 +55,7 @@ public class ShangPinController {
         String beizhu = request.getParameter("beizhu");
         ShangPin shangpin = shangPinService.findShangPinById(id);
         shangpin.setSellprice(sellprice);
-        shangpin.setBeizhu("beizhu");
+        shangpin.setBeizhu(beizhu);
         return shangPinService.updateShangPinById(shangpin);
     }
 

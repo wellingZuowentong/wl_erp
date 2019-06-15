@@ -138,7 +138,7 @@
             function queryAllChuKu(num,con) {
                 $.ajax({
                     type:'Get',
-                    url:'findAllChuKu?pageNum='+num+con,
+                    url:'getAllChuKu?pageNum='+num+con,
                     dataType:'json',
                     success:function(msg){
                         $("#data").empty();

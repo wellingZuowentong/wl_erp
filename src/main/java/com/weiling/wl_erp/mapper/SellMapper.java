@@ -15,9 +15,10 @@ import java.util.List;
 @Mapper
 public interface SellMapper {
     public int insertSell(Sell sell);
-    public List<Sell> findAllSell();
+    public List<Sell> findAllSell(@Param("pname")String pname, @Param("cname")String cname,@Param("starttime")Date starttime,@Param("overtime")Date overtime);
     public Sell findSellById(Integer id);
-    public List<Sell> findByNameAndTime(@Param("pname")String pname, @Param("cname")String cname, @Param("starttime")Date starttime,@Param("overtime")Date overtime);
+    public List<Sell> findSellByName(@Param("pname")String pname, @Param("cname")String cname);
     public int updateZhuangTai(@Param("id")Integer id,@Param("zhuangtai")Integer zhuangtai);
     public int updateSellById(Sell sell);
+    public Integer findSellByZhuangtai(@Param("pname")String pname, @Param("cname")String cname);
 }

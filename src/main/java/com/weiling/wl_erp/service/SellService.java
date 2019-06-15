@@ -22,19 +22,23 @@ public class SellService {
     public int insertSell(Sell sell){
         return sellMapper.insertSell(sell);
     }
-    public List<Sell> findAllSell(){
-        return sellMapper.findAllSell();
+    public List<Sell> findAllSell(String pname,String cname,Date starttime,Date overtime){
+
+        return sellMapper.findAllSell(pname,cname,starttime,overtime);
     }
     public Sell findSellById(Integer id){
         return sellMapper.findSellById(id);
     }
-    public List<Sell> findByNameAndTime(String pname,String cname,Date starttime,Date overtime){
-        return sellMapper.findByNameAndTime(pname,cname,starttime,overtime);
+    public List<Sell> findByNameAndTime(String pname,String cname){
+        return sellMapper.findSellByName(pname,cname);
     }
     public int updateZhuangTai(Integer id,Integer zhuangtai){
         return sellMapper.updateZhuangTai(id,zhuangtai);
     }
     public int updateSellById(Sell sell){
         return sellMapper.updateSellById(sell);
+    }
+    public int findSellByZhuangtai(String pname,String cname){
+        return sellMapper.findSellByZhuangtai(pname,cname)==null?0:sellMapper.findSellByZhuangtai(pname,cname);
     }
 }

@@ -6,6 +6,7 @@ import com.weiling.wl_erp.bean.KuCun;
 import com.weiling.wl_erp.bean.RuKu;
 import com.weiling.wl_erp.bean.ShangPin;
 import com.weiling.wl_erp.service.KuCunService;
+import com.weiling.wl_erp.service.SellService;
 import com.weiling.wl_erp.service.ShangPinService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ public class KuCunController {
     private KuCunService kuCunService;
     @Autowired
     private ShangPinService shangPinService;
+    @Autowired
+    private SellService sellService;
 
     /*查询所有库存列表*/
     @RequestMapping("findAllKuCun")
@@ -82,6 +85,8 @@ public class KuCunController {
     @ResponseBody
     public List<KuCun> addShangPin(Integer id,Integer sellnum,String beizhu){
         KuCun kuCun = kuCunService.findKuCunById(id);
+        int notout = sellService.findSellByZhuangtai(kuCun.getPname(),kuCun.getCname());
+        System.out.println(notout);
         kuCun.setVnum(kuCun.getVnum()+kuCun.getSellnum()-sellnum);
         kuCun.setSellnum(sellnum);
         kuCunService.updateKuCunById(kuCun);
@@ -94,7 +99,7 @@ public class KuCunController {
         shangPin.setBeizhu(beizhu);
         ShangPin newshangpin = shangPinService.findShangPinByName(shangPin.getPname(),shangPin.getCname());
         if(newshangpin!=null){
-            newshangpin.setSellnum(kuCun.getSellnum());
+            newshangpin.setSellnum(kuCun.getSellnum()-notout);
             newshangpin.setBeizhu(beizhu);
             shangPinService.updateShangPinById(newshangpin);
         }else {

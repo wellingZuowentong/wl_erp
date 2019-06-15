@@ -30,11 +30,29 @@
     <!--查询所有销售表-->
     <select id="findAllSell" resultType="com.weiling.wl_erp.bean.Sell">
         SELECT <include refid="sell"/> FROM sell
+        <where>
+            <if test="param1!=null">
+                and pname=#{param1}
+            </if>
+            <if test="param2!=null">
+                and cname=#{param2}
+            </if>
+            <if test="param3!=null">
+                and selltime between #{param3} and #{param4}
+            </if>
+
+
+        </where> order by id
     </select>
 
     <!--根据库存ID查询销售表-->
     <select id="findSellById" resultType="com.weiling.wl_erp.bean.Sell">
         SELECT <include refid="sell"/> FROM sell where id=#{value}
+    </select>
+
+    <!--根据商品名和厂家名定位销售列-->
+    <select id="findSellByName" resultType="com.weiling.wl_erp.bean.Sell">
+        SELECT <include refid="sell"/> FROM sell where pname=#{pname} and cname=#{cname}
     </select>
 
     <!--&lt;!&ndash;根据商品名和厂家名查询库存&ndash;&gt;
@@ -51,5 +69,9 @@
     <update id="updateZhuangTai" parameterType="int">
             update sell set zhuangtai=#{zhuangtai} where id=#{id}
     </update>
+
+    <select id="findSellByZhuangtai" parameterType="com.weiling.wl_erp.bean.Sell" resultType="Integer">
+        SELECT sum(oksell) FROM sell where pname=#{pname} and cname=#{cname} and zhuangtai=0
+    </select>
 
 </mapper>

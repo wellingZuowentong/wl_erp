@@ -30,9 +30,19 @@
                                        placeholder="输入商品名">
                             </div>
                             <div class="form-group">
-                                <label  for="caid">厂家:</label>
-                                <select class="form-control" id="caid" name="caid">
-                                    <option value="0">=====请选择=====</option>
+                                <label  for="cname">厂家:</label>
+                                <input type="text" class="form-control" id="cname" name="cname"
+                                       placeholder="输入厂家名">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                &nbsp;&nbsp;<label  for="starttime">起止时间:</label>
+                                <input type="date" class="form-control" id="starttime" name="starttime">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label  for="starttime">-</label>
+                                <input type="date" class="form-control" id="overtime" name="starttime">
                                 </select>
                             </div>
                             <button type="button" onclick="queryByTj()" class="btn btn-primary">查询</button>
@@ -158,35 +168,61 @@
         <script src="js/bootstrap.min.js"></script>
         <script src="js/ajaxfileupload.js"></script>
         <script>
+            var pre,next,end;
+            var tj="";//条件
+
             $(function(){
                 //查询所有销售列表
-                getAllSell(1);
+                getAllSell(1,tj);
                 $("#first").on("click",function(){
-                    getAllSell(1);
+                    getAllSell(1,tj);
                 });
                 $("#pre").on("click",function(){
                     if(pre==0){
                         pre=1;
                     }
-                    getAllSell(pre)
+                    getAllSell(pre,tj)
                 });
                 $("#next").on("click",function(){
-                    getAllSell(next)
+                    getAllSell(next,tj)
                 });
                 $("#end").on("click",function(){
-                    getAllSell(end);
+                    getAllSell(end,tj);
                 });
             });
+            //按条件分页查找
+            function queryByTj(){
+                //重置条件
+                tj="";
+
+                var pname=$("#pname").val();
+                var cname = $("#cname").val();
+                var starttime = $("#starttime").val();
+                var overtime = $("#overtime").val();
+
+                if(pname!=null && pname!=""){
+                    tj+="&pname="+pname;
+                }
+                if(cname!=null &&cname!=""){
+                    tj+="&cname="+cname;
+                }
+                if(starttime!=null &&starttime!=""){
+                    tj+="&starttime="+starttime;
+                }
+                if(overtime!=null &&overtime!=""){
+                    tj+="&overtime="+overtime;
+                }
+                getAllSell(1,tj);
+            }
 
 
             //分页查询所有销售表
-            function  getAllSell(num){
+            function  getAllSell(num,con){
+                alert(num);
+                alert(con);
                 $.ajax({
-                    type:'Post',
-                    url:'getAllSell',
-                    data:{
-                        pageNum:num
-                    },
+                    type:'Get',
+                    url:'getAllSell?pageNum='+num+con,
                     dataType:'json',
                     success:function(msg){
                         $("#data").empty();
@@ -237,7 +273,7 @@
                                 zt = '被驳回';
                                 $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg[i].id+"</th><th>"+msg[i].pname+"</th><th>"+msg[i].cname+"</th><th>"+msg[i].oksell+"</th><th>"+msg[i].sellprice+"</th><th>"+msg[i].guige+"</th><th>"+msg[i].allprice+"</th><th>"+msg[i].selluser+"</th><th><p style='color: red'>"+zt+"</p></th><th>"+msg[i].beizhu+"</th><th><a class=\"disabled\" style='text-decoration:none'></a><label></label><a class=\"disabled\" style='text-decoration:none'></a></th></tr>");
                             }
-                            //$("#caid").append("<option value='"+msg[i].cname+"'>"+msg[i].cname+"</option>");
+                           // $("#caid").append("<option value='"+msg.cname+"'>"+msg.cname+"</option>");
                         }
                     }
                 });

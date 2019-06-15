@@ -113,14 +113,14 @@
                             <div class="form-group">
                                 <label for="xzinprice" class="col-sm-2 control-label">进货价：</label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control" id="xzinprice" name="inprice">
+                                    <input type="text" class="form-control" id="xzinprice" name="inprice">
                                 </div>
                             </div>
                             <!-- 出库价 -->
                             <div class="form-group">
                                 <label for="xzoutprice" class="col-sm-2 control-label">出库价：</label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control" id="xzoutprice" name="outprice">
+                                    <input type="text" class="form-control" id="xzoutprice" name="outprice">
                                 </div>
                             </div>
 
@@ -128,7 +128,7 @@
                             <div class="form-group">
                                 <label for="xzsellprice" class="col-sm-2 control-label">销售价：</label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control" id="xzsellprice" name="sellprice">
+                                    <input type="text" class="form-control" id="xzsellprice" name="sellprice">
                                 </div>
                             </div>
                             <!-- 库存数量 -->
@@ -165,7 +165,7 @@
 
                             <div class="form-group">
                                 <div class="col-sm-offset-10 col-sm-10">
-                                    <button type="button" class="btn btn-default" onclick="tj()">添加</button>
+                                    <button type="button" class="btn btn-default" onclick="tianjia()">添加</button>
                                 </div>
                             </div>
                         </form>
@@ -240,7 +240,7 @@
                         $.each(msg.list,function(i,msg) {
                             oldTime = new Date(msg.rukutime).toJSON();
                             newTime = new Date(+new Date(oldTime) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '');
-                            $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>" + msg.id + "</th><th>" + msg.pname + "</th><th>" + msg.cname + "</th><th>" + msg.inprice + "</th><th>" + msg.outprice + "</th><th>" + msg.sellprice + "</th><th>" + msg.vnum + "</th><th>" + msg.guige + "</th><th>" + newTime + "</th><th>" + msg.username + "</th><th>" + msg.beizhu + "</th><th><a href='#' onclick='xiugai(" + msg.id + ")' style='text-decoration:none'>修改</a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='shanchu(" + msg.id + ")' style='text-decoration:none'>删除</a></th></tr>");
+                            $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>" + msg.id + "</th><th>" + msg.pname + "</th><th>" + msg.cname + "</th><th>" + msg.inprice + "</th><th>" + msg.outprice + "</th><th>" + msg.sellprice + "</th><th>" + msg.vnum + "</th><th>" + msg.guige + "</th><th>" + newTime + "</th><th>" + msg.username + "</th><th>" + msg.beizhu + "</th><th><a href='#' onclick='shanchu(" + msg.id + ")' style='text-decoration:none'>删除</a></th></tr>");
                             //$("#caid").append("<option value='"+msg[i].cname+"'>"+msg[i].cname+"</option>");
 
                         });
@@ -257,24 +257,49 @@
                 $("#xzoutprice").empty();
                 $("#xzsellprice").empty();
                 $("#xzvnum").empty();
-                $("#xzsellnum").empty();
                 $("#xzguige").empty();
-                $("#xzrukutime").empty();
                 $("#xzusername").empty();
                 $("#xzbeizhu").empty();
             }
 
             //新增库存商品提交
-            function tj() {
-                console.log($("#xzpname").val());
-                console.log($("#xzcname").val());
-                console.log($("#xzinprice").val());
-                console.log($("#xzoutprice").val());
-                console.log($("#xzsellprice").val());
-                console.log($("#xzvnum").val());
-                console.log($("#xzguige").val());
-                console.log($("#xzusername").val());
-                console.log($("#xzbeizhu").val());
+            function tianjia() {
+                if($("#xzpname").val() == "" || $("#xzpname").val() == null){
+                    alert("商品名不能为空");
+                    return false;
+                }
+                if($("#xzcname").val() == "" || $("#xzcname").val() == null){
+                    alert("厂家不能为空");
+                    return false;
+                }
+                if($("#xzinprice").val() == "" || $("#xzinprice").val() == null){
+                    alert("进货价不能为空");
+                    return false;
+                }
+                if($("#xzoutprice").val() == "" || $("#xzoutprice").val() == null){
+                    alert("出库价不能为空");
+                    return false;
+                }
+                if($("#xzsellprice").val() == "" || $("#xzsellprice").val() == null){
+                    alert("销售价不能为空");
+                    return false;
+                }
+                if($("#xzvnum").val() == "" || $("#xzvnum").val() == null){
+                    alert("库存数量不能为空");
+                    return false;
+                }
+                if($("#xzguige").val() == "" || $("#xzguige").val() == null){
+                    alert("规格不能为空");
+                    return false;
+                }
+                if($("#xzusername").val() == "" || $("#xzusername").val() == null){
+                    alert("入库人不能为空");
+                    return false;
+                }
+                if($("#xzbeizhu").val() == "" || $("#xzbeizhu").val() == null){
+                    alert("备注不能为空");
+                    return false;
+                }
                 $.ajax({
                     type: "POST",//方法类型
                     dataType: "json",//预期服务器返回的数据类型

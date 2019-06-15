@@ -1,5 +1,6 @@
 package com.weiling.wl_erp.bean;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -8,7 +9,7 @@ import java.util.Date;
  * 日期：2019/6/11
  * 入库表
  */
-public class RuKu {
+public class RuKu implements Serializable {
     private Integer id;
     private String pname;
     private String cname;

@@ -36,9 +36,9 @@ public class RuKuController {
 
 /*添加库存*/
 
-    @RequestMapping("insertRuKu")
+    @RequestMapping("/insertRuKu")
     @ResponseBody
-    public int insertRuKu(HttpServletRequest request){
+    public int insertRuKu(HttpServletRequest request) throws Exception{
         String pname = request.getParameter("pname");
         String cname = request.getParameter("cname");
         BigDecimal inprice = new BigDecimal(request.getParameter("inprice"));
@@ -62,16 +62,18 @@ public class RuKuController {
         ruKu.setRukutime(rukutime);
         ruKu.setUsername(username);
         ruKuService.insertRuKu(ruKu);
-        KuCun kuCun = kuCunService.findKuCunByName(pname,cname);
-        if(kuCun!=null){
-            kuCun.setVnum(kuCun.getVnum()+vnum);
-            return kuCunService.updateKuCunById(kuCun);
+        KuCun kuCun1 = kuCunService.findKuCunByName(pname,cname);
+        KuCun kuCun = new KuCun();
+        if(kuCun1!=null){
+            kuCun1.setVnum(kuCun1.getVnum()+vnum);
+            return kuCunService.updateKuCunById(kuCun1);
         }else{
             kuCun.setPname(pname);
             kuCun.setCname(cname);
             kuCun.setInprice(inprice);
             kuCun.setOutprice(outprice);
             kuCun.setSellprice(sellprice);
+            kuCun.setSellnum(0);
             kuCun.setGuige(guige);
             kuCun.setVnum(vnum);
             kuCun.setBeizhu(beizhu);

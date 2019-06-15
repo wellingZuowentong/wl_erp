@@ -101,8 +101,6 @@ public class SellController {
         String pname = sell.getPname();
         String cname = sell.getCname();
         KuCun kuCun = kuCunService.findKuCunByName(pname,cname);
-        System.out.println(kuCun);
-        System.out.println(sell);
         kuCun.setSellnum(kuCun.getSellnum()-sell.getOksell());
         kuCunService.updateKuCunById(kuCun);
         ChuKu chuKu = new ChuKu();

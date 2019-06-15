@@ -56,7 +56,6 @@ public class ShangPinController {
         Integer id = Integer.parseInt(request.getParameter("id"));
         BigDecimal sellprice = new BigDecimal(request.getParameter("sellprice"));
         String beizhu = request.getParameter("beizhu");
-        System.out.println(beizhu+"!!!!!!!!!!!!!@@@@@@@@@@@@@@@");
         ShangPin shangpin = shangPinService.findShangPinById(id);
         shangpin.setSellprice(sellprice);
         shangpin.setBeizhu(beizhu);

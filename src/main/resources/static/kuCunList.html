@@ -30,10 +30,9 @@
                                        placeholder="输入商品名">
                             </div>
                             <div class="form-group">
-                                <label  for="caid">厂家:</label>
-                                <select class="form-control" id="caid" name="caid">
-                                    <option value="0">=====请选择=====</option>
-                                </select>
+                                <label  for="cname">厂家:</label>
+                                <input type="text" class="form-control" id="cname" name="cname"
+                                       placeholder="输入厂家名">
                             </div>
                             <button type="button" onclick="queryByTj()" class="btn btn-primary">查询</button>
                             <button type="button" onclick="export2Excel()" class="btn btn-success">导出到EXCEL</button>
@@ -216,32 +215,49 @@
         <script src="js/bootstrap.min.js"></script>
         <script src="js/ajaxfileupload.js"></script>
         <script>
+            var tj = "";
+            var pre,next,end;
             $(function(){
-                getAllKuCun(1);
+                getAllKuCun(1,tj);
                 $("#first").on("click",function(){
-                    getAllKuCun(1);
+                    getAllKuCun(1,tj);
                 });
                 $("#pre").on("click",function(){
                     if(pre==0){
                         pre=1;
                     }
-                    getAllKuCun(pre)
+                    getAllKuCun(pre,tj);
                 });
                 $("#next").on("click",function(){
-                    getAllKuCun(next)
+                    getAllKuCun(next,tj);
                 });
                 $("#end").on("click",function(){
-                    getAllKuCun(end);
+                    getAllKuCun(end,tj);
                 });
             });
+
+            //按条件分页查找
+            function queryByTj(){
+                //重置条件
+                tj="";
+                var pname=$("#pname").val();
+
+                var cname = $("#cname").val();
+
+                if(pname!=null && pname!=""){
+                    tj+="&pname="+pname;
+                }
+                if(cname!=null &&cname!=""){
+                    tj+="&cname="+cname;
+                }
+                getAllKuCun(1,tj);
+            }
+
             //分页查询所有库存
-            function  getAllKuCun(num){
+            function  getAllKuCun(num,con){
                 $.ajax({
-                    type:'Post',
-                    url:' getAllKuCun',
-                    data:{
-                        pageNum:num
-                    },
+                    type:'Get',
+                    url:' getAllKuCun?pageNum='+num+con,
                     dataType:'json',
                     success:function(msg){
                         $("#data").empty();

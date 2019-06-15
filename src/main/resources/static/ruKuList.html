@@ -30,10 +30,17 @@
                                        placeholder="输入商品名">
                             </div>
                             <div class="form-group">
-                                <label  for="caid">厂家:</label>
-                                <select class="form-control" id="caid" name="caid">
-                                    <option value="0">=====请选择=====</option>
-                                </select>
+                                <label  for="cname">厂家:</label>
+                                <input type="text" class="form-control" id="cname" name="cname"
+                                       placeholder="输入厂家名">
+                            </div>
+                            <div class="form-group">
+                                &nbsp;&nbsp;<label  for="starttime">起止时间:</label>
+                                <input type="date" class="form-control" id="starttime" name="starttime">
+                            </div>
+                            <div class="form-group">
+                                <label  for="starttime">-</label>
+                                <input type="date" class="form-control" id="overtime" name="starttime">
                             </div>
                             <button type="button" onclick="queryByTj()" class="btn btn-primary">查询</button>
                             <button type="button" onclick="export2Excel()" class="btn btn-success">导出到EXCEL</button>
@@ -174,16 +181,56 @@
         <script src="js/bootstrap.min.js"></script>
         <script src="js/ajaxfileupload.js"></script>
         <script>
+            var tj = "";
+            var pre,next,end;
             $(function(){
                 //查询所有入库列表
-                queryAllRuKu();
+                queryAllRuKu(1,tj);
+                $("#first").on("click",function(){
+                    queryAllRuKu(1,tj);
+                });
+                $("#pre").on("click",function(){
+                    if(pre==0){
+                        pre=1;
+                    }
+                    queryAllRuKu(pre,tj);
+                });
+                $("#next").on("click",function(){
+                    queryAllRuKu(next,tj);
+                });
+                $("#end").on("click",function(){
+                    queryAllRuKu(end,tj);
+                });
             });
 
+            //按条件分页查找
+            function queryByTj(){
+                //重置条件
+                tj="";
+                var pname=$("#pname").val();
+                var cname = $("#cname").val();
+                var starttime = $("#starttime").val();
+                var overtime = $("#overtime").val();
+                if(pname!=null && pname!=""){
+                    tj+="&pname="+pname;
+                }
+                if(cname!=null &&cname!=""){
+                    tj+="&cname="+cname;
+                }
+                if(starttime!=null &&starttime!=""){
+                    tj+="&starttime="+starttime;
+                }
+                if(overtime!=null &&overtime!=""){
+                    tj+="&overtime="+overtime;
+                }
+                queryAllRuKu(1,tj);
+            }
+
             //查询所有入库列表
-            function queryAllRuKu() {
+            function queryAllRuKu(num,con) {
                 $.ajax({
-                    type:'Post',
-                    url:'findAllRuKu',
+                    type:'Get',
+                    url:'findAllRuKu?pageNum='+num+con,
                     dataType:'json',
                     success:function(msg){
                         $("#data").empty();

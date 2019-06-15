@@ -21,8 +21,9 @@ public class ShangPinService {
         return shangPinMapper.insertShangPin(shangPin);
     }
 
-    public List<ShangPin> findAllShangPin(){
-        return shangPinMapper.findAllShangPin();
+    public List<ShangPin> findAllShangPin(String pname,String cname){
+
+        return shangPinMapper.findAllShangPin(pname,cname);
     }
 
     public ShangPin findShangPinById(Integer id){

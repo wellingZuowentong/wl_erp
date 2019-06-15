@@ -7,6 +7,7 @@ import com.weiling.wl_erp.mapper.RuKuMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,8 +24,8 @@ public class RuKuService {
         return ruKuMapper.insertRuKu(ruKu);
     }
 
-    public List<RuKu> findAllRuKu(){
-        return ruKuMapper.findAllRuKu();
+    public List<RuKu> findAllRuKu(String pname, String cname, Date starttime, Date overtime){
+        return ruKuMapper.findAllRuKu(pname,cname,starttime,overtime);
     }
 
     public KuCun findRuKuById(Integer id){

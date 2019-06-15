@@ -13,7 +13,7 @@ import java.util.List;
 @Mapper
 public interface ShangPinMapper {
     public int insertShangPin(ShangPin shangPin);
-    public List<ShangPin> findAllShangPin();
+    public List<ShangPin> findAllShangPin(@Param("pname")String pname, @Param("cname")String cname);
     public ShangPin findShangPinById(Integer id);
     public int updateShangPinById(ShangPin shangPin);
     public ShangPin findShangPinByName(@Param("pname")String pname,@Param("cname")String cname);

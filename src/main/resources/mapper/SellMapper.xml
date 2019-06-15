@@ -21,7 +21,7 @@
         <result property="selltime" column="selltime" />
         <result property="zhuangtai" column="zhuangtai" />
         <result property="beizhu" column="beizhu" />
-    </resultMap>
+   </resultMap>
     <!--增加销售表-->
     <insert id="insertSell" parameterType="com.weiling.wl_erp.bean.Sell">
         insert into sell(<include refid="sell" />)values(#{id},#{pname},#{cname},#{oksell},#{sellprice},#{guige},#{allprice},#{overprice},#{selluser},#{selltime},#{zhuangtai},#{beizhu})
@@ -40,9 +40,7 @@
             <if test="param3!=null">
                 and selltime between #{param3} and #{param4}
             </if>
-
-
-        </where> order by id
+        </where>
     </select>
 
     <!--根据库存ID查询销售表-->

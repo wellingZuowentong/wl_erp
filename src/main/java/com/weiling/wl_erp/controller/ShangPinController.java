@@ -36,11 +36,11 @@ public class ShangPinController {
 
     }*/
    /*查询所有商品列表*/
-   @RequestMapping("/findAllShangPin")
+  /* @RequestMapping("/findAllShangPin")
    @ResponseBody
     public List<ShangPin> findAllShangPin(){
        return shangPinService.findAllShangPin();
-    }
+    }*/
     /*根据ID查询商品*/
     @RequestMapping("/findShangPinById")
     @ResponseBody
@@ -112,7 +112,7 @@ public class ShangPinController {
         ShangPin shangpin = shangPinService.findShangPinById(id);
         shangpin.setSellnum(shangpin.getSellnum()-oksell);
         shangPinService.updateShangPinById(shangpin);
-        return shangPinService.findAllShangPin();
+        return null;
     }
     /**
      * 商品分页功能
@@ -121,9 +121,11 @@ public class ShangPinController {
      * */
     @RequestMapping("/getAllShangPin")
     @ResponseBody
-    public PageInfo<ShangPin> getAllShangPin(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
+    public PageInfo<ShangPin> getAllShangPin(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum,HttpServletRequest request){
+        String pname = request.getParameter("pname");
+        String cname = request.getParameter("cname");
         PageHelper.startPage(pageNum,5);
-        List<ShangPin> list = shangPinService.findAllShangPin();
+        List<ShangPin> list = shangPinService.findAllShangPin(pname,cname);
         PageInfo<ShangPin> pageInfo = new PageInfo<ShangPin>(list);
         return pageInfo;
     }

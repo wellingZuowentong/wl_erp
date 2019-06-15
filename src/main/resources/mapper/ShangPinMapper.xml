@@ -26,6 +26,14 @@
     <!--查询所有商品-->
     <select id="findAllShangPin" resultType="com.weiling.wl_erp.bean.ShangPin">
         SELECT <include refid="shangPin"/> FROM shangpin
+        <where>
+            <if test="param1!=null">
+                and pname=#{param1}
+            </if>
+            <if test="param2!=null">
+                and cname=#{param2}
+            </if>
+        </where>
     </select>
 
     <!--根据商品ID查询商品-->

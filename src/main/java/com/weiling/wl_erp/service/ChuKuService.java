@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,8 +24,8 @@ public class ChuKuService {
     public int insertChuKu(ChuKu chuKu){
         return chuKuMapper.insertChuKu(chuKu);
     }
-   public List<ChuKu> findAllChuKu(){
-        return chuKuMapper.findAllChuKu();
+   public List<ChuKu> findAllChuKu(String pname, String cname, Date starttime, Date overtime){
+        return chuKuMapper.findAllChuKu(pname,cname,starttime,overtime);
     }
     public KuCun findChuKuById(Integer id){
         return chuKuMapper.findChuKuById(id);

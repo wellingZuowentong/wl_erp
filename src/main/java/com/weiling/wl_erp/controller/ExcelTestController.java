@@ -36,7 +36,11 @@ public class ExcelTestController {
         row.add("22222222222");
         row.add("3333333333");
         rows.add(row);
-
+        List<Object> row2 = new ArrayList();
+        row2.add("啊啊啊啊啊啊啊啊");
+        row2.add("常常常常常常常常");
+        row2.add("爸爸八佰伴八佰伴");
+        rows.add(row2);
         data.setRows(rows);
 
 

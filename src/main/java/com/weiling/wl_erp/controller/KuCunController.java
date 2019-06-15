@@ -34,11 +34,11 @@ public class KuCunController {
     private SellService sellService;
 
     /*查询所有库存列表*/
-    @RequestMapping("findAllKuCun")
+   /* @RequestMapping("findAllKuCun")
     @ResponseBody
     public List<KuCun> findAllKuCun(){
         return kuCunService.findAllKuCun();
-    }
+    }*/
 
     /*根据ID查询库存*/
     @RequestMapping("findKuCunById")
@@ -105,16 +105,18 @@ public class KuCunController {
         }else {
             shangPinService.insertShangPin(shangPin);
         }
-        return kuCunService.findAllKuCun();
+        return null;
     }
 
 
     /*分页查询所有库存表*/
     @RequestMapping("/getAllKuCun")
     @ResponseBody
-    public PageInfo<KuCun> getAllKuCun(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
+    public PageInfo<KuCun> getAllKuCun(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum,HttpServletRequest request){
+        String pname = request.getParameter("pname");
+        String cname = request.getParameter("cname");
         PageHelper.startPage(pageNum,5);
-        List<KuCun> list = kuCunService.findAllKuCun();
+        List<KuCun> list = kuCunService.findAllKuCun(pname,cname);
         PageInfo<KuCun> pageInfo = new PageInfo<KuCun>(list);
         return pageInfo;
     }

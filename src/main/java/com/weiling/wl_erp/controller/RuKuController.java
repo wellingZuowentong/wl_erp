@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -84,11 +86,11 @@ public class RuKuController {
 
 /*查询所有入库列表*/
 
-    @RequestMapping("findAllRuKu")
+   /* @RequestMapping("findAllRuKu")
     @ResponseBody
     public List<RuKu> findAllRuKu(){
         return ruKuService.findAllRuKu();
-    }
+    }*/
 
 
 /*根据ID查询入库信息*/
@@ -123,9 +125,26 @@ public class RuKuController {
     /*分页查询所有入库表*/
     @RequestMapping("/getAllRuKu")
     @ResponseBody
-    public PageInfo<RuKu> getAllRuKu(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
+    public PageInfo<RuKu> getAllRuKu(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum,HttpServletRequest request) throws ParseException {
+        Date starttime=null;
+        Date overtime=null;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String pname = request.getParameter("pname");
+        String cname = request.getParameter("cname");
+        String time = request.getParameter("starttime");
+        String otime = request.getParameter("overtime");
+        if(time!=null&&time!=""){
+            starttime = formatter.parse(time);
+        }
+
+        if(otime!=null&&otime!=""){
+            overtime = formatter.parse(otime);
+        }else{
+            overtime =new Date();
+        }
+
         PageHelper.startPage(pageNum,5);
-        List<RuKu> list = ruKuService.findAllRuKu();
+        List<RuKu> list = ruKuService.findAllRuKu(pname,cname,starttime,overtime);
         PageInfo<RuKu> pageInfo = new PageInfo<RuKu>(list);
         return pageInfo;
     }

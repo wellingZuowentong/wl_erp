@@ -5,6 +5,7 @@ import com.weiling.wl_erp.bean.RuKu;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ import java.util.List;
 @Mapper
 public interface RuKuMapper {
     public int insertRuKu(RuKu ruKu);
-    public List<RuKu> findAllRuKu();
+    public List<RuKu> findAllRuKu(@Param("pname")String pname, @Param("cname")String cname, @Param("starttime") Date starttime, @Param("overtime")Date overtime);
     public KuCun findRuKuById(Integer id);
     public int updateRuKuById(RuKu ruKu);
     public List<RuKu> findRuKuByName(@Param("pname") String pname, @Param("cname") String cname);

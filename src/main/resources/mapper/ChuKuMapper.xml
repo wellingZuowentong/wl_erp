@@ -20,7 +20,7 @@
         <result property="outtime" column="outtime" />
         <result property="zhuangtai" column="zhuangtai" />
         <result property="beizhu" column="beizhu" />
-    </resultMap>
+   </resultMap>
     <!--增加库存-->
     <insert id="insertChuKu" parameterType="com.weiling.wl_erp.bean.ChuKu">
         insert into chuku(<include refid="chuKu" />)values(#{id},#{pname},#{cname},#{outnum},#{outprice},#{guige},#{outallprice},#{outuser},#{outtime},#{zhuangtai},#{beizhu})
@@ -29,6 +29,17 @@
     <!--查询所有库存-->
     <select id="findAllChuKu" resultType="com.weiling.wl_erp.bean.ChuKu">
         SELECT <include refid="chuKu"/> FROM chuku
+        <where>
+            <if test="param1!=null">
+                and pname=#{param1}
+            </if>
+            <if test="param2!=null">
+                and cname=#{param2}
+            </if>
+            <if test="param3!=null">
+                and selltime between #{param3} and #{param4}
+            </if>
+        </where>
     </select>
 
     <!--根据库存ID查询库存-->

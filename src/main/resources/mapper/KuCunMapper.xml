@@ -29,6 +29,14 @@
     <!--查询所有库存-->
     <select id="findAllKuCun" resultType="com.weiling.wl_erp.bean.KuCun">
         SELECT <include refid="kuCun"/> FROM kucun
+        <where>
+            <if test="param1!=null">
+                and pname=#{param1}
+            </if>
+            <if test="param2!=null">
+                and cname=#{param2}
+            </if>
+        </where>
     </select>
 
     <!--根据库存ID查询库存-->

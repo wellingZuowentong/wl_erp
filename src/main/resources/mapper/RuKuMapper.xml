@@ -23,7 +23,7 @@
         <result property="username" column="username" />
         <result property="sid" column="sid" />
         <result property="beizhu" column="beizhu" />
-    </resultMap>
+   </resultMap>
     <!--增加库存-->
     <insert id="insertRuKu" parameterType="com.weiling.wl_erp.bean.RuKu">
         insert into ruku(<include refid="ruKu" />)values(#{id},#{pname},#{cname},#{inprice},#{outprice},#{sellprice},#{vnum},#{sellnum},#{guige},#{rukutime},#{updatetime},#{username},#{sid},#{beizhu})
@@ -32,6 +32,17 @@
     <!--查询所有库存-->
     <select id="findAllRuKu" resultType="com.weiling.wl_erp.bean.RuKu">
         SELECT <include refid="ruKu"/> FROM ruku
+        <where>
+            <if test="param1!=null">
+                and pname=#{param1}
+            </if>
+            <if test="param2!=null">
+                and cname=#{param2}
+            </if>
+            <if test="param3!=null">
+                and selltime between #{param3} and #{param4}
+            </if>
+        </where>
     </select>
 
     <!--根据库存ID查询库存-->

@@ -21,8 +21,8 @@ public class KuCunService {
         return kuCunMapper.insertKuCun(kuCun);
     }
 
-    public List<KuCun> findAllKuCun(){
-        return kuCunMapper.findAllKuCun();
+    public List<KuCun> findAllKuCun(String pname,String cname){
+        return kuCunMapper.findAllKuCun(pname,cname);
     }
 
     public KuCun findKuCunById(Integer id){

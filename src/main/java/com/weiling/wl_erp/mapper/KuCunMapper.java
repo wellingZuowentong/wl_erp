@@ -15,7 +15,7 @@ import java.util.List;
 @Mapper
 public interface KuCunMapper {
     public int insertKuCun(KuCun kuCun);
-    public List<KuCun> findAllKuCun();
+    public List<KuCun> findAllKuCun(@Param("pname")String pname, @Param("cname")String cname);
     public KuCun findKuCunById(Integer id);
     public int updateKuCunById(KuCun kuCun);
     public KuCun findKuCunByName(@Param("pname") String pname, @Param("cname") String cname);

@@ -26,7 +26,7 @@
     </resultMap>
     <!--增加库存-->
     <insert id="insertRuKu" parameterType="com.weiling.wl_erp.bean.RuKu">
-        insert into ruku(<include refid="ruKu" />)values(#{id},#{pname},#{cname},#{inprice},#{outprice},#{sellprice},#{vnum},#{sellnum},#{guige},#{rukutime},#{updatetime},#{username}#{sid},#{beizhu})
+        insert into ruku(<include refid="ruKu" />)values(#{id},#{pname},#{cname},#{inprice},#{outprice},#{sellprice},#{vnum},#{sellnum},#{guige},#{rukutime},#{updatetime},#{username},#{sid},#{beizhu})
     </insert>
 
     <!--查询所有库存-->

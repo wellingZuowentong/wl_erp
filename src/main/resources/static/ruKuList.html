@@ -37,6 +37,8 @@
                             </div>
                             <button type="button" onclick="queryByTj()" class="btn btn-primary">查询</button>
                             <button type="button" onclick="export2Excel()" class="btn btn-success">导出到EXCEL</button>
+                            <!-- 添加库存商品按钮 -->
+                            <button type="button" class="btn btn-info" onclick="xzkc()">新增库存商品</button>
                         </form>
                     </div>
                 </div>
@@ -58,7 +60,6 @@
                 <th>出库价</th>
                 <th>销售价</th>
                 <th>库存数量</th>
-                <th>销售数量</th>
                 <th>规格</th>
                 <th>入库时间</th>
                 <th>入库人</th>
@@ -77,6 +78,94 @@
             <button type='button' id="end" class="btn btn-danger">尾页</button>
         </div>
 
+        <!-- 修改库存列表模态框 -->
+        <div class="modal fade" id="xzModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">新增入库商品</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="updateKuCunById" method="post" class="form-horizontal" role="form" id="xz_form">
+                            <input type="hidden" name="id" id="xzid"/>
+                            <div class="form-group">
+                                <label for="xzpname" class="col-sm-2 control-label">商品名：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="xzpname" name="pname">
+                                </div>
+                            </div>
+                            <!-- 厂家 -->
+                            <div class="form-group">
+                                <label for="xzcname" class="col-sm-2 control-label">厂家：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="xzcname" name="cname">
+                                </div>
+                            </div>
+                            <!-- 进货价 -->
+                            <div class="form-group">
+                                <label for="xzinprice" class="col-sm-2 control-label">进货价：</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" id="xzinprice" name="inprice">
+                                </div>
+                            </div>
+                            <!-- 出库价 -->
+                            <div class="form-group">
+                                <label for="xzoutprice" class="col-sm-2 control-label">出库价：</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" id="xzoutprice" name="outprice">
+                                </div>
+                            </div>
+
+                            <!-- 销售价 -->
+                            <div class="form-group">
+                                <label for="xzsellprice" class="col-sm-2 control-label">销售价：</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" id="xzsellprice" name="sellprice">
+                                </div>
+                            </div>
+                            <!-- 库存数量 -->
+                            <div class="form-group">
+                                <label for="xzvnum" class="col-sm-2 control-label">库存数量：</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" id="xzvnum" name="vnum">
+                                </div>
+                            </div>
+
+                            <!-- 规格 -->
+                            <div class="form-group">
+                                <label for="xzguige" class="col-sm-2 control-label">规格：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="xzguige" name="guige">
+                                </div>
+                            </div>
+
+                            <!-- 入库人 -->
+                            <div class="form-group">
+                                <label for="xzusername" class="col-sm-2 control-label">入库人：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="xzusername" name="username">
+                                </div>
+                            </div>
+
+                            <!-- 备注 -->
+                            <div class="form-group">
+                                <label for="xzbeizhu" class="col-sm-2 control-label">备注：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="xzbeizhu" name="beizhu">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-10 col-sm-10">
+                                    <button type="button" class="btn btn-default" onclick="tj()">添加</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <script src="js/jquery.js"></script>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -101,17 +190,78 @@
                         var oldTime;
                         var newTime;
                         for(var i = 0;i < msg.length;i++){
-                            console.log(msg);
                             oldTime = new Date(msg[i].rukutime).toJSON();
                             newTime = new Date(+new Date(oldTime)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'');
-                            $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg[i].id+"</th><th>"+msg[i].pname+"</th><th>"+msg[i].cname+"</th><th>"+msg[i].inprice+"</th><th>"+msg[i].outprice+"</th><th>"+msg[i].sellprice+"</th><th>"+msg[i].vnum+"</th><th>"+msg[i].sellnum+"</th><th>"+msg[i].guige+"</th><th>"+newTime+"</th><th>"+msg[i].username+"</th><th>"+msg[i].beizhu+"</th><th><a href='#' onclick='xiugai("+msg[i].id+")' style='text-decoration:none'>修改</a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='shanchu("+msg.id+")' style='text-decoration:none'>删除</a></th></tr>");
+                            $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg[i].id+"</th><th>"+msg[i].pname+"</th><th>"+msg[i].cname+"</th><th>"+msg[i].inprice+"</th><th>"+msg[i].outprice+"</th><th>"+msg[i].sellprice+"</th><th>"+msg[i].vnum+"</th><th>"+msg[i].guige+"</th><th>"+newTime+"</th><th>"+msg[i].username+"</th><th>"+msg[i].beizhu+"</th><th><a href='#' onclick='xiugai("+msg[i].id+")' style='text-decoration:none'>修改</a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='shanchu("+msg.id+")' style='text-decoration:none'>删除</a></th></tr>");
                             //$("#caid").append("<option value='"+msg[i].cname+"'>"+msg[i].cname+"</option>");
                         }
                     }
                 });
             }
 
+            //新增库存商品
+            function xzkc() {
+                $("#xzModal").modal("show");
+                $("#xzpname").empty();
+                $("#xzcname").empty();
+                $("#xzinprice").empty();
+                $("#xzoutprice").empty();
+                $("#xzsellprice").empty();
+                $("#xzvnum").empty();
+                $("#xzsellnum").empty();
+                $("#xzguige").empty();
+                $("#xzrukutime").empty();
+                $("#xzusername").empty();
+                $("#xzbeizhu").empty();
+            }
 
+            //新增库存商品提交
+            function tj() {
+                console.log($("#xzpname").val());
+                console.log($("#xzcname").val());
+                console.log($("#xzinprice").val());
+                console.log($("#xzoutprice").val());
+                console.log($("#xzsellprice").val());
+                console.log($("#xzvnum").val());
+                console.log($("#xzguige").val());
+                console.log($("#xzusername").val());
+                console.log($("#xzbeizhu").val());
+                $.ajax({
+                    type: "POST",//方法类型
+                    dataType: "json",//预期服务器返回的数据类型
+                    url: "insertRuKu" ,//url
+                    data: $('#xz_form').serialize(),
+                    success: function (result) {
+                        $("#zxModal").modal("hide");
+                        alert("添加成功");
+                        queryAllRuKu();
+                    },
+                    error : function() {
+                        alert("异常！");
+                    }
+                });
+            }
+
+            //根据id删除入库商品
+            function shanchu(flag) {
+                var del = confirm("确定删除此商品？");
+                if(del == true){
+                    $.ajax({
+                        type:'Post',
+                        url:'deleteRuKuById',
+                        data:{
+                            'id':flag
+                        },
+                        dataType:'json',
+                        success:function(msg){
+                            alert("删除成功");
+                            queryAllKuCun();
+                        }
+                    });
+                }else{
+                    return
+                }
+            }
         </script>
     </body>
 </html>

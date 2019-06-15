@@ -24,7 +24,7 @@ public class ChuKuService {
     public int insertChuKu(ChuKu chuKu){
         return chuKuMapper.insertChuKu(chuKu);
     }
-   public List<ChuKu> findAllChuKu(String pname, String cname, Date starttime, Date overtime){
+   public List<ChuKu> findAllChuKu(String pname,String cname,Date starttime,Date overtime){
         return chuKuMapper.findAllChuKu(pname,cname,starttime,overtime);
     }
     public KuCun findChuKuById(Integer id){

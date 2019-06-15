@@ -40,7 +40,7 @@
                 and cname=#{param2}
             </if>
             <if test="param3!=null">
-                and selltime between #{param3} and #{param4}
+                and rukutime between #{param3} and #{param4}
             </if>
         </where>
     </select>

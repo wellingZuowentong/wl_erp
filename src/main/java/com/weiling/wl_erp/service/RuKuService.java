@@ -24,7 +24,7 @@ public class RuKuService {
         return ruKuMapper.insertRuKu(ruKu);
     }
 
-    public List<RuKu> findAllRuKu(String pname, String cname, Date starttime, Date overtime){
+    public List<RuKu> findAllRuKu(String pname,String cname,Date starttime,Date overtime){
         return ruKuMapper.findAllRuKu(pname,cname,starttime,overtime);
     }
 

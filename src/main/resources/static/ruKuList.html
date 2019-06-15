@@ -205,6 +205,7 @@
 
             //按条件分页查找
             function queryByTj(){
+
                 //重置条件
                 tj="";
                 var pname=$("#pname").val();
@@ -236,12 +237,13 @@
                         $("#data").empty();
                         var oldTime;
                         var newTime;
-                        for(var i = 0;i < msg.length;i++){
-                            oldTime = new Date(msg[i].rukutime).toJSON();
-                            newTime = new Date(+new Date(oldTime)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'');
-                            $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg[i].id+"</th><th>"+msg[i].pname+"</th><th>"+msg[i].cname+"</th><th>"+msg[i].inprice+"</th><th>"+msg[i].outprice+"</th><th>"+msg[i].sellprice+"</th><th>"+msg[i].vnum+"</th><th>"+msg[i].guige+"</th><th>"+newTime+"</th><th>"+msg[i].username+"</th><th>"+msg[i].beizhu+"</th><th><a href='#' onclick='xiugai("+msg[i].id+")' style='text-decoration:none'>修改</a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='shanchu("+msg.id+")' style='text-decoration:none'>删除</a></th></tr>");
+                        $.each(msg.list,function(i,msg) {
+                            oldTime = new Date(msg.rukutime).toJSON();
+                            newTime = new Date(+new Date(oldTime) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '');
+                            $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>" + msg.id + "</th><th>" + msg.pname + "</th><th>" + msg.cname + "</th><th>" + msg.inprice + "</th><th>" + msg.outprice + "</th><th>" + msg.sellprice + "</th><th>" + msg.vnum + "</th><th>" + msg.guige + "</th><th>" + newTime + "</th><th>" + msg.username + "</th><th>" + msg.beizhu + "</th><th><a href='#' onclick='xiugai(" + msg.id + ")' style='text-decoration:none'>修改</a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='shanchu(" + msg.id + ")' style='text-decoration:none'>删除</a></th></tr>");
                             //$("#caid").append("<option value='"+msg[i].cname+"'>"+msg[i].cname+"</option>");
-                        }
+
+                        });
                     }
                 });
             }

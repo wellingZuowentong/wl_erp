@@ -154,7 +154,7 @@ public class SellController {
     /*分页查询所有销售表*/
     @RequestMapping("/getAllSell")
     @ResponseBody
-    public PageInfo<Sell> getAllShangPin(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum,HttpServletRequest request) throws ParseException {
+    public  PageInfo<Sell> getAllShangPin(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum,HttpServletRequest request) throws ParseException {
         Date starttime=null;
         Date overtime=null;
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

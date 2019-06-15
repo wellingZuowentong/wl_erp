@@ -22,7 +22,7 @@ public class SellService {
     public int insertSell(Sell sell){
         return sellMapper.insertSell(sell);
     }
-    public List<Sell> findAllSell(String pname,String cname,Date starttime,Date overtime){
+    public  List<Sell> findAllSell(String pname,String cname,Date starttime,Date overtime){
 
         return sellMapper.findAllSell(pname,cname,starttime,overtime);
     }

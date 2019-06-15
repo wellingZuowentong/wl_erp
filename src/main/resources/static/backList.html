@@ -429,11 +429,7 @@
 
     //导出Excel
     function export2Excel() {
-        $.ajax({
-           type:"Get",
-           dataType:"josn",
-           url:"?tj="+tj
-        });
+        window.location.href="excelshangpin?"+tj;
     }
 </script>
 </body>

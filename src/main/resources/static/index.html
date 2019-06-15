@@ -52,11 +52,11 @@
             <div class="row">
                 <div class="col-md-2">
                     <div class="list-group">
-                        <a href="backList.html" target="et" class="list-group-item">商品列表</a>
-                        <a href="kuCunList.html" target="et" class="list-group-item">库存列表</a>
-                        <a href="sellList.html" target="et" class="list-group-item">销售列表</a>
-                        <a href="chuKuList.html" target="et" class="list-group-item">出库列表</a>
-                        <a href="ruKuList.html" target="et" class="list-group-item">入库列表</a>
+                        <a href="backList.html" target="et" class="list-group-item" id="aa">商品列表</a>
+                        <a href="kuCunList.html" target="et" class="list-group-item" id="bb">库存列表</a>
+                        <a href="sellList.html" target="et" class="list-group-item" id="cc">销售列表</a>
+                        <a href="chuKuList.html" target="et" class="list-group-item" id="dd">出库列表</a>
+                        <a href="ruKuList.html" target="et" class="list-group-item" id="ee">入库列表</a>
                     </div>
                 </div>
                 <div class="col-md-10">
@@ -70,5 +70,32 @@
         <script src="js/jquery.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="js/bootstrap.min.js"></script>
+        <script>
+            $(function(){
+                alert("!!!!!!!!!!!!!");
+                qx();
+            });
+            function qx() {
+                $.ajax({
+                    type: "POST",//方法类型
+                    dataType: "json",//预期服务器返回的数据类型
+                    url: "checkqx" ,//url
+                    success: function (result) {
+                        if(result.qx==2){
+                            $("#dd").remove();
+                            $("#bb").remove();
+                            $("#ee").remove();
+                        }
+                        if(result.qx==3){
+                            $("#aa").remove();
+                        }
+                    },
+                    error : function() {
+                        alert("异常！");
+                    }
+                });
+            }
+        </script>
+
     </body>
 </html>

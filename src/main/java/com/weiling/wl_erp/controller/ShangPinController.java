@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -112,7 +113,8 @@ public class ShangPinController {
         ShangPin shangpin = shangPinService.findShangPinById(id);
         shangpin.setSellnum(shangpin.getSellnum()-oksell);
         shangPinService.updateShangPinById(shangpin);
-        return null;
+        List<ShangPin> list1 = new ArrayList<>();
+        return list1;
     }
     /**
      * 商品分页功能

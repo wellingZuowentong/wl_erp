@@ -31,7 +31,7 @@
 
     <!--查询所有库存-->
     <select id="findAllRuKu" resultType="com.weiling.wl_erp.bean.RuKu">
-        SELECT <include refid="ruKu"/> FROM ruku
+        SELECT <include refid="ruKu"/> FROM ruku order by rukutime desc
         <where>
             <if test="param1!=null">
                 and pname=#{param1}

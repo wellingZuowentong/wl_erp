@@ -26,9 +26,9 @@
         insert into chuku(<include refid="chuKu" />)values(#{id},#{pname},#{cname},#{outnum},#{outprice},#{guige},#{outallprice},#{outuser},#{outtime},#{zhuangtai},#{beizhu})
     </insert>
 
-    <!--查询所有库存-->
+    <!--查询所有出库表-->
     <select id="findAllChuKu" resultType="com.weiling.wl_erp.bean.ChuKu">
-        SELECT <include refid="chuKu"/> FROM chuku
+        SELECT <include refid="chuKu"/> FROM chuku order by outtime desc
         <where>
             <if test="param1!=null">
                 and pname=#{param1}
@@ -42,7 +42,7 @@
         </where>
     </select>
 
-    <!--根据库存ID查询库存-->
+    <!--根据库存ID查询出库-->
     <select id="findChuKuById" resultType="com.weiling.wl_erp.bean.ChuKu">
         SELECT <include refid="chuKu"/> FROM chuku where id=#{value}
     </select>

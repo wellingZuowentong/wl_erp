@@ -29,7 +29,7 @@
 
     <!--查询所有销售表-->
     <select id="findAllSell" resultType="com.weiling.wl_erp.bean.Sell">
-        SELECT <include refid="sell"/> FROM sell
+        SELECT <include refid="sell"/> FROM sell order by selltime desc
         <where>
             <if test="param1!=null">
                 and pname=#{param1}

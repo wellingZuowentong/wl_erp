@@ -39,7 +39,7 @@ public class UserController {
         User user1=userService.checkNamePass(user);
         if(user1!=null){
             session.setAttribute("username",user1);
-            return "index.html";
+            return "main.html";
         }
         return "error.html";
     }

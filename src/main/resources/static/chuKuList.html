@@ -136,12 +136,16 @@
             }
 
             function queryAllChuKu(num,con) {
+                dqy=num;
                 $.ajax({
                     type:'Get',
                     url:'getAllChuKu?pageNum='+num+con,
                     dataType:'json',
                     success:function(msg){
                         $("#data").empty();
+                        pre=msg.prePage;
+                        next=msg.nextPage;
+                        end=msg.lastPage;
                         var oldTime;
                         var newTime;
                         $.each(msg.list,function(i,msg) {

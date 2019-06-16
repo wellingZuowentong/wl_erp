@@ -167,6 +167,7 @@
         <script>
             var pre,next,end;
             var tj="";//条件
+            var dqy=1;
 
             $(function(){
                 //查询所有销售列表
@@ -215,6 +216,7 @@
 
             //分页查询所有销售表
             function  getAllSell(num,con){
+                dqy=num;
                 $.ajax({
                     type:'Get',
                     url:'getAllSell?pageNum='+num+con,
@@ -322,7 +324,7 @@
                     success: function (result) {
                         $("#ckModal").modal("hide");
                         alert("出库成功");
-                        queryAllSell();
+                        getAllSell(dqy,tj);
                     },
                     error : function() {
                         alert("异常！");
@@ -339,8 +341,9 @@
                     data: $('#bh_form').serialize(),
                     success: function (result) {
                         $("#bhModal").modal("hide");
+                        getAllSell(dqy,tj);
                         alert("驳回成功");
-                        queryAllSell();
+
                     },
                     error : function() {
                         alert("异常！");

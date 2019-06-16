@@ -252,6 +252,7 @@
 <script>
     var pre,next,end;
     var tj="";
+    var dqy=1;
     $(function(){
         getAllShangPin(1,tj);
         $("#first").on("click",function(){
@@ -290,6 +291,7 @@
 
     //分页查询所有商品
     function getAllShangPin(num,con){
+        dqy=num;
         $.ajax({
             type:'Get',
             url:'getAllShangPin?pageNum='+num+con,
@@ -306,22 +308,6 @@
         });
     }
 
-
-    //查询所有商品
-    function queryAllShangPin() {
-        $.ajax({
-            type:'Post',
-            url:'findAllShangPin',
-            dataType:'json',
-            success:function(msg){
-
-                $("#data").empty();
-                for(var i = 0;i < msg.length;i++){
-                    $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg[i].id+"</th><th>"+msg[i].pname+"</th><th>"+msg[i].cname+"</th><th>"+msg[i].sellprice+"</th><th>"+msg[i].sellnum+"</th><th>"+msg[i].guige+"</th><th>"+msg[i].beizhu+"</th><th><a href='#' onclick='showSellModul("+msg[i].id+")' style='text-decoration:none'>出售</a><br><a href='#' onclick='xiugai("+msg[i].id+")' style='text-decoration:none'>修改</a></th></tr>");
-                }
-            }
-        });
-    }
 
     var sj;
     //展示出售模态框和内容
@@ -398,7 +384,7 @@
                 console.log(result);//打印服务端返回的数据(调试用)
                 $("#myModal").modal("hide");
                 alert("出售成功");
-                queryAllShangPin();
+                getAllShangPin(dqy,tj);
             },
             error : function() {
                 alert("异常！");
@@ -418,7 +404,7 @@
                 console.log(result);//打印服务端返回的数据(调试用)
                 $("#xgModal").modal("hide");
                 alert("修改成功");
-                queryAllShangPin();
+                getAllShangPin(dqy,tj);
             },
             error : function() {
                 alert("异常！");

@@ -182,6 +182,7 @@
         <script src="js/ajaxfileupload.js"></script>
         <script>
             var tj = "";
+            var dqy=1;
             var pre,next,end;
             $(function(){
                 //查询所有入库列表
@@ -229,12 +230,16 @@
 
             //查询所有入库列表
             function queryAllRuKu(num,con) {
+                dqy=num;
                 $.ajax({
                     type:'Get',
                     url:'getAllRuKu?pageNum='+num+con,
                     dataType:'json',
                     success:function(msg){
                         $("#data").empty();
+                        pre=msg.prePage;
+                        next=msg.nextPage;
+                        end=msg.lastPage;
                         var oldTime;
                         var newTime;
                         $.each(msg.list,function(i,msg) {
@@ -308,9 +313,7 @@
                     success: function (result) {
                         $("#xzModal").modal("hide");
                         alert("添加成功");
-                        var num;
-                        var con;
-                        queryAllRuKu(num,con);
+                        queryAllRuKu(dqy,tj);
                     },
                     error : function() {
                         alert("异常！");
@@ -331,7 +334,7 @@
                         dataType:'json',
                         success:function(msg){
                             alert("删除成功");
-                            queryAllKuCun();
+                            queryAllRuKu(dqy,tj);
                         }
                     });
                 }else{

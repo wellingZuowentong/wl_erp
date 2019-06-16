@@ -216,6 +216,7 @@
         <script src="js/ajaxfileupload.js"></script>
         <script>
             var tj = "";
+            var dqy=1;
             var pre,next,end;
             $(function(){
                 getAllKuCun(1,tj);
@@ -255,6 +256,7 @@
 
             //分页查询所有库存
             function  getAllKuCun(num,con){
+                dqy=num;
                 $.ajax({
                     type:'Get',
                     url:' getAllKuCun?pageNum='+num+con,
@@ -359,7 +361,7 @@
                         dataType:'json',
                         success:function(msg){
                             alert("删除成功");
-                            queryAllKuCun();
+                            getAllKuCun(dqy,tj);
                         }
                     });
                 }else{
@@ -377,7 +379,7 @@
                     success: function (result) {
                         $("#xgModal").modal("hide");
                         alert("修改成功");
-                        queryAllKuCun();
+                        getAllKuCun(dqy,tj);
                     },
                     error : function() {
                         alert("异常！");
@@ -395,7 +397,7 @@
                     success: function (result) {
                         $("#ysModal").modal("hide");
                         alert("添加成功");
-                        //queryAllKuCun();
+                        getAllKuCun(dqy,tj);
                     },
                     error : function() {
                         alert("异常！");

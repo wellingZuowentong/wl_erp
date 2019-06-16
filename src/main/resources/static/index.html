@@ -1,101 +1,67 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html>
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>首页</title>
+        <meta charset="UTF-8">
+        <title>登陆</title>
         <!-- Bootstrap -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <style>
             .page-header{
-                margin:0px 0px;
-                padding-bottom: 0px;
+                margin:2px 0px;
             }
         </style>
     </head>
     <body>
-        <div class="page-header">
-            <img src="img/70.jpg" class="img-responsive" alt="Responsive image" style="width: 100%;">
-        </div>
-        <!-- 导航条strat -->
-        <nav class="navbar navbar-default" role="navigation">
-            <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">进销存管理系统</a>
-                </div>
-
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle"
-                               data-toggle="dropdown">更多 <span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">退出</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-fluid -->
-        </nav>
-        <!-- 导航条 end -->
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-2">
-                    <div class="list-group">
-                        <a href="backList.html" target="et" class="list-group-item" id="aa">商品列表</a>
-                        <a href="kuCunList.html" target="et" class="list-group-item" id="bb">库存列表</a>
-                        <a href="sellList.html" target="et" class="list-group-item" id="cc">销售列表</a>
-                        <a href="chuKuList.html" target="et" class="list-group-item" id="dd">出库列表</a>
-                        <a href="ruKuList.html" target="et" class="list-group-item" id="ee">入库列表</a>
+        <div style="margin-top: 15%">
+            <div class="" style="width: 20%;margin: 0 auto">
+                <form action="/checkNamePass" method="get" accept-charset="UTF-8" onsubmit="return check()">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">用户名</label>
+                        <input type="text" class="form-control" name="username" id="exampleInputEmail1" placeholder="请输入用户名">
                     </div>
-                </div>
-                <div class="col-md-10">
-                    <iframe src="backList.html" frameborder="0"
-                            width="100%" height="1000px" name="et"></iframe>
-                </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">密码</label>
+                        <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="请输入密码">
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" checked> 记住我
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-success">登陆</button>
+                    <button type="reset" class="btn btn-danger">取消</button>
+                </form>
             </div>
         </div>
 
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="js/jquery.min.js"></script>
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="js/bootstrap.min.js"></script>
+
         <script>
-            $(function(){
-                alert("!!!!!!!!!!!!!");
-                qx();
-            });
-            function qx() {
-                $.ajax({
-                    type: "POST",//方法类型
-                    dataType: "json",//预期服务器返回的数据类型
-                    url: "checkqx" ,//url
-                    success: function (result) {
-                        if(result.qx==2){
-                            $("#dd").remove();
-                            $("#bb").remove();
-                            $("#ee").remove();
-                        }
-                        if(result.qx==3){
-                            $("#aa").remove();
-                        }
-                    },
-                    error : function() {
-                        alert("异常！");
-                    }
-                });
+            $(document).ready(function(){
+                if($.cookie("password") != ''){
+                    $("#password").val($.cookie("password"));
+                }
+                if($.cookie("name") != ''){
+                    $("#username").val($.cookie("username"));
+                }
+            })
+
+            function check() {
+                //记住我功能使用
+                //写入cookie
+                if ($("#remember-me").prop("checked") == true) {
+                    var name = $("#username").val();
+                    var password = $("#password").val();
+                    //alert(passWord);
+                    $.cookie("username", username);
+                    $.cookie("password", password, {expires: 7}); // 存储一个带7天期限的 cookie 如果{ expires: 7 } 不写则cookie只相当回话效果
+                } else {
+                    $.cookie("username", "");
+                    $.cookie("password", "");
+                }
             }
         </script>
-
     </body>
+
 </html>

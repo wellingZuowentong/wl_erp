@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -105,7 +106,8 @@ public class KuCunController {
         }else {
             shangPinService.insertShangPin(shangPin);
         }
-        return null;
+        List<KuCun> listkucun = new ArrayList<>();
+        return listkucun;
     }
 
 

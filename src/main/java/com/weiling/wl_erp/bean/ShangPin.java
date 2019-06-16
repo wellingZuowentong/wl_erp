@@ -8,11 +8,8 @@ import java.math.BigDecimal;
  * 日期：2019/6/11
  * 商品表
  */
-@Table(name = "shangpin")
+
 public class ShangPin {
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String pname;
     private String cname;

@@ -9,7 +9,7 @@ import java.util.Date;
  * 日期：2019/6/11
  * 入库表
  */
-public class RuKu implements Serializable {
+public class RuKu {
     private Integer id;
     private String pname;
     private String cname;

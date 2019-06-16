@@ -170,7 +170,7 @@
 
                     <div class="form-group">
                         <div class="col-sm-offset-10 col-sm-10">
-                            <button type="button" class="btn btn-default" onclick="tj()">提交</button>
+                            <button type="button" class="btn btn-default" onclick="tijiao()">提交</button>
                         </div>
                     </div>
                 </form>
@@ -388,7 +388,7 @@
         $("#overprice").val(hj);
     }
     //提交出售列表
-    function tj() {
+    function tijiao() {
         $.ajax({
             type: "POST",//方法类型
             dataType: "json",//预期服务器返回的数据类型

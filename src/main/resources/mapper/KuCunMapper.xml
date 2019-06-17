@@ -59,4 +59,8 @@
         delete from kucun where id=#{id}
     </delete>
 
+    <select id="findShangPinName" resultType="String">
+        SELECT pname FROM kucun group by pname
+    </select>
+
 </mapper>

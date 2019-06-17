@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,6 +37,10 @@ public class TestExcelController {
 
     @RequestMapping(value = "/excelsell", method = RequestMethod.GET)
     public void excelsell(HttpServletResponse response, HttpServletRequest request) throws Exception {
+        BigDecimal yzongjia = new BigDecimal("0");
+        BigDecimal wzongjia = new BigDecimal("0");
+        Integer yout = 0;
+        Integer wout = 0;
         Date starttime=null;
         Date overtime=null;
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -63,6 +68,7 @@ public class TestExcelController {
         titles1.add("售价");
         titles1.add("规格");
         titles1.add("销售总价");
+        titles1.add("实售总价");
         titles1.add("销售人");
         titles1.add("销售时间");
         titles1.add("状态");
@@ -79,12 +85,17 @@ public class TestExcelController {
             row.add(sell.getSellprice());
             row.add(sell.getGuige());
             row.add(sell.getAllprice());
+            row.add(sell.getOverprice());
             row.add(sell.getSelluser());
             row.add(DateUtil.formatNormalDateString(sell.getSelltime()));
             if(sell.getZhuangtai()==0){
+                wzongjia = wzongjia.add(sell.getOverprice());
+                wout = wout+sell.getOksell();
                 row.add("未出库");
             }
             if(sell.getZhuangtai()==1){
+                yzongjia = yzongjia.add(sell.getOverprice());
+                yout = yout+sell.getOksell();
                 row.add("已出库");
             }
             if(sell.getZhuangtai()==2){
@@ -94,15 +105,36 @@ public class TestExcelController {
             row.add(sell.getBeizhu());
             rows.add(row);
         }
+        List<Object> row1 = new ArrayList<>();
+        row1.add("合计:");
+        List<Object> row2 = new ArrayList<>();
+        row2.add("未出库数量");
+        row2.add(wout);
+        row2.add("未出库总价");
+        row2.add(wzongjia);
+        List<Object> row3 = new ArrayList<>();
+        row3.add("已出库数量");
+        row3.add(yout);
+        row3.add("已出库总价");
+        row3.add(yzongjia);
+        rows.add(row1);
+        rows.add(row2);
+        rows.add(row3);
+
         data.setRows(rows);
 
-        SimpleDateFormat fdate = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-        String fileName = fdate.format(new Date()) + ".xls";
+        SimpleDateFormat fdate = new SimpleDateFormat("MMddHHmmss");
+        String fileName = "销售表"+fdate.format(new Date()) + ".xls";
+
         ExcelUtils.exportExcel(response, fileName, data);
     }
 
     @RequestMapping(value = "/excelruku", method = RequestMethod.GET)
     public void excelruku(HttpServletResponse response, HttpServletRequest request) throws Exception {
+        BigDecimal zongjinjia = new BigDecimal("0");
+        BigDecimal zongchujia = new BigDecimal("0");
+        BigDecimal zongmaijia = new BigDecimal("0");
+        Integer zongshuliang = 0;
         Date starttime=null;
         Date overtime=null;
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -140,6 +172,10 @@ public class TestExcelController {
         List<RuKu> list = ruKuService.findAllRuKu(pname,cname,starttime,overtime);
         for(RuKu ruKu:list) {
             List<Object> row = new ArrayList();
+            zongjinjia = zongjinjia.add(ruKu.getInprice().multiply(new BigDecimal(ruKu.getVnum())));
+            zongchujia = zongchujia.add(ruKu.getOutprice().multiply(new BigDecimal(ruKu.getVnum())));
+            zongmaijia = zongmaijia.add(ruKu.getSellprice().multiply(new BigDecimal(ruKu.getVnum())));
+            zongshuliang = zongshuliang+ruKu.getVnum();
             row.add(ruKu.getPname());
             row.add(ruKu.getCname());
             row.add(ruKu.getInprice());
@@ -152,15 +188,30 @@ public class TestExcelController {
             row.add(ruKu.getBeizhu());
             rows.add(row);
         }
+        List<Object> row1 = new ArrayList<>();
+        row1.add("合计：");
+        List<Object> row2 = new ArrayList<>();
+        row2.add("总进货价：");
+        row2.add(zongjinjia);
+        row2.add("总出库价：");
+        row2.add(zongchujia);
+        row2.add("总销售价：");
+        row2.add(zongmaijia);
+        row2.add("进货总数量：");
+        row2.add(zongshuliang);
+        rows.add(row1);
+        rows.add(row2);
         data.setRows(rows);
 
-        SimpleDateFormat fdate = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-        String fileName = fdate.format(new Date()) + ".xls";
+        SimpleDateFormat fdate = new SimpleDateFormat("MMddHHmmss");
+        String fileName = "入库表"+fdate.format(new Date()) + ".xls";
         ExcelUtils.exportExcel(response, fileName, data);
     }
 
     @RequestMapping(value = "/excelchuku", method = RequestMethod.GET)
     public void excelchuku(HttpServletResponse response, HttpServletRequest request) throws Exception {
+        Integer zongnum = 0;
+        BigDecimal zongjia = new BigDecimal("0");
         Date starttime=null;
         Date overtime=null;
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -197,6 +248,8 @@ public class TestExcelController {
         List<ChuKu> list = chuKuService.findAllChuKu(pname,cname,starttime,overtime);
         for(ChuKu chuKu:list) {
             List<Object> row = new ArrayList();
+            zongnum = zongnum+chuKu.getOutnum();
+            zongjia = zongjia.add(chuKu.getOutallprice());
             row.add(chuKu.getPname());
             row.add(chuKu.getCname());
             row.add(chuKu.getOutnum());
@@ -208,10 +261,19 @@ public class TestExcelController {
             row.add(chuKu.getBeizhu());
             rows.add(row);
         }
+        List<Object> row1 = new ArrayList<>();
+        row1.add("合计：");
+        List<Object> row2 = new ArrayList<>();
+        row2.add("总出库数量：");
+        row2.add(zongnum);
+        row2.add("出库总价：");
+        row2.add(zongjia);
+        rows.add(row1);
+        rows.add(row2);
         data.setRows(rows);
 
-        SimpleDateFormat fdate = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-        String fileName = fdate.format(new Date()) + ".xls";
+        SimpleDateFormat fdate = new SimpleDateFormat("MMddHHmmss");
+        String fileName = "出库表"+fdate.format(new Date()) + ".xls";
         ExcelUtils.exportExcel(response, fileName, data);
     }
 
@@ -244,8 +306,8 @@ public class TestExcelController {
         }
         data.setRows(rows);
 
-        SimpleDateFormat fdate = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-        String fileName = fdate.format(new Date()) + ".xls";
+        SimpleDateFormat fdate = new SimpleDateFormat("MMddHHmmss");
+        String fileName = "商品表"+fdate.format(new Date()) + ".xls";
         ExcelUtils.exportExcel(response, fileName, data);
     }
 
@@ -284,8 +346,8 @@ public class TestExcelController {
         }
         data.setRows(rows);
 
-        SimpleDateFormat fdate = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-        String fileName = fdate.format(new Date()) + ".xls";
+        SimpleDateFormat fdate = new SimpleDateFormat("MMddHHmmss");
+        String fileName = "库存表"+fdate.format(new Date()) + ".xls";
         ExcelUtils.exportExcel(response, fileName, data);
     }
 

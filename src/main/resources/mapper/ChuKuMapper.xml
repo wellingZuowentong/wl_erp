@@ -28,7 +28,7 @@
 
     <!--查询所有出库表-->
     <select id="findAllChuKu" resultType="com.weiling.wl_erp.bean.ChuKu">
-        SELECT <include refid="chuKu"/> FROM chuku order by outtime desc
+        SELECT <include refid="chuKu"/> FROM chuku
         <where>
             <if test="param1!=null">
                 and pname=#{param1}
@@ -39,7 +39,7 @@
             <if test="param3!=null">
                 and outtime between #{param3} and #{param4}
             </if>
-        </where>
+        </where> order by outtime desc
     </select>
 
     <!--根据库存ID查询出库-->

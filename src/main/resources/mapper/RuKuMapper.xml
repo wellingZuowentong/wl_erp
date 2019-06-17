@@ -31,7 +31,7 @@
 
     <!--查询所有库存-->
     <select id="findAllRuKu" resultType="com.weiling.wl_erp.bean.RuKu">
-        SELECT <include refid="ruKu"/> FROM ruku order by rukutime desc
+        SELECT <include refid="ruKu"/> FROM ruku
         <where>
             <if test="param1!=null">
                 and pname=#{param1}
@@ -42,7 +42,7 @@
             <if test="param3!=null">
                 and rukutime between #{param3} and #{param4}
             </if>
-        </where>
+        </where> order by rukutime desc
     </select>
 
     <!--根据库存ID查询库存-->

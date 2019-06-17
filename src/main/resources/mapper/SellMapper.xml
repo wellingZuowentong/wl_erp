@@ -29,7 +29,7 @@
 
     <!--查询所有销售表-->
     <select id="findAllSell" resultType="com.weiling.wl_erp.bean.Sell">
-        SELECT <include refid="sell"/> FROM sell order by selltime desc
+        SELECT <include refid="sell"/> FROM sell
         <where>
             <if test="param1!=null">
                 and pname=#{param1}
@@ -40,7 +40,7 @@
             <if test="param3!=null">
                 and selltime between #{param3} and #{param4}
             </if>
-        </where>
+        </where> order by selltime desc
     </select>
 
     <!--根据库存ID查询销售表-->

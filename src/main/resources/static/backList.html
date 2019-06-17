@@ -375,6 +375,12 @@
     }
     //提交出售列表
     function tijiao() {
+        var ysnum = $("#sellnum").val();
+        var oknum = $("#oksell").val();
+        if(oknum > ysnum){
+            alert("售出数量不能大于在售数量");
+            return false;
+        }
         $.ajax({
             type: "POST",//方法类型
             dataType: "json",//预期服务器返回的数据类型

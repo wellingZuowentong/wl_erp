@@ -381,10 +381,7 @@
             alert("售出数量不能大于在售数量");
             return false;
         }
-        if(parseInt(ysnum) == 0){
-            alert("预售数量为0,不能操作");
-            return false;
-        }
+        
         $.ajax({
             type: "POST",//方法类型
             dataType: "json",//预期服务器返回的数据类型

@@ -402,16 +402,10 @@
             //添加预售商品
             function ys() {
                 var kcnum = $("#ysvnum").val();
-                alert("kcnum + " + kcnum);
                 var ysnum = $("#yssellnum").val();
-                alert("ysnum + " + ysnum);
                 if(parseInt(ysnum) > parseInt(kcnum)){
                     alert(ysnum > kcnum);
                     alert("预售数量不能大于总库存数量");
-                    return false;
-                }
-                if(parseInt(kcnum) == 0){
-                    alert("库存数量为0,不能操作");
                     return false;
                 }
                 $.ajax({

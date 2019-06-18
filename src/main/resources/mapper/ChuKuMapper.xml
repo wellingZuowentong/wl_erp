@@ -62,4 +62,8 @@
         delete from chuku where id=#{id}
     </delete>
 
+    <update id="updateChuKuName" parameterType="String">
+        update chuku set pname=#{param1},cname=#{param2} where pname=#{param3} and cname=#{param4}
+    </update>
+
 </mapper>

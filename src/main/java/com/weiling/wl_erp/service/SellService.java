@@ -41,4 +41,7 @@ public class SellService {
     public int findSellByZhuangtai(String pname,String cname){
         return sellMapper.findSellByZhuangtai(pname,cname)==null?0:sellMapper.findSellByZhuangtai(pname,cname);
     }
+    public int updateSellName(String pname,String cname,String odpname,String odcname){
+        return sellMapper.updateSellName(pname,cname,odpname,odcname);
+    }
 }

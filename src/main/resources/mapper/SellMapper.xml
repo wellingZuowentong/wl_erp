@@ -72,4 +72,8 @@
         SELECT sum(oksell) FROM sell where pname=#{pname} and cname=#{cname} and zhuangtai=0
     </select>
 
+    <update id="updateSellName" parameterType="String">
+        update sell set pname=#{param1},cname=#{param2} where pname=#{param3} and cname=#{param4}
+    </update>
+
 </mapper>

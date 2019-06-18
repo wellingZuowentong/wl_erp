@@ -21,4 +21,5 @@ public interface SellMapper {
     public int updateZhuangTai(@Param("id")Integer id,@Param("zhuangtai")Integer zhuangtai);
     public int updateSellById(Sell sell);
     public Integer findSellByZhuangtai(@Param("pname")String pname, @Param("cname")String cname);
+    public int updateSellName(@Param("pname")String pname, @Param("cname")String cname,@Param("odpname")String odpname, @Param("odcname")String odcname);
 }

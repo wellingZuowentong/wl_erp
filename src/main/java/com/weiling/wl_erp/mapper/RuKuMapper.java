@@ -21,6 +21,6 @@ public interface RuKuMapper {
     public int updateRuKuById(RuKu ruKu);
     public List<RuKu> findRuKuByName(@Param("pname") String pname, @Param("cname") String cname);
     public int deleteRuKuById(Integer id);
-
+    public int updateRuKuName(@Param("pname")String pname, @Param("cname")String cname,@Param("odpname")String odpname, @Param("odcname")String odcname);
 
 }

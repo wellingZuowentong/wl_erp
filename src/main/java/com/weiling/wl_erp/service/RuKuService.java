@@ -43,7 +43,9 @@ public class RuKuService {
     public int deleteRuKuById(Integer id){
         return ruKuMapper.deleteRuKuById(id);
     }
-
+    public int updateRuKuName(String pname,String cname,String odpname,String odcname){
+        return ruKuMapper.updateRuKuName(pname,cname,odpname,odcname);
+    }
 
 
 

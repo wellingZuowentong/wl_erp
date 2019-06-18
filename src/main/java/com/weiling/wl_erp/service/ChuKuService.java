@@ -39,7 +39,9 @@ public class ChuKuService {
     public int deleteChuKuById(Integer id){
         return chuKuMapper.deleteChuKuById(id);
     }
-
+    public int updateChuKuName(String pname,String cname,String odpname,String odcname){
+        return chuKuMapper.updateChuKuName(pname,cname,odpname,odcname);
+    }
 
 
 

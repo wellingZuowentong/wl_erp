@@ -5,9 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.weiling.wl_erp.bean.KuCun;
 import com.weiling.wl_erp.bean.RuKu;
 import com.weiling.wl_erp.bean.ShangPin;
-import com.weiling.wl_erp.service.KuCunService;
-import com.weiling.wl_erp.service.SellService;
-import com.weiling.wl_erp.service.ShangPinService;
+import com.weiling.wl_erp.service.*;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +31,10 @@ public class KuCunController {
     private ShangPinService shangPinService;
     @Autowired
     private SellService sellService;
+    @Autowired
+    private ChuKuService chuKuService;
+    @Autowired
+    private RuKuService ruKuService;
 
     /*查询所有库存列表*/
    /* @RequestMapping("findAllKuCun")
@@ -62,6 +64,8 @@ public class KuCunController {
         String guige = request.getParameter("guige");
         String beizhu = request.getParameter("beizhu");
         KuCun kuCun = kuCunService.findKuCunById(id);
+        String odpname = kuCun.getPname();
+        String odcname = kuCun.getCname();
         kuCun.setPname(pname);
         kuCun.setCname(cname);
         kuCun.setInprice(inprice);
@@ -69,7 +73,15 @@ public class KuCunController {
         kuCun.setSellprice(sellprice);
         kuCun.setGuige(guige);
         kuCun.setBeizhu(beizhu);
-        return kuCunService.updateKuCunById(kuCun);
+        kuCunService.updateKuCunById(kuCun);
+        ShangPin shangpin = shangPinService.findShangPinByName(odpname,odcname);
+        shangpin.setPname(pname);
+        shangpin.setCname(cname);
+        shangpin.setSellprice(sellprice);
+        chuKuService.updateChuKuName(pname,cname,odpname,odcname);
+        ruKuService.updateRuKuName(pname,cname,odpname,odcname);
+        sellService.updateSellName(pname,cname,odpname,odcname);
+        return shangPinService.updateShangPinById(shangpin);
     }
 
     /*根据ID删除库存*/
@@ -77,7 +89,14 @@ public class KuCunController {
     @ResponseBody
     public int deleteKuCunById(HttpServletRequest request){
         Integer id = Integer.parseInt(request.getParameter("id"));
-
+        KuCun kuCun = kuCunService.findKuCunById(id);
+        String pname = kuCun.getPname();
+        String cname = kuCun.getCname();
+        ShangPin shangPin = shangPinService.findShangPinByName(pname,cname);
+        if(shangPin!=null){
+            Integer sid = shangPin.getId();
+            shangPinService.deleteShangPinById(sid) ;
+        }
         return kuCunService.deleteKuCunById(id);
     }
 

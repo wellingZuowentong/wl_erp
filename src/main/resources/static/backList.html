@@ -377,8 +377,12 @@
     function tijiao() {
         var ysnum = $("#sellnum").val();
         var oknum = $("#oksell").val();
-        if(oknum > ysnum){
+        if(parseInt(oknum) > parseInt(ysnum)){
             alert("售出数量不能大于在售数量");
+            return false;
+        }
+        if(parseInt(ysnum) == 0){
+            alert("预售数量为0,不能操作");
             return false;
         }
         $.ajax({

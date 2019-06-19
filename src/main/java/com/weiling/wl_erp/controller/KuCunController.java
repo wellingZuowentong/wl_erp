@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 作者：王怀朋
@@ -54,7 +56,8 @@ public class KuCunController {
     /*根据ID修改库存表*/
     @RequestMapping("updateKuCunById")
     @ResponseBody
-    public int updateKuCunById(HttpServletRequest request){
+    public  Map<String,String> updateKuCunById(HttpServletRequest request){
+        Map<String,String> map = new HashMap<>();
         Integer id = Integer.parseInt(request.getParameter("id"));
         String pname = request.getParameter("pname");
         String cname = request.getParameter("cname");
@@ -64,24 +67,33 @@ public class KuCunController {
         String guige = request.getParameter("guige");
         String beizhu = request.getParameter("beizhu");
         KuCun kuCun = kuCunService.findKuCunById(id);
-        String odpname = kuCun.getPname();
-        String odcname = kuCun.getCname();
-        kuCun.setPname(pname);
-        kuCun.setCname(cname);
-        kuCun.setInprice(inprice);
-        kuCun.setOutprice(outprice);
-        kuCun.setSellprice(sellprice);
-        kuCun.setGuige(guige);
-        kuCun.setBeizhu(beizhu);
-        kuCunService.updateKuCunById(kuCun);
-        ShangPin shangpin = shangPinService.findShangPinByName(odpname,odcname);
-        shangpin.setPname(pname);
-        shangpin.setCname(cname);
-        shangpin.setSellprice(sellprice);
-        chuKuService.updateChuKuName(pname,cname,odpname,odcname);
-        ruKuService.updateRuKuName(pname,cname,odpname,odcname);
-        sellService.updateSellName(pname,cname,odpname,odcname);
-        return shangPinService.updateShangPinById(shangpin);
+        if(kuCun!=null) {
+            String odpname = kuCun.getPname();
+            String odcname = kuCun.getCname();
+            kuCun.setPname(pname);
+            kuCun.setCname(cname);
+            kuCun.setInprice(inprice);
+            kuCun.setOutprice(outprice);
+            kuCun.setSellprice(sellprice);
+            kuCun.setGuige(guige);
+            kuCun.setBeizhu(beizhu);
+            kuCunService.updateKuCunById(kuCun);
+            ShangPin shangpin = shangPinService.findShangPinByName(odpname, odcname);
+            if(shangpin!=null){
+                shangpin.setPname(pname);
+                shangpin.setCname(cname);
+                shangpin.setSellprice(sellprice);
+            }
+            chuKuService.updateChuKuName(pname, cname, odpname, odcname);
+            ruKuService.updateRuKuName(pname, cname, odpname, odcname);
+            sellService.updateSellName(pname, cname, odpname, odcname);
+            shangPinService.updateShangPinById(shangpin);
+            map.put("code","1");
+            return map;
+        }
+        map.put("code","2");
+        return map;
+
     }
 
     /*根据ID删除库存*/
@@ -90,43 +102,52 @@ public class KuCunController {
     public int deleteKuCunById(HttpServletRequest request){
         Integer id = Integer.parseInt(request.getParameter("id"));
         KuCun kuCun = kuCunService.findKuCunById(id);
-        String pname = kuCun.getPname();
-        String cname = kuCun.getCname();
-        ShangPin shangPin = shangPinService.findShangPinByName(pname,cname);
-        if(shangPin!=null){
-            Integer sid = shangPin.getId();
-            shangPinService.deleteShangPinById(sid) ;
+        if(kuCun!=null) {
+            String pname = kuCun.getPname();
+            String cname = kuCun.getCname();
+            ShangPin shangPin = shangPinService.findShangPinByName(pname, cname);
+            if (shangPin != null) {
+                Integer sid = shangPin.getId();
+                shangPinService.deleteShangPinById(sid);
+            }
+            return kuCunService.deleteKuCunById(id);
+
         }
-        return kuCunService.deleteKuCunById(id);
+        return 0;
     }
 
     /*根据库存ID添加预售商品表*/
     @RequestMapping("addShangPin")
     @ResponseBody
-    public List<KuCun> addShangPin(Integer id,Integer sellnum,String beizhu){
+    public Map<String,String> addShangPin(Integer id, Integer sellnum, String beizhu){
+        Map<String,String> map = new HashMap<>();
         KuCun kuCun = kuCunService.findKuCunById(id);
-        int notout = sellService.findSellByZhuangtai(kuCun.getPname(),kuCun.getCname());
-        System.out.println(notout);
-        kuCun.setVnum(kuCun.getVnum()+kuCun.getSellnum()-sellnum);
-        kuCun.setSellnum(sellnum);
-        kuCunService.updateKuCunById(kuCun);
-        ShangPin shangPin = new ShangPin();
-        shangPin.setCname(kuCun.getCname());
-        shangPin.setPname(kuCun.getPname());
-        shangPin.setSellnum(kuCun.getSellnum());
-        shangPin.setGuige(kuCun.getGuige());
-        shangPin.setSellprice(kuCun.getSellprice());
-        shangPin.setBeizhu(beizhu);
-        ShangPin newshangpin = shangPinService.findShangPinByName(shangPin.getPname(),shangPin.getCname());
-        if(newshangpin!=null){
-            newshangpin.setSellnum(kuCun.getSellnum()-notout);
-            newshangpin.setBeizhu(beizhu);
-            shangPinService.updateShangPinById(newshangpin);
-        }else {
-            shangPinService.insertShangPin(shangPin);
+        if(kuCun!=null) {
+            int notout = sellService.findSellByZhuangtai(kuCun.getPname(), kuCun.getCname());
+            System.out.println(notout);
+            kuCun.setVnum(kuCun.getVnum() + kuCun.getSellnum() - sellnum);
+            kuCun.setSellnum(sellnum);
+            kuCunService.updateKuCunById(kuCun);
+            ShangPin shangPin = new ShangPin();
+            shangPin.setCname(kuCun.getCname());
+            shangPin.setPname(kuCun.getPname());
+            shangPin.setSellnum(kuCun.getSellnum());
+            shangPin.setGuige(kuCun.getGuige());
+            shangPin.setSellprice(kuCun.getSellprice());
+            shangPin.setBeizhu(beizhu);
+            ShangPin newshangpin = shangPinService.findShangPinByName(shangPin.getPname(), shangPin.getCname());
+            if (newshangpin != null) {
+                newshangpin.setSellnum(kuCun.getSellnum() - notout);
+                newshangpin.setBeizhu(beizhu);
+                shangPinService.updateShangPinById(newshangpin);
+            } else {
+                shangPinService.insertShangPin(shangPin);
+            }
+           map.put("code","1");
+            return map;
         }
-        List<KuCun> listkucun = new ArrayList<>();
-        return listkucun;
+        map.put("code","2");
+        return map;
     }
 
 

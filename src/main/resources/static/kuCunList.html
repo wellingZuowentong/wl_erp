@@ -371,7 +371,13 @@
                             'id':flag
                         },
                         dataType:'json',
-                        success:function(msg){
+                        success:function(result){
+                            if(result==0){
+                                $("#ysModal").modal("hide");
+                                alert("该商品已被删除");
+                                getAllKuCun(dqy,tj);
+                                return;
+                            };
                             alert("删除成功");
                             getAllKuCun(dqy,tj);
                         }
@@ -389,6 +395,12 @@
                     url: "updateKuCunById" ,//url
                     data: $('#xg_form').serialize(),
                     success: function (result) {
+                        if(result.code==2){
+                            $("#ysModal").modal("hide");
+                            alert("该商品已被删除");
+                            getAllKuCun(dqy,tj);
+                            return;
+                        };
                         $("#xgModal").modal("hide");
                         alert("修改成功");
                         getAllKuCun(dqy,tj);
@@ -414,6 +426,12 @@
                     url: "addShangPin" ,//url
                     data: $('#ys_form').serialize(),
                     success: function (result) {
+                        if(result.code==2){
+                            $("#ysModal").modal("hide");
+                            alert("该商品已被删除");
+                            getAllKuCun(dqy,tj);
+                            return;
+                        };
                         $("#ysModal").modal("hide");
                         alert("添加成功");
                         getAllKuCun(dqy,tj);

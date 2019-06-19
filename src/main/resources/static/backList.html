@@ -388,7 +388,18 @@
             url: "saleShangPinById" ,//url
             data: $('#cs_form').serialize(),
             success: function (result) {
-                console.log(result);//打印服务端返回的数据(调试用)
+                if(result==0){
+                    $("#myModal").modal("hide");
+                    alert("商品不存在");
+                    getAllShangPin(dqy,tj);
+                    return;
+                }
+                if(result==2){
+                    $("#myModal").modal("hide");
+                    alert("商品销售数量大于预售数量");
+                    getAllShangPin(dqy,tj);
+                    return;
+                }
                 $("#myModal").modal("hide");
                 alert("出售成功");
                 getAllShangPin(dqy,tj);

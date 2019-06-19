@@ -82,7 +82,7 @@ public class ShangPinController {
     /*出售商品*/
     @RequestMapping("/saleShangPinById")
     @ResponseBody
-    public List<ShangPin> saleShangPinById(HttpServletRequest request){
+    public int saleShangPinById(HttpServletRequest request){
         Integer id = Integer.parseInt(request.getParameter("id"));
         String pname = request.getParameter("pname");
         String cname = request.getParameter("cname");
@@ -97,6 +97,13 @@ public class ShangPinController {
         BigDecimal overprice = new BigDecimal(jiage);
         String selluser = request.getParameter("selluser");
         String beizhu = request.getParameter("beizhu");
+        ShangPin shangpin = shangPinService.findShangPinById(id);
+        if(shangpin==null){
+            return 0;
+        }
+        if((shangpin.getSellnum()-oksell)<0){
+            return 2;
+        }
         Sell sell =new Sell();
         sell.setPname(pname);
         sell.setCname(cname);
@@ -110,11 +117,11 @@ public class ShangPinController {
         sell.setZhuangtai(0);
         sell.setBeizhu(beizhu);
         sellService.insertSell(sell);
-        ShangPin shangpin = shangPinService.findShangPinById(id);
+
         shangpin.setSellnum(shangpin.getSellnum()-oksell);
         shangPinService.updateShangPinById(shangpin);
         List<ShangPin> list1 = new ArrayList<>();
-        return list1;
+        return 1;
     }
     /**
      * 商品分页功能

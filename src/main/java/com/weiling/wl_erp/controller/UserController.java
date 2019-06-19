@@ -34,9 +34,10 @@ public class UserController {
         String password = request.getParameter("password");
 
         User user=new User();
-        user.setName(username);
+        user.setUsername(username);
         user.setPassword(password);
         User user1=userService.checkNamePass(user);
+        System.out.println(user1+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         if(user1!=null){
             session.setAttribute("username",user1);
             return "main.html";
@@ -48,6 +49,7 @@ public class UserController {
     @ResponseBody
     public User checkqx(HttpSession session){
         User user = (User)session.getAttribute("username");
+        System.out.println(user);
         return user;
     }
 

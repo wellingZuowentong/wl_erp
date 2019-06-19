@@ -17,5 +17,8 @@
     <select id="checkNamePass" parameterType="com.weiling.wl_erp.bean.User" resultType="com.weiling.wl_erp.bean.User">
         SELECT id,username,password,qx FROM user where username=#{name} and password=#{password}
     </select>
+    <update id="changePass" parameterType="com.weiling.wl_erp.bean.User">
+        update user set password = #{password} where id =#{id}
+    </update>
 
 </mapper>

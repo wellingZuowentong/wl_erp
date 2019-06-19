@@ -23,4 +23,8 @@ public class UserService {
     public User checkNamePass(User user){
         return userMapper.checkNamePass(user);
     }
+
+    public int changePass(User user){
+        return userMapper.changePass(user);
+    }
 }

@@ -14,4 +14,5 @@ import java.util.List;
 public interface UserMapper {
     public List<User> findAllUser();
     public User checkNamePass(User user);
+    public int changePass(User user);
 }

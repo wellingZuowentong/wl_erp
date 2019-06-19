@@ -57,4 +57,14 @@ public class UserController {
         return userService.findAllUser();
     }
 
+    /*修改密码*/
+    @RequestMapping(value="/changePass")
+    @ResponseBody
+    public int changePass(HttpServletRequest request,HttpSession session){
+        String password = request.getParameter("password");
+        User user = (User)session.getAttribute("username");
+        user.setPassword(password);
+        return userService.changePass(user);
+    }
+
 }

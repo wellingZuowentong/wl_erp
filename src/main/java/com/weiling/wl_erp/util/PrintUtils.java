@@ -14,7 +14,7 @@ public class PrintUtils {
     //ip 192.168.1.6
     public static void print2(String filePath,String ip) throws Exception{
         File file = new File(filePath); // 获取选择的文件
-        Socket socket =  new Socket(ip, 9100);
+        Socket socket =  new Socket(ip,1);
 
         OutputStream out = socket.getOutputStream();
         FileInputStream fis = new FileInputStream(file);

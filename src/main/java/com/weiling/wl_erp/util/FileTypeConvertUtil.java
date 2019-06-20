@@ -26,7 +26,7 @@ public class FileTypeConvertUtil {
          */
         public static void html2pdf(String htmlFile, String pdfFile) throws Exception {
             // step 1
-            String url = new File(htmlFile).toURI().toURL().toString();
+            String url = new File("wl_erp/static/tuhuoList.html").toString();
             System.out.println(url);
             // step 2
             OutputStream os = new FileOutputStream(pdfFile);
@@ -59,10 +59,13 @@ public class FileTypeConvertUtil {
         public static void main(String[] args) {
             //        String htmlFile = "/home/lbj/sign.jsp";
             //        String pdfFile = "/home/lbj/sign.pdf";
-            String htmlFile = "d:/table.html";
-            String pdfFile = "d:/testoone2.pdf";
+            String htmlFile = "http://127.0.0.1:8080/tuhuoList.html";
+            File ff = new File(htmlFile);
+            System.out.println(ff.exists() +","+ff.isDirectory());
+            String pdfFile = "d:/tuhuo.pdf";
             try {
                 FileTypeConvertUtil.html2pdf(htmlFile, pdfFile);
+                PrintUtils.print2(pdfFile,"192.168.1.6");
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (Exception e) {

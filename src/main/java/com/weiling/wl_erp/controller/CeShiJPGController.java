@@ -12,7 +12,7 @@ import java.io.*;
  * 作者：王怀朋
  * 日期：2019/6/20
  */
-public class CeShiController {
+public class CeShiJPGController {
     public static void main(String[] argv) throws Exception {
         File file = new File("D:\\tuhuo.pdf");
         String printerName = "Brother DCP-7057 Printer (副本 1)";//打印机名包含字串

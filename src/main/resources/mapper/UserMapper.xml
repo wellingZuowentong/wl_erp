@@ -6,19 +6,26 @@
 
     <resultMap id="result" type="com.weiling.wl_erp.bean.User">
         <result property="id" column="id"/>
-        <result property="name" column="username" />
+        <result property="username" column="username" />
         <result property="password" column="password" />
         <result property="qx" column="qx" />
+        <result property="zhuangtai" column="zhuangtai" />
     </resultMap>
 
     <select id="findAllUser" resultMap="result">
-        SELECT id,username,password qx FROM user
+        SELECT id,username,password,qx,zhuangtai FROM user
+    </select>
+    <select id="findUserById" resultMap="result">
+        SELECT id,username,password,qx,zhuangtai FROM user where id = #{value}
     </select>
     <select id="checkNamePass" parameterType="com.weiling.wl_erp.bean.User" resultType="com.weiling.wl_erp.bean.User">
-        SELECT id,username,password,qx FROM user where username=#{name} and password=#{password}
+        SELECT id,username,password,qx,zhuangtai FROM user where username=#{username} and password=#{password}
     </select>
     <update id="changePass" parameterType="com.weiling.wl_erp.bean.User">
         update user set password = #{password} where id =#{id}
+    </update>
+    <update id="changeZhuangtai" parameterType="com.weiling.wl_erp.bean.User">
+        update user set zhuangtai = #{zhuangtai} where id =#{id}
     </update>
 
 </mapper>

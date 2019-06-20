@@ -37,8 +37,13 @@ public class UserController {
         user.setUsername(username);
         user.setPassword(password);
         User user1=userService.checkNamePass(user);
-        System.out.println(user1+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         if(user1!=null){
+            if(user1.getZhuangtai()==1){
+                    user1.setZhuangtai(2);
+            }else{
+                user1.setZhuangtai(1);
+            }
+            userService.changeZhuangtai(user1);
             session.setAttribute("username",user1);
             return "main.html";
         }
@@ -67,6 +72,17 @@ public class UserController {
         User user = (User)session.getAttribute("username");
         user.setPassword(password);
         return userService.changePass(user);
+    }
+
+    @RequestMapping("/checkZhuangTai")
+    @ResponseBody
+    public int checkZhuangTai(HttpSession session){
+        User user = (User)session.getAttribute("username");
+        User uu = userService.findUserById(user.getId());
+        if(uu.getZhuangtai()==user.getZhuangtai()){
+            return 1;
+        }
+        return 0;
     }
 
 }

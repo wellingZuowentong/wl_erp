@@ -27,4 +27,10 @@ public class UserService {
     public int changePass(User user){
         return userMapper.changePass(user);
     }
+    public int changeZhuangtai(User user){
+        return userMapper.changeZhuangtai(user);
+    }
+    public User findUserById(Integer id){
+        return userMapper.findUserById(id);
+    }
 }

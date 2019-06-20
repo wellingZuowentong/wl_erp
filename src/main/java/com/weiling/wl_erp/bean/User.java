@@ -5,15 +5,25 @@ public class User {
 	private String username;
 	private String password;
 	private Integer qx;
+	private Integer zhuangtai;
 	public User() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public User(Integer id, String username, String password, Integer qx) {
+	public Integer getZhuangtai() {
+		return zhuangtai;
+	}
+
+	public void setZhuangtai(Integer zhuangtai) {
+		this.zhuangtai = zhuangtai;
+	}
+
+	public User(Integer id, String username, String password, Integer qx, Integer zhuangtai) {
 		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.qx = qx;
+		this.zhuangtai = zhuangtai;
 	}
 
 	public Integer getId() {
@@ -55,6 +65,7 @@ public class User {
 				", username='" + username + '\'' +
 				", password='" + password + '\'' +
 				", qx=" + qx +
+				", zhuangtai=" + zhuangtai +
 				'}';
 	}
 }

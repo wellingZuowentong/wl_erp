@@ -15,4 +15,6 @@ public interface UserMapper {
     public List<User> findAllUser();
     public User checkNamePass(User user);
     public int changePass(User user);
+    public int changeZhuangtai(User user);
+    public User findUserById(Integer id);
 }

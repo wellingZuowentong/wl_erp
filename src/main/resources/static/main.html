@@ -105,11 +105,13 @@
                 qx();
             });
             function qx() {
+
                 $.ajax({
                     type: "POST",//方法类型
                     dataType: "json",//预期服务器返回的数据类型
                     url: "checkqx" ,//url
                     success: function (result) {
+                        vv();
                         if(result.qx==2){
                             $("#dd").remove();
                             $("#bb").remove();
@@ -117,6 +119,23 @@
                         }
                         if(result.qx==3){
                             $("#aa").remove();
+                        }
+                    },
+                    error : function() {
+                        alert("异常！");
+                    }
+                });
+            }
+
+            function dl() {
+                $.ajax({
+                    type: "Get",//方法类型
+                    dataType: "json",//预期服务器返回的数据类型
+                    url: "/checkZhuangTai" ,//url
+                    success: function (result) {
+                        if(result==0){
+                            alert("该账号再另一个窗口打开，请退出或重新登陆!");
+                            window.location.href="index.html";
                         }
                     },
                     error : function() {
@@ -148,6 +167,8 @@
                     }
                 });
             }
+            function vv(){
+                setInterval("dl()", 1000);}
         </script>
 
     </body>

@@ -9,7 +9,7 @@
         table.table-separate th{
             font-weight:bold;
             font-size:14px;
-            border-top:1px solid #F3EDE9 !important;
+            border-top:1px solid !important;
         }
         table.table-separate td{
             padding: 13px 0;
@@ -37,6 +37,7 @@
         }
 
         table {
+            border-color: #0f0f0f;
             border-collapse: collapse;
             table-layout: fixed;
             word-break:break-all;
@@ -50,7 +51,7 @@
         }
         @page {
             size:210mm 297mm;//纸张大小A4
-        margin: 0.25in;
+            margin: 0.25in;
             -fs-flow-bottom: "footer";
             -fs-flow-left: "left";
             -fs-flow-right: "right";
@@ -66,6 +67,11 @@
         }
         #pagecount:before {content: counter(pages);
         }
+
+        table tr td, table tr th {
+            border: 1px solid #000000;
+            border-collapse: collapse;
+        }
     </style>
 </head>
 <body class="bg-white pb-3"  style = "font-family: SimSun;">
@@ -77,7 +83,7 @@
     <div class="">
         <div class="f14 mb bold">开票日期:</div>
         <div class="f14 mb"></div>
-        <table class="table-separate">
+        <table class="table-separate" style="border-top:solid 2px;border-left:solid 2px;border-right:solid 2px">
             <tbody>
             <tr>
                 <td class="tit" valign="middle">单位或个人</td>
@@ -91,7 +97,7 @@
         <!--<div class="f14 mt-3 mb bold"></div>
         <div class="f14 mb"></div>-->
         <div class="">
-            <table class="table-separate" style="border-bottom:solid 0px;border-top:solid 0px">
+            <table class="table-separate" style="border-left:solid 2px;border-right:solid 2px">
                 <thead></thead>
                 <tbody>
                     <tr>
@@ -112,7 +118,7 @@
 
         <!--<div class="f14 mt-3 mb bold"></div>-->
         <div class="">
-            <table class="table-separate">
+            <table class="table-separate" style="border-bottom:solid 2px;border-left:solid 2px;border-right:solid 2px">
                 <tbody>
                     <tr>
                         <td class="tit" valign="middle">收款单位盖章</td>

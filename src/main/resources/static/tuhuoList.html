@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>表格样式</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width"/>
+    <link rel="stylesheet" href="https://static.loyalvalleycapital.com/web/css/frame.css"/>
+    <style>
+        table.table-separate th{
+            font-weight:bold;
+            font-size:14px;
+            border-top:1px solid #F3EDE9 !important;
+        }
+        table.table-separate td{
+            padding: 13px 0;
+            font-weight:100;
+        }
+        .table-separate td.tit{
+            background-color: #f4f9fe;
+            font-weight:normal;
+            padding:22px 0;
+            width:15%;
+        }
+        .table-separate td.cont{
+            text-align: left;
+            padding:16px 22px;
+            width:85%;
+            line-height:175%;
+        }
+        .table-separate.no-border th{
+            border:none;
+            text-align: left;
+        }
+        .table-separate.no-border td{
+            text-align: left;
+            border:none;
+        }
+
+        table {
+            border-collapse: collapse;
+            table-layout: fixed;
+            word-break:break-all;
+            font-size: 10px;
+            width: 100%;
+            text-align: center;
+        }
+        td {
+            word-break:break-all;
+            word-wrap : break-word;
+        }
+        @page {
+            size:210mm 297mm;//纸张大小A4
+        margin: 0.25in;
+            -fs-flow-bottom: "footer";
+            -fs-flow-left: "left";
+            -fs-flow-right: "right";
+            padding: 1em;
+        }
+        #footer {
+            font-size: 90%; font-style: italic;
+            position: absolute; top: 0; left: 0;
+            -fs-move-to-flow: "footer";
+        }
+        #pagenumber:before {
+            content: counter(page);
+        }
+        #pagecount:before {content: counter(pages);
+        }
+    </style>
+</head>
+<body class="bg-white pb-3"  style = "font-family: SimSun;">
+<div id="footer" style=""></div>
+<div style="max-width:600px;margin:0 auto;padding:10px;">
+    <div class="f18 text-center mv-2 bold">收据</div>
+    <div class="f14 text-center mb-3"></div>
+
+    <div class="">
+        <div class="f14 mb bold">开票日期:</div>
+        <div class="f14 mb"></div>
+        <table class="table-separate">
+            <tbody>
+            <tr>
+                <td class="tit" valign="middle">单位或个人</td>
+
+                <td class="cont">
+                    <p class="bold"></p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <!--<div class="f14 mt-3 mb bold"></div>
+        <div class="f14 mb"></div>-->
+        <div class="">
+            <table class="table-separate" style="border-bottom:solid 0px;border-top:solid 0px">
+                <thead></thead>
+                <tbody>
+                    <tr>
+                        <td>收款内容</td>
+                        <td></td>
+                        <td>收款方式</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>人民币 大写</td>
+                        <td></td>
+                        <td>人民币 小写</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!--<div class="f14 mt-3 mb bold"></div>-->
+        <div class="">
+            <table class="table-separate">
+                <tbody>
+                    <tr>
+                        <td class="tit" valign="middle">收款单位盖章</td>
+                        <td class=""></td>
+                        <td class="text-left pl-2">收款人签章</td>
+                        <td></td>
+                        <td>备注</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!--<div class="f14 mt-3 mb bold"></div>
+        <div class="f14 mb"></div>
+        <div class="">
+            <p></p>
+            <p class="bold"></p>
+        </div>-->
+    </div>
+</div>
+
+</body>
+</html>

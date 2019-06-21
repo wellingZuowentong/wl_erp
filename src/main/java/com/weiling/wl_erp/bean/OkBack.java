@@ -7,7 +7,7 @@ import java.util.Date;
  * 作者：王怀朋
  * 日期：2019/6/21
  */
-public class Back {
+public class OkBack {
     private Integer id;
     private String pname;
     private String cname;
@@ -16,11 +16,10 @@ public class Back {
     private String ordercode;
     private Date backtime;
     private String backuser;
-    private Integer zhuangtai;
     private String beizhu;
-    public Back(){}
+    public OkBack(){}
 
-    public Back(Integer id, String pname, String cname, Integer backnum, BigDecimal backprice, String ordercode, Date backtime, String backuser, Integer zhuangtai, String beizhu) {
+    public OkBack(Integer id, String pname, String cname, Integer backnum, BigDecimal backprice, String ordercode, Date backtime, String backuser,String beizhu) {
         this.id = id;
         this.pname = pname;
         this.cname = cname;
@@ -29,7 +28,6 @@ public class Back {
         this.ordercode = ordercode;
         this.backtime = backtime;
         this.backuser = backuser;
-        this.zhuangtai = zhuangtai;
         this.beizhu = beizhu;
     }
 
@@ -97,13 +95,7 @@ public class Back {
         this.backuser = backuser;
     }
 
-    public Integer getZhuangtai() {
-        return zhuangtai;
-    }
 
-    public void setZhuangtai(Integer zhuangtai) {
-        this.zhuangtai = zhuangtai;
-    }
 
     public String getBeizhu() {
         return beizhu;
@@ -124,7 +116,6 @@ public class Back {
                 ", ordercode='" + ordercode + '\'' +
                 ", backtime=" + backtime +
                 ", backuser='" + backuser + '\'' +
-                ", zhuangtai=" + zhuangtai +
                 ", beizhu='" + beizhu + '\'' +
                 '}';
     }

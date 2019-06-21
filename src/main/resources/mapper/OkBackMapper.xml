@@ -2,20 +2,20 @@
 <!DOCTYPE mapper PUBLIC
         "-//mybatis.org//DTD com.example.Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.weiling.wl_erp.mapper.BackMapper">
+<mapper namespace="com.weiling.wl_erp.mapper.OkBackMapper">
 
-    <sql id="back">
-        id,pname,cname,backnum,backprice,ordercode,backtime,backuser,zhuangtai,beizhu
+    <sql id="okback">
+        id,pname,cname,backnum,backprice,ordercode,backtime,backuser,beizhu
     </sql>
 
     <!--新增退货-->
-    <insert id="insertBack" parameterType="com.weiling.wl_erp.bean.Back">
-        insert into back(<include refid="back" />)values(#{id},#{pname},#{cname},#{backnum},#{backprice},#{ordercode},#{backtime},#{backuser},#{zhuangtai},#{beizhu})
+    <insert id="insertOkBack" parameterType="com.weiling.wl_erp.bean.OkBack">
+        insert into okback(<include refid="okback" />)values(#{id},#{pname},#{cname},#{backnum},#{backprice},#{ordercode},#{backtime},#{backuser},#{beizhu})
     </insert>
 
     <!--查询所有退货-->
-    <select id="getAllBack" resultType="com.weiling.wl_erp.bean.Back">
-        SELECT <include refid="back"/> FROM back
+    <select id="getAllOkBack" resultType="com.weiling.wl_erp.bean.OkBack">
+        SELECT <include refid="okback"/> FROM okback
         <where>
             <if test="param1!=null">
                 and pname=#{param1}
@@ -26,31 +26,31 @@
             <if test="param3!=null">
                 and backtime between #{param3} and #{param4}
             </if>
-        </where> ordercode by backtime desc
+        </where> order by backtime desc
     </select>
 
     <!--根据退货ID 查询退货-->
-    <select id="findBackById" resultType="com.weiling.wl_erp.bean.Back">
-        SELECT <include refid="back"/> FROM back where id=#{value}
+    <select id="findOkBackById" resultType="com.weiling.wl_erp.bean.OkBack">
+        SELECT <include refid="okback"/> FROM okback where id=#{value}
     </select>
 
     <!--根据商品名和厂家名查询退货-->
-    <select id="findBackByPnameCname" parameterType="String" resultType="com.weiling.wl_erp.bean.Back">
-        SELECT <include refid="back"/> FROM back where pname=#{pname} and cname=#{cname}
+    <select id="findOkBackByPnameCname" parameterType="String" resultType="com.weiling.wl_erp.bean.OkBack">
+        SELECT <include refid="okback"/> FROM okback where pname=#{pname} and cname=#{cname}
     </select>
 
     <!--根据id和库存信息修改退货-->
-    <update id="updateBack" parameterType="com.weiling.wl_erp.bean.Back">
-        update back set pname=#{pname},cname=#{cname},backnum=#{backnum},backprice=#{backprice},ordercode=#{ordercode},backtime=#{backtime},backuser=#{backuser},zhuangtai=#{zhuangtai},beizhu=#{beizhu} where id=#{id}
+    <update id="updateOkBack" parameterType="com.weiling.wl_erp.bean.OkBack">
+        update okback set pname=#{pname},cname=#{cname},backnum=#{backnum},backprice=#{backprice},ordercode=#{ordercode},backtime=#{backtime},backuser=#{backuser},beizhu=#{beizhu} where id=#{id}
     </update>
 
     <!--根据id删除退货信息-->
-    <delete id="deleteBack" parameterType="int">
-        delete from back where id=#{id}
+    <delete id="deleteOkBack" parameterType="int">
+        delete from okback where id=#{id}
     </delete>
 
-    <update id="updateBackName" parameterType="String">
-        update back set pname=#{param1},cname=#{param2} where pname=#{param3} and cname=#{param4}
+    <update id="updateOkBackName" parameterType="String">
+        update okback set pname=#{param1},cname=#{param2} where pname=#{param3} and cname=#{param4}
     </update>
 
 </mapper>

@@ -1,6 +1,8 @@
 package com.weiling.wl_erp.service;
 
 import com.weiling.wl_erp.bean.Back;
+import com.weiling.wl_erp.bean.OkBack;
+import com.weiling.wl_erp.mapper.OkBackMapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,37 +15,37 @@ import java.util.List;
  * 日期：2019/6/21
  */
 @Service
-public class BackService {
+public class OkBackService {
     @Autowired
-    private BackService backService;
+    private OkBackMapper okMapper;
 
 
-    public int insertBack(Back back){
-        return backService.insertBack(back);
+    public int insertOkBack(OkBack okBack){
+        return okMapper.insertOkBack(okBack);
     }
 
-    public int deleteBack(Integer id){
-        return backService.deleteBack(id);
+    public int deleteOkBack(Integer id){
+        return okMapper.deleteOkBack(id);
     }
 
-    public int updateBack(Back back){
-        return backService.updateBack(back);
+    public int updateOkBack(OkBack okBack){
+        return okMapper.updateOkBack(okBack);
     }
 
-    public List<Back> getAllBack(String pname,String cname,Date starttime,Date overtime){
-        return backService.getAllBack(pname,cname,starttime,overtime);
+    public List<OkBack> getAllOkBack(String pname,String cname,Date starttime,Date overtime){
+        return okMapper.getAllOkBack(pname,cname,starttime,overtime);
     }
 
-    public Back findBackByPnameCname(String pname,String cname){
+    public List<OkBack> findOkBackByPnameCname(String pname,String cname){
 
-        return backService.findBackByPnameCname(pname,cname);
+        return okMapper.findOkBackByPnameCname(pname,cname);
     }
 
-    public int updateBackName(@Param("pname")String pname, @Param("cname")String cname,@Param("odpname")String odpname, @Param("odcname")String odcname){
-        return backService.updateBackName(pname,cname,odpname,odcname);
+    public int updateOkBackName(@Param("pname")String pname, @Param("cname")String cname,@Param("odpname")String odpname, @Param("odcname")String odcname){
+        return okMapper.updateOkBackName(pname,cname,odpname,odcname);
     }
 
-    public Back findBackById(Integer id){
-        return backService.findBackById(id);
+    public Back findOkBackById(Integer id){
+        return okMapper.findOkBackById(id);
     }
 }

@@ -38,8 +38,8 @@ public class BackController {
     @RequestMapping("insertBack")
     @ResponseBody
     public int insertBack(HttpServletRequest request){
-        String order = request.getParameter("order");
-        Sell sell = sellService.findSellByOrder(order);
+        String ordercode = request.getParameter("ordercode");
+        Sell sell = sellService.findSellByOrder(ordercode);
         if(sell==null){
             return 0;
         }
@@ -61,20 +61,12 @@ public class BackController {
         back.setBacknum(backnum);
         back.setBackprice(backprice);
         back.setBacktime(backtime);
-        back.setOrder(order);
+        back.setOrdercode(ordercode);
         back.setBackuser(backuser);
+        back.setZhuangtai(0);
         back.setBeizhu(beizhu);
-        sell.setOksell(sell.getOksell()-backnum);
-        sell.setOverprice(sell.getOverprice().subtract(backprice));
-        KuCun kuCun = kuCunService.findKuCunByName(pname,cname);
-        if(kuCun==null){
-            return 2;
-        }
-        kuCun.setVnum(kuCun.getVnum()+backnum);
-        kuCunService.updateKuCunById(kuCun);
         backService.insertBack(back);
-        sellService.updateSellById(sell);
-        return 3;
+        return 2;
     }
 
     /*分页查询所有退货*/

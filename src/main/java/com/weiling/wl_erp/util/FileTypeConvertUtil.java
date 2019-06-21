@@ -26,7 +26,7 @@ public class FileTypeConvertUtil {
          */
         public static void html2pdf(String htmlFile, String pdfFile) throws Exception {
             // step 1
-            String url = new File("wl_erp/static/tuhuoList.html").toString();
+            String url = new File(htmlFile).toString();
             System.out.println(url);
             // step 2
             OutputStream os = new FileOutputStream(pdfFile);
@@ -59,7 +59,7 @@ public class FileTypeConvertUtil {
         public static void main(String[] args) {
             //        String htmlFile = "/home/lbj/sign.jsp";
             //        String pdfFile = "/home/lbj/sign.pdf";
-            String htmlFile = "http://127.0.0.1:8080/tuhuoList.html";
+            String htmlFile = "wl_erp/static/tuhuoList.html";
             File ff = new File(htmlFile);
             System.out.println(ff.exists() +","+ff.isDirectory());
             String pdfFile = "d:/tuhuo.pdf";

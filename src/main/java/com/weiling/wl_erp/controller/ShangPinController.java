@@ -84,8 +84,8 @@ public class ShangPinController {
     @RequestMapping("/saleShangPinById")
     @ResponseBody
     public int saleShangPinById(HttpServletRequest request){
-        String order = DateUtil.formatNormalDateString(new Date()).replaceAll(":","").replaceAll(" ","");
-        order = order.replace("-","").trim();
+        String ordercode = DateUtil.formatNormalDateString(new Date()).replaceAll(":","").replaceAll(" ","");
+        ordercode = ordercode.replace("-","").trim();
         Integer id = Integer.parseInt(request.getParameter("id"));
         String pname = request.getParameter("pname");
         String cname = request.getParameter("cname");
@@ -107,9 +107,8 @@ public class ShangPinController {
         if((shangpin.getSellnum()-oksell)<0){
             return 2;
         }
-
         Sell sell =new Sell();
-        sell.setOrder(order);
+        sell.setOrdercode(ordercode);
         sell.setPname(pname);
         sell.setCname(cname);
         sell.setOksell(oksell);
@@ -122,7 +121,6 @@ public class ShangPinController {
         sell.setZhuangtai(0);
         sell.setBeizhu(beizhu);
         sellService.insertSell(sell);
-
         shangpin.setSellnum(shangpin.getSellnum()-oksell);
         shangPinService.updateShangPinById(shangpin);
         List<ShangPin> list1 = new ArrayList<>();

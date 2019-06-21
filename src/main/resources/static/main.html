@@ -105,6 +105,8 @@
             $(function(){
                 qx();
             });
+            var myzidong=setInterval("dl()", 1000);
+
             function qx() {
 
                 $.ajax({
@@ -112,7 +114,6 @@
                     dataType: "json",//预期服务器返回的数据类型
                     url: "checkqx" ,//url
                     success: function (result) {
-                        vv();
                         if(result.qx==2){
                             $("#dd").remove();
                             $("#bb").remove();
@@ -135,7 +136,13 @@
                     url: "/checkZhuangTai" ,//url
                     success: function (result) {
                         if(result==0){
+                            clearInterval(myzidong);
                             alert("该账号再另一个窗口打开，请退出或重新登陆!");
+                            window.location.href="index.html";
+                        }
+                        if(result==3){
+                            clearInterval(myzidong);
+                            alert("长时间未操作，请重新登陆");
                             window.location.href="index.html";
                         }
                     },
@@ -168,8 +175,8 @@
                     }
                 });
             }
-            function vv(){
-                setInterval("dl()", 1000);}
+
+
         </script>
 
     </body>

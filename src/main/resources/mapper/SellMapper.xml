@@ -5,12 +5,12 @@
 <mapper namespace="com.weiling.wl_erp.mapper.SellMapper">
 
     <sql id="sell">
-        id,order,pname,cname,oksell,sellprice,guige,allprice,overprice,selluser,selltime,zhuangtai,beizhu
+        id,ordercode,pname,cname,oksell,sellprice,guige,allprice,overprice,selluser,selltime,zhuangtai,beizhu
     </sql>
 
    <resultMap id="result" type="com.weiling.wl_erp.bean.Sell">
         <result property="id" column="id"/>
-       <result property="order" column="order" />
+       <result property="ordercode" column="ordercode" />
         <result property="pname" column="pname" />
         <result property="cname" column="cname" />
         <result property="oksell" column="oksell" />
@@ -25,7 +25,7 @@
    </resultMap>
     <!--增加销售表-->
     <insert id="insertSell" parameterType="com.weiling.wl_erp.bean.Sell">
-        insert into sell(<include refid="sell" />)values(#{id},#{order},#{pname},#{cname},#{oksell},#{sellprice},#{guige},#{allprice},#{overprice},#{selluser},#{selltime},#{zhuangtai},#{beizhu})
+        insert into sell(<include refid="sell" />)values(#{id},#{ordercode},#{pname},#{cname},#{oksell},#{sellprice},#{guige},#{allprice},#{overprice},#{selluser},#{selltime},#{zhuangtai},#{beizhu})
     </insert>
 
     <!--查询所有销售表-->
@@ -50,7 +50,7 @@
     </select>
 
     <select id="findSellByOrder" resultType="com.weiling.wl_erp.bean.Sell">
-        SELECT <include refid="sell"/> FROM sell where order=#{value}
+        SELECT <include refid="sell"/> FROM sell where ordercode=#{value}
     </select>
 
     <!--根据商品名和厂家名定位销售列-->

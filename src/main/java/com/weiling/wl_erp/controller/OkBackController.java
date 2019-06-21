@@ -4,10 +4,11 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.weiling.wl_erp.bean.Back;
 import com.weiling.wl_erp.bean.KuCun;
-import com.weiling.wl_erp.bean.RuKu;
+import com.weiling.wl_erp.bean.OkBack;
 import com.weiling.wl_erp.bean.Sell;
 import com.weiling.wl_erp.service.BackService;
 import com.weiling.wl_erp.service.KuCunService;
+import com.weiling.wl_erp.service.OkBackService;
 import com.weiling.wl_erp.service.SellService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,52 +28,43 @@ import java.util.List;
  * 日期：2019/6/21
  */
 @Controller
-public class BackController {
+public class OkBackController {
     @Autowired
     private BackService backService;
     @Autowired
     private SellService sellService;
     @Autowired
     private KuCunService kuCunService;
+    @Autowired
+    private OkBackService okBackService;
 
     @RequestMapping("insertBack")
     @ResponseBody
     public int insertBack(HttpServletRequest request){
-        String ordercode = request.getParameter("ordercode");
-        Sell sell = sellService.findSellByOrder(ordercode);
-        if(sell==null){
-            return 0;
-        }
-        String pname = request.getParameter("pname");
-        String cname = request.getParameter("cname");
-        String sbacknum = request.getParameter("backnum");
-        String sbackprice = request.getParameter("backprice");
-        BigDecimal backprice = new BigDecimal(sbackprice==null?"0":sbackprice);
-        Integer backnum = Integer.parseInt(sbacknum==null?"0":sbacknum);
-        if(backnum>sell.getOksell()){
-            return 1;
-        }
-        String backuser = request.getParameter("backuser");
+        String okBackUser = request.getParameter("okBackUser");
         String beizhu = request.getParameter("beizhu");
-        Date backtime = new Date();
-        Back back = new Back();
-        back.setPname(pname);
-        back.setCname(cname);
-        back.setBacknum(backnum);
-        back.setBackprice(backprice);
-        back.setBacktime(backtime);
-        back.setOrdercode(ordercode);
-        back.setBackuser(backuser);
-        back.setZhuangtai(0);
-        back.setBeizhu(beizhu);
-        backService.insertBack(back);
-        return 2;
+       Integer id = Integer.parseInt(request.getParameter("id"));
+       Back back = backService.findBackById(id);
+       back.setZhuangtai(1);
+       backService.updateBack(back);
+       OkBack okBack = new OkBack();
+       okBack.setPname(back.getPname());
+       okBack.setCname(back.getCname());
+       okBack.setBacknum(back.getBacknum());
+       okBack.setBackprice(back.getBackprice());
+       okBack.setBacktime(new Date());
+       okBack.setBackuser(okBackUser);
+       okBack.setBeizhu(beizhu);
+        KuCun kuCun = kuCunService.findKuCunByName(back.getPname(),back.getCname());
+        kuCun.setVnum(back.getBacknum()+kuCun.getVnum());
+        kuCunService.updateKuCunById(kuCun);
+        return okBackService.insertOkBack(okBack);
     }
 
     /*分页查询所有退货*/
-    @RequestMapping("/getAllBack")
+    @RequestMapping("/getAllOkBack")
     @ResponseBody
-    public PageInfo<Back> getAllRuKu(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum, HttpServletRequest request) throws ParseException {
+    public PageInfo<OkBack> getAllOkBack(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum, HttpServletRequest request) throws ParseException {
         Date starttime=null;
         Date overtime=null;
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -91,8 +83,8 @@ public class BackController {
         }
 
         PageHelper.startPage(pageNum,5);
-        List<Back> list = backService.getAllBack(pname,cname,starttime,overtime);
-        PageInfo<Back> pageInfo = new PageInfo<Back>(list);
+        List<OkBack> list = okBackService.getAllOkBack(pname,cname,starttime,overtime);
+        PageInfo<OkBack> pageInfo = new PageInfo<OkBack>(list);
         return pageInfo;
     }
 

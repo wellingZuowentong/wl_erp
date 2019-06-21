@@ -13,12 +13,25 @@ public class Back {
     private String cname;
     private Integer backnum;
     private BigDecimal backprice;
-    private String order;
+    private String ordercode;
     private Date backtime;
     private String backuser;
+    private Integer zhuangtai;
     private String beizhu;
-
     public Back(){}
+
+    public Back(Integer id, String pname, String cname, Integer backnum, BigDecimal backprice, String ordercode, Date backtime, String backuser, Integer zhuangtai, String beizhu) {
+        this.id = id;
+        this.pname = pname;
+        this.cname = cname;
+        this.backnum = backnum;
+        this.backprice = backprice;
+        this.ordercode = ordercode;
+        this.backtime = backtime;
+        this.backuser = backuser;
+        this.zhuangtai = zhuangtai;
+        this.beizhu = beizhu;
+    }
 
     public Integer getId() {
         return id;
@@ -60,12 +73,12 @@ public class Back {
         this.backprice = backprice;
     }
 
-    public String getOrder() {
-        return order;
+    public String getOrdercode() {
+        return ordercode;
     }
 
-    public void setOrder(String order) {
-        this.order = order;
+    public void setOrdercode(String ordercode) {
+        this.ordercode = ordercode;
     }
 
     public Date getBacktime() {
@@ -84,6 +97,14 @@ public class Back {
         this.backuser = backuser;
     }
 
+    public Integer getZhuangtai() {
+        return zhuangtai;
+    }
+
+    public void setZhuangtai(Integer zhuangtai) {
+        this.zhuangtai = zhuangtai;
+    }
+
     public String getBeizhu() {
         return beizhu;
     }
@@ -100,9 +121,10 @@ public class Back {
                 ", cname='" + cname + '\'' +
                 ", backnum=" + backnum +
                 ", backprice=" + backprice +
-                ", order='" + order + '\'' +
+                ", ordercode='" + ordercode + '\'' +
                 ", backtime=" + backtime +
                 ", backuser='" + backuser + '\'' +
+                ", zhuangtai=" + zhuangtai +
                 ", beizhu='" + beizhu + '\'' +
                 '}';
     }

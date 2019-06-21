@@ -375,7 +375,7 @@ public class TestExcelController {
         ExcelData data = new ExcelData();
         data.setName("退货表");
         List<String> titles1 = new ArrayList();
-        titles1.add("退货编号");
+        titles1.add("订单编号");
         titles1.add("商品名");
         titles1.add("厂家");
         titles1.add("退货数量");
@@ -391,7 +391,7 @@ public class TestExcelController {
         BigDecimal price = new BigDecimal("0");
         for(Back back:list) {
             List<Object> row = new ArrayList();
-            row.add(back.getOrder());
+            row.add(back.getOrdercode());
             row.add(back.getPname());
             row.add(back.getCname());
             row.add(back.getBacknum());

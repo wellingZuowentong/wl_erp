@@ -1,6 +1,7 @@
 package com.weiling.wl_erp.mapper;
 
 import com.weiling.wl_erp.bean.Back;
+import com.weiling.wl_erp.bean.OkBack;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -12,12 +13,12 @@ import java.util.List;
  * 日期：2019/6/21
  */
 @Mapper
-public interface BackMapper {
-    public int insertBack(Back back);
-    public int deleteBack(Integer id);
-    public int updateBack(Back back);
-    public List<Back> getAllBack(@Param("pname")String pname, @Param("cname")String cname, @Param("starttime") Date starttime, @Param("overtime")Date overtime);
-    public List<Back> findBackByPnameCname(@Param("pname")String pname, @Param("cname")String cname);
-    public int updateBackName(@Param("pname")String pname, @Param("cname")String cname,@Param("odpname")String odpname, @Param("odcname")String odcname);
-    public Back findBackById(Integer id);
+public interface OkBackMapper {
+    public int insertOkBack(OkBack okBack);
+    public int deleteOkBack(Integer id);
+    public int updateOkBack(OkBack okBack);
+    public List<OkBack> getAllOkBack(@Param("pname") String pname, @Param("cname") String cname, @Param("starttime") Date starttime, @Param("overtime") Date overtime);
+    public List<OkBack> findOkBackByPnameCname(@Param("pname") String pname, @Param("cname") String cname);
+    public int updateOkBackName(@Param("pname") String pname, @Param("cname") String cname, @Param("odpname") String odpname, @Param("odcname") String odcname);
+    public Back findOkBackById(Integer id);
 }

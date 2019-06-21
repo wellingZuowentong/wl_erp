@@ -281,18 +281,7 @@
                 $("#ckModal").modal("show");
                 $("#ckoutser").empty();
                 $("#ckbeizhu").empty();
-                $.ajax({
-                    type:'Post',
-                    url:'findSellById',
-                    data:{
-                        'id':flag
-                    },
-                    dataType:'json',
-                    success:function(msg){
-                        $("#ckid").val(msg.id);
-
-                    }
-                });
+                $("#ckid").val(flag);
             }
 
             //驳回

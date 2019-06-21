@@ -34,6 +34,8 @@ public class TestExcelController {
     private ChuKuService chuKuService;
     @Autowired
     private ShangPinService shangPinService;
+    @Autowired
+    private BackService backService;
 
     @RequestMapping(value = "/excelsell", method = RequestMethod.GET)
     public void excelsell(HttpServletResponse response, HttpServletRequest request) throws Exception {
@@ -350,5 +352,74 @@ public class TestExcelController {
         String fileName = "库存表"+fdate.format(new Date()) + ".xls";
         ExcelUtils.exportExcel(response, fileName, data);
     }
+    @RequestMapping(value = "/excelBack", method = RequestMethod.GET)
+    public void excelBack(HttpServletResponse response, HttpServletRequest request) throws Exception {
+        Date starttime=null;
+        Date overtime=null;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String pname = request.getParameter("pname");
+        String cname = request.getParameter("cname");
+        String time = request.getParameter("starttime");
+        String otime = request.getParameter("overtime");
+        if(time!=null&&time!=""){
+            starttime = formatter.parse(time);
+        }
+
+        if(otime!=null&&otime!=""){
+            overtime = formatter.parse(otime);
+        }else{
+            overtime =new Date();
+        }
+
+
+        ExcelData data = new ExcelData();
+        data.setName("退货表");
+        List<String> titles1 = new ArrayList();
+        titles1.add("退货编号");
+        titles1.add("商品名");
+        titles1.add("厂家");
+        titles1.add("退货数量");
+        titles1.add("退货总价");
+        titles1.add("退货人");
+        titles1.add("退货时间");
+        titles1.add("备注");
+        data.setTitles(titles1);
+
+        List<List<Object>> rows = new ArrayList();
+        List<Back> list = backService.getAllBack(pname,cname,starttime,overtime);
+        Integer num=0;
+        BigDecimal price = new BigDecimal("0");
+        for(Back back:list) {
+            List<Object> row = new ArrayList();
+            row.add(back.getOrder());
+            row.add(back.getPname());
+            row.add(back.getCname());
+            row.add(back.getBacknum());
+            num = num+back.getBacknum();
+            row.add(back.getBackprice());
+            price = price.add(back.getBackprice());
+            row.add(back.getBackuser());
+            row.add(back.getBacktime());
+            row.add(back.getBeizhu());
+            rows.add(row);
+        }
+        List<Object> row1 = new ArrayList<>();
+        row1.add("合计：");
+        List<Object> row2 = new ArrayList<>();
+        row2.add("总退货数量：");
+        row2.add(num);
+        row2.add("总退货价：");
+        row2.add(price);
+        rows.add(row1);
+        rows.add(row2);
+        data.setRows(rows);
+        SimpleDateFormat fdate = new SimpleDateFormat("MMddHHmmss");
+        String fileName = "入库表"+fdate.format(new Date()) + ".xls";
+        ExcelUtils.exportExcel(response, fileName, data);
+    }
+
+
+
+
 
 }

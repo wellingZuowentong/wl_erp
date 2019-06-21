@@ -43,6 +43,7 @@ public class BackController {
         if(sell==null){
             return 0;
         }
+        System.out.println("退货走了！！！！！2");
         String pname = request.getParameter("pname");
         String cname = request.getParameter("cname");
         String sbacknum = request.getParameter("backnum");
@@ -52,6 +53,7 @@ public class BackController {
         if(backnum>sell.getOksell()){
             return 1;
         }
+        System.out.println("退货走了！！！！！3");
         String backuser = request.getParameter("backuser");
         String beizhu = request.getParameter("beizhu");
         Date backtime = new Date();

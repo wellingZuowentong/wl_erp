@@ -52,6 +52,7 @@ public class OkBackController {
        okBack.setCname(back.getCname());
        okBack.setBacknum(back.getBacknum());
        okBack.setBackprice(back.getBackprice());
+       okBack.setOrdercode(back.getOrdercode());
        okBack.setBacktime(new Date());
        okBack.setBackuser(okBackUser);
        okBack.setBeizhu(beizhu);

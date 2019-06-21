@@ -1,0 +1,41 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD com.example.Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weiling.wl_erp.mapper.SellAndBackMapper">
+
+    <sql id="back">
+        b.backnum,b.backprice,b.ordercode,b.backtime
+    </sql>
+    <sql id="sell">
+        s.id,s.ordercode,s.pname,s.cname,s.oksell,s.overprice,s.selluser,s.selltime
+    </sql>
+
+    <!--<resultMap type="com.weiling.wl_erp.bean.SellAndBack" id="aa">
+
+        <result column="s_ordercode" property="ordercode"/>
+        <result column="s_pname" property="pname"/>
+        <result column="s_cname" property="cname"/>
+        <result column="s_oksell" property="oksell"/>
+        <result column="s_overprice" property="overprice"/>
+        <result column="s_selluser" property="selluser"/>
+        <result column="s_selluser" property="selluser"/>
+        <result column="s_selltime" property="selltime"/>
+
+        <collection property="backlist" ofType="com.weiling.wl_erp.bean.Back">
+            <result column="b_backnum" property="backnum"/>
+            <result column="b_backprice" property="backprice"/>
+            <result column="b_backtime" property="backtime"/>
+        </collection>
+
+
+    </resultMap>
+
+    <select id="qq" resultType="aa">
+        select  s.ordercode s_ordercode,s.pname s_pname,s.cname s_cname,s.oksell s_oksell,s.overprice s_overprice,
+        s.selluser s_selluser,s.selltime s_selltime,
+        b.backnum b_backnum,b.backprice b_backprice,b.backtime b_backtime
+        from sell s left join back b on s.ordercode=b.ordercode
+    </select>-->
+
+</mapper>

@@ -58,18 +58,15 @@
                     <input type="checkbox" id='checkall'>
                     <label for='checkall'>全选</label>
                 </th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th>订单编号</th>
+                <th>商品名</th>
+                <th>厂家</th>
+                <th>退货数量</th>
+                <th>退货总价</th>
+                <th>退货时间</th>
+                <th>退货人</th>
+                <th>退货时间</th>
+                <th>备注</th>
             </tr>
             </thead>
             <tbody id="data">
@@ -82,5 +79,90 @@
             <button type='button' id="next" class="btn btn-info">下一页</button>
             <button type='button' id="end" class="btn btn-danger">尾页</button>
         </div>
+
+        <script src="js/jquery.js"></script>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/ajaxfileupload.js"></script>
+        <script>
+            var pre,next,end;
+            var tj="";//条件
+            var dqy=1;
+
+            $(function(){
+                //查询所有销售列表
+                getAllSell(1,tj);
+                $("#first").on("click",function(){
+                    getAllSell(1,tj);
+                });
+                $("#pre").on("click",function(){
+                    if(pre==0){
+                        pre=1;
+                    }
+                    getAllSell(pre,tj)
+                });
+                $("#next").on("click",function(){
+                    getAllSell(next,tj)
+                });
+                $("#end").on("click",function(){
+                    getAllSell(end,tj);
+                });
+            });
+            //按条件分页查找
+            function queryByTj(){
+                //重置条件
+                tj="";
+
+                var pname=$("#pname").val();
+                var cname = $("#cname").val();
+                var starttime = $("#starttime").val();
+                var overtime = $("#overtime").val();
+
+                if(pname!=null && pname!=""){
+                    tj+="&pname="+pname;
+                }
+                if(cname!=null &&cname!=""){
+                    tj+="&cname="+cname;
+                }
+                if(starttime!=null &&starttime!=""){
+                    tj+="&starttime="+starttime;
+                }
+                if(overtime!=null &&overtime!=""){
+                    tj+="&overtime="+overtime;
+                }
+                getAllSell(1,tj);
+            }
+
+
+            //分页查询所有销售表
+            function  getAllSell(num,con){
+                dqy=num;
+                $.ajax({
+                    type:'Get',
+                    url:'getAllBack?pageNum='+num+con,
+                    dataType:'json',
+                    success:function(msg){
+                        $("#data").empty();
+                        var zt = "";
+                        pre=msg.prePage;
+                        next=msg.nextPage;
+                        end=msg.lastPage;
+                        var oldTime;
+                        var newTime;
+                        $.each(msg.list,function(i,msg) {
+                            oldTime = new Date(msg.backtime).toJSON();
+                            newTime = new Date(+new Date(oldTime) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '');
+                            $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>" + msg.ordercode + "</th><th>" + msg.pname + "</th><th>" + msg.cname + "</th><th>" + msg.backnum + "</th><th>" + msg.backprice + "</th><th>" + msg.backtime + "</th><th>" + msg.backuser + "</th><th>" + msg.beizhu  + "</th><th><a href='#' onclick='chuku(" + msg.id + ")' style='text-decoration:none'>入库</a></th></tr>");
+                        });
+                    }
+                });
+            }
+
+            function export2Excel() {
+                window.location.href="excelsell?"+tj;
+            }
+        </script>
     </body>
 </html>

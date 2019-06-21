@@ -6,6 +6,7 @@ import com.weiling.wl_erp.bean.Sell;
 import com.weiling.wl_erp.bean.ShangPin;
 import com.weiling.wl_erp.service.SellService;
 import com.weiling.wl_erp.service.ShangPinService;
+import com.weiling.wl_erp.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -83,6 +84,8 @@ public class ShangPinController {
     @RequestMapping("/saleShangPinById")
     @ResponseBody
     public int saleShangPinById(HttpServletRequest request){
+        String order = DateUtil.formatNormalDateString(new Date()).replaceAll(":","").replaceAll(" ","");
+        order = order.replace("-","").trim();
         Integer id = Integer.parseInt(request.getParameter("id"));
         String pname = request.getParameter("pname");
         String cname = request.getParameter("cname");
@@ -104,7 +107,9 @@ public class ShangPinController {
         if((shangpin.getSellnum()-oksell)<0){
             return 2;
         }
+
         Sell sell =new Sell();
+        sell.setOrder(order);
         sell.setPname(pname);
         sell.setCname(cname);
         sell.setOksell(oksell);

@@ -1,4 +1,4 @@
-package com.weiling.wl_erp.controller.dayinji;
+package com.weiling.wl_erp.controller;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.printing.PDFPrintable;

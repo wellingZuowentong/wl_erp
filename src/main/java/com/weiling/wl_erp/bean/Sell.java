@@ -9,6 +9,7 @@ import java.util.Date;
  */
 public class Sell {
     private Integer id;
+    private String order;
     private String pname;
     private String cname;
     private Integer oksell;//销售数量
@@ -22,8 +23,9 @@ public class Sell {
     private String beizhu;
     public Sell(){}
 
-    public Sell(Integer id, String pname, String cname, Integer oksell, BigDecimal sellprice, BigDecimal allprice, BigDecimal overprice, String guige, String selluser, Integer zhuangtai, Date selltime, String beizhu) {
+    public Sell(Integer id, String order, String pname, String cname, Integer oksell, BigDecimal sellprice, BigDecimal allprice, BigDecimal overprice, String guige, String selluser, Integer zhuangtai, Date selltime, String beizhu) {
         this.id = id;
+        this.order = order;
         this.pname = pname;
         this.cname = cname;
         this.oksell = oksell;
@@ -43,6 +45,14 @@ public class Sell {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
     }
 
     public String getPname() {
@@ -137,6 +147,7 @@ public class Sell {
     public String toString() {
         return "Sell{" +
                 "id=" + id +
+                ", order='" + order + '\'' +
                 ", pname='" + pname + '\'' +
                 ", cname='" + cname + '\'' +
                 ", oksell=" + oksell +

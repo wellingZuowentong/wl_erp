@@ -44,4 +44,7 @@ public class SellService {
     public int updateSellName(String pname,String cname,String odpname,String odcname){
         return sellMapper.updateSellName(pname,cname,odpname,odcname);
     }
+    public Sell findSellByOrder(String order){
+        return sellMapper.findSellByOrder(order);
+    }
 }

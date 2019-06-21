@@ -158,6 +158,73 @@
                 </div>
             </div>
         </div>
+
+        <!-- 驳回模态框 -->
+        <div class="modal fade" id="thModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">退货</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="post" class="form-horizontal" role="form" id="th_form">
+                            <input type="hidden" name="id" id="thid"/>
+                            <div class="form-group">
+                                <label for="thpname" class="col-sm-2 control-label">商品名：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="thpname" name="pname" readonly="readonly">
+                                </div>
+                            </div>
+                            <!-- 厂家 -->
+                            <div class="form-group">
+                                <label for="thcname" class="col-sm-2 control-label">厂家：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="thcname" name="cname" readonly="readonly">
+                                </div>
+                            </div>
+                            <!-- 退货数量 -->
+                            <div class="form-group">
+                                <label for="thbacknum" class="col-sm-2 control-label">退货数量：</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" id="thbacknum" name="backnum">
+                                </div>
+                            </div>
+                            <!-- 退货价格 -->
+                            <div class="form-group">
+                                <label for="thbackprice" class="col-sm-2 control-label">退货价格：</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" id="thbackprice" name="backprice">
+                                </div>
+                            </div>
+
+                            <!-- 退货人 -->
+                            <div class="form-group">
+                                <label for="thbackuser" class="col-sm-2 control-label">退货人：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="thbackuser" name="backuser">
+                                </div>
+                            </div>
+
+                            <!-- 备注 -->
+                            <div class="form-group">
+                                <label for="thbeizhu" class="col-sm-2 control-label">备注：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="thbeizhu" name="beizhu">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-10 col-sm-10">
+                                    <button type="button" class="btn btn-default" onclick="th()">退货</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script src="js/jquery.js"></script>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="js/jquery.min.js"></script>
@@ -234,7 +301,7 @@
                             newTime = new Date(+new Date(oldTime)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'');
                             if(msg.zhuangtai==0){
                                 zt = '未出库';
-                                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg.id+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.oksell+"</th><th>"+msg.sellprice+"</th><th>"+msg.guige+"</th><th>"+msg.overprice+"</th><th>"+msg.selluser+"</th><th>"+newTime+"</th><th><p style='color: dodgerblue'>"+zt+"</p></th><th>"+msg.beizhu+"</th><th><a href='#' onclick='chuku("+msg.id+")' style='text-decoration:none'>出库</a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='bohui("+msg.id+")' style='text-decoration:none'>驳回</a></th></tr>");
+                                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg.id+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.oksell+"</th><th>"+msg.sellprice+"</th><th>"+msg.guige+"</th><th>"+msg.overprice+"</th><th>"+msg.selluser+"</th><th>"+newTime+"</th><th><p style='color: dodgerblue'>"+zt+"</p></th><th>"+msg.beizhu+"</th><th><a href='#' onclick='chuku("+msg.id+")' style='text-decoration:none'>出库</a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='bohui("+msg.id+")' style='text-decoration:none'>驳回</a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='tuihuo("+msg.id+")' style='text-decoration:none'>退货</a></th></tr>");
                             }else if (msg.zhuangtai==1){
                                 zt = '已出库';
                                 $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg.id+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.oksell+"</th><th>"+msg.sellprice+"</th><th>"+msg.guige+"</th><th>"+msg.overprice+"</th><th>"+msg.selluser+"</th><th>"+newTime+"</th><th><p style='color: #3e8f3e'>"+zt+"</p></th><th>"+msg.beizhu+"</th><th><a class=\"disabled\" style='text-decoration:none'></a><label></label><a class=\"disabled\" style='text-decoration:none'></a></th></tr>");
@@ -244,34 +311,6 @@
                             }
                         });
 
-                    }
-                });
-            }
-
-
-
-            //查询所有销售列表
-            function queryAllSell() {
-                $.ajax({
-                    type:'Post',
-                    url:'findAllSell',
-                    dataType:'json',
-                    success:function(msg){
-                        $("#data").empty();
-                        var zt = "";
-                        for(var i = 0;i < msg.length;i++){
-                            if(msg[i].zhuangtai==0){
-                                zt = '未出库';
-                                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg[i].id+"</th><th>"+msg[i].pname+"</th><th>"+msg[i].cname+"</th><th>"+msg[i].oksell+"</th><th>"+msg[i].sellprice+"</th><th>"+msg[i].guige+"</th><th>"+msg[i].allprice+"</th><th>"+msg[i].selluser+"</th><th><p style='color: dodgerblue'>"+zt+"</p></th><th>"+msg[i].beizhu+"</th><th><a href='#' onclick='chuku("+msg[i].id+")' style='text-decoration:none'>出库</a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='bohui("+msg[i].id+")' style='text-decoration:none'>驳回</a></th></tr>");
-                            }else if (msg[i].zhuangtai==1){
-                                zt = '已出库';
-                                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg[i].id+"</th><th>"+msg[i].pname+"</th><th>"+msg[i].cname+"</th><th>"+msg[i].oksell+"</th><th>"+msg[i].sellprice+"</th><th>"+msg[i].guige+"</th><th>"+msg[i].allprice+"</th><th>"+msg[i].selluser+"</th><th><p style='color: #3e8f3e'>"+zt+"</p></th><th>"+msg[i].beizhu+"</th><th><a class=\"disabled\" style='text-decoration:none'></a><label></label><a class=\"disabled\" style='text-decoration:none'></a></th></tr>");
-                            }else if (msg[i].zhuangtai==2){
-                                zt = '被驳回';
-                                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg[i].id+"</th><th>"+msg[i].pname+"</th><th>"+msg[i].cname+"</th><th>"+msg[i].oksell+"</th><th>"+msg[i].sellprice+"</th><th>"+msg[i].guige+"</th><th>"+msg[i].allprice+"</th><th>"+msg[i].selluser+"</th><th><p style='color: red'>"+zt+"</p></th><th>"+msg[i].beizhu+"</th><th><a class=\"disabled\" style='text-decoration:none'></a><label></label><a class=\"disabled\" style='text-decoration:none'></a></th></tr>");
-                            }
-                           // $("#caid").append("<option value='"+msg.cname+"'>"+msg.cname+"</option>");
-                        }
                     }
                 });
             }
@@ -289,6 +328,18 @@
                 $("#bhModal").modal("show");
                 $("#bhoutser").empty();
                 $("#bhbeizhu").empty();
+                $("#bhid").val(flag);
+            }
+
+            //退货
+            function tuihuo(flag) {
+                $("#thModal").modal("show");
+                $("#thpname").empty();
+                $("#thcname").empty();
+                $("#thbacknum").empty();
+                $("#thbackprice").empty();
+                $("#thbackuser").empty();
+                $("#thbeizhu").empty();
                 $.ajax({
                     type:'Post',
                     url:'findSellById',
@@ -297,12 +348,12 @@
                     },
                     dataType:'json',
                     success:function(msg){
-                        $("#bhid").val(msg.id);
-
+                        $("#thid").val(msg.id);
+                        $("#thpname").val(msg.pname);
+                        $("#thcname").val(msg.cname);
                     }
                 });
             }
-
             //提交出库
             function ck() {
                 $.ajax({
@@ -339,6 +390,26 @@
                     }
                 });
             }
+
+            //提交退货
+            function th() {
+                $.ajax({
+                    type: "POST",//方法类型
+                    dataType: "json",//预期服务器返回的数据类型
+                    url: "insertBack" ,//url
+                    data: $('#th_form').serialize(),
+                    success: function (result) {
+                        $("#thModal").modal("hide");
+                        getAllSell(dqy,tj);
+                        alert("退货成功");
+
+                    },
+                    error : function() {
+                        alert("异常！");
+                    }
+                });
+            }
+
             function export2Excel() {
                 window.location.href="excelsell?"+tj;
             }

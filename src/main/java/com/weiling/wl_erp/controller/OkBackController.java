@@ -38,9 +38,9 @@ public class OkBackController {
     @Autowired
     private OkBackService okBackService;
 
-    @RequestMapping("insertBack")
+    @RequestMapping("insertOkBack")
     @ResponseBody
-    public int insertBack(HttpServletRequest request){
+    public int insertOkBack(HttpServletRequest request){
         String okBackUser = request.getParameter("okBackUser");
         String beizhu = request.getParameter("beizhu");
        Integer id = Integer.parseInt(request.getParameter("id"));

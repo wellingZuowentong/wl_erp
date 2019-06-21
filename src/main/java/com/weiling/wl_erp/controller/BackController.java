@@ -72,7 +72,7 @@ public class BackController {
     /*分页查询所有退货*/
     @RequestMapping("/getAllBack")
     @ResponseBody
-    public PageInfo<Back> getAllRuKu(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum, HttpServletRequest request) throws ParseException {
+    public PageInfo<Back> getAllBack(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum, HttpServletRequest request) throws ParseException {
         Date starttime=null;
         Date overtime=null;
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

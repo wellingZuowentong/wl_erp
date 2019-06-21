@@ -72,13 +72,10 @@ public class UserController {
         user.setPassword(password);
         return userService.changePass(user);
     }
-int i = 0;
     @RequestMapping("/checkZhuangTai")
     @ResponseBody
     public int checkZhuangTai(HttpSession session){
         User user = (User)session.getAttribute("username");
-        i+=1;
-        System.out.println(i);
         if(user==null){
             return 3;
         }

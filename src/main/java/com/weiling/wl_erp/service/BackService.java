@@ -1,6 +1,7 @@
 package com.weiling.wl_erp.service;
 
 import com.weiling.wl_erp.bean.Back;
+import com.weiling.wl_erp.mapper.BackMapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,35 +16,35 @@ import java.util.List;
 @Service
 public class BackService {
     @Autowired
-    private BackService backService;
+    private BackMapper backMapper;
 
 
     public int insertBack(Back back){
-        return backService.insertBack(back);
+        return backMapper.insertBack(back);
     }
 
     public int deleteBack(Integer id){
-        return backService.deleteBack(id);
+        return backMapper.deleteBack(id);
     }
 
     public int updateBack(Back back){
-        return backService.updateBack(back);
+        return backMapper.updateBack(back);
     }
 
     public List<Back> getAllBack(String pname,String cname,Date starttime,Date overtime){
-        return backService.getAllBack(pname,cname,starttime,overtime);
+        return backMapper.getAllBack(pname,cname,starttime,overtime);
     }
 
-    public Back findBackByPnameCname(String pname,String cname){
+    public List<Back> findBackByPnameCname(String pname,String cname){
 
-        return backService.findBackByPnameCname(pname,cname);
+        return backMapper.findBackByPnameCname(pname,cname);
     }
 
     public int updateBackName(@Param("pname")String pname, @Param("cname")String cname,@Param("odpname")String odpname, @Param("odcname")String odcname){
-        return backService.updateBackName(pname,cname,odpname,odcname);
+        return backMapper.updateBackName(pname,cname,odpname,odcname);
     }
 
     public Back findBackById(Integer id){
-        return backService.findBackById(id);
+        return backMapper.findBackById(id);
     }
 }

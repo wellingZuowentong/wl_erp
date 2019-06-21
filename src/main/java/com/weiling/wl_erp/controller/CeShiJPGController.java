@@ -1,4 +1,4 @@
-package com.weiling.wl_erp.controller;
+package com.weiling.wl_erp.controller.dayinji;
 
 import javax.print.*;
 import javax.print.attribute.HashPrintRequestAttributeSet;

@@ -414,7 +414,7 @@ public class TestExcelController {
         rows.add(row2);
         data.setRows(rows);
         SimpleDateFormat fdate = new SimpleDateFormat("MMddHHmmss");
-        String fileName = "入库表"+fdate.format(new Date()) + ".xls";
+        String fileName = "待退货表"+fdate.format(new Date()) + ".xls";
         ExcelUtils.exportExcel(response, fileName, data);
     }
 

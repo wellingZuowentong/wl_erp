@@ -169,6 +169,7 @@
                     </div>
                     <div class="modal-body">
                         <form action="insertBack" method="post" class="form-horizontal" role="form" id="th_form">
+                            <input type="hidden" name="id" id="thid"/>
                             <input type="hidden" name="ordercode" id="thordercode"/>
                             <div class="form-group">
                                 <label for="thpname" class="col-sm-2 control-label">商品名：</label>
@@ -301,13 +302,13 @@
                             newTime = new Date(+new Date(oldTime)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'');
                             if(msg.zhuangtai==0){
                                 zt = '未出库';
-                                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg.id+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.oksell+"</th><th>"+msg.sellprice+"</th><th>"+msg.guige+"</th><th>"+msg.overprice+"</th><th>"+msg.selluser+"</th><th>"+newTime+"</th><th><p style='color: dodgerblue'>"+zt+"</p></th><th>"+msg.beizhu+"</th><th><a href='#' onclick='chuku("+msg.id+")' style='text-decoration:none'>出库</a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='bohui("+msg.id+")' style='text-decoration:none'>驳回</a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='tuihuo("+msg.ordercode+")' style='text-decoration:none'>退货</a></th></tr>");
+                                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg.id+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.oksell+"</th><th>"+msg.sellprice+"</th><th>"+msg.guige+"</th><th>"+msg.overprice+"</th><th>"+msg.selluser+"</th><th>"+newTime+"</th><th><p style='color: dodgerblue'>"+zt+"</p></th><th>"+msg.beizhu+"</th><th><a href='#' onclick='chuku("+msg.id+")' style='text-decoration:none'>出库</a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='bohui("+msg.id+")' style='text-decoration:none'>驳回</a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='tuihuo("+msg.id+")' style='text-decoration:none'>退货</a></th></tr>");
                             }else if (msg.zhuangtai==1){
                                 zt = '已出库';
-                                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg.id+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.oksell+"</th><th>"+msg.sellprice+"</th><th>"+msg.guige+"</th><th>"+msg.overprice+"</th><th>"+msg.selluser+"</th><th>"+newTime+"</th><th><p style='color: #3e8f3e'>"+zt+"</p></th><th>"+msg.beizhu+"</th><th><a class=\"disabled\" style='text-decoration:none'></a><label></label><a class=\"disabled\" style='text-decoration:none'></a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='tuihuo("+msg.ordercode+")' style='text-decoration:none'>退货</a></th></tr>");
+                                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg.id+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.oksell+"</th><th>"+msg.sellprice+"</th><th>"+msg.guige+"</th><th>"+msg.overprice+"</th><th>"+msg.selluser+"</th><th>"+newTime+"</th><th><p style='color: #3e8f3e'>"+zt+"</p></th><th>"+msg.beizhu+"</th><th><a class=\"disabled\" style='text-decoration:none'></a><label></label><a class=\"disabled\" style='text-decoration:none'></a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='tuihuo("+msg.id+")' style='text-decoration:none'>退货</a></th></tr>");
                             }else if (msg.zhuangtai==2){
                                 zt = '被驳回';
-                                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg.id+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.oksell+"</th><th>"+msg.sellprice+"</th><th>"+msg.guige+"</th><th>"+msg.overprice+"</th><th>"+msg.selluser+"</th><th>"+newTime+"</th><th><p style='color: red'>"+zt+"</p></th><th>"+msg.beizhu+"</th><th><a class=\"disabled\" style='text-decoration:none'></a><label></label><a class=\"disabled\" style='text-decoration:none'></a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='tuihuo("+msg.ordercode+")' style='text-decoration:none'>退货</a></th></tr>");
+                                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg.id+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.oksell+"</th><th>"+msg.sellprice+"</th><th>"+msg.guige+"</th><th>"+msg.overprice+"</th><th>"+msg.selluser+"</th><th>"+newTime+"</th><th><p style='color: red'>"+zt+"</p></th><th>"+msg.beizhu+"</th><th><a class=\"disabled\" style='text-decoration:none'></a><label></label><a class=\"disabled\" style='text-decoration:none'></a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='tuihuo("+msg.id+")' style='text-decoration:none'>退货</a></th></tr>");
                             }
                         });
 
@@ -348,6 +349,7 @@
                     },
                     dataType:'json',
                     success:function(msg){
+                        $("#thid").val(msg.id);
                         $("#thordercode").val(msg.ordercode);
                         $("#thpname").val(msg.pname);
                         $("#thcname").val(msg.cname);

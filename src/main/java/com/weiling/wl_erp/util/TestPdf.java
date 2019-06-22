@@ -57,7 +57,7 @@ public class TestPdf {
         cell = new PdfPCell(new Phrase("销售总价："+jiage+"元",font));
         cell.setFixedHeight(size);
         table.addCell(cell);
-        cell = new PdfPCell(new Phrase("购买方:",font));
+        cell = new PdfPCell(new Phrase("购买方: "+goumairen,font));
         cell.setColspan(3);
         cell.setFixedHeight(size);
         table.addCell(cell);
@@ -69,7 +69,7 @@ public class TestPdf {
         cell = new PdfPCell(new Phrase("收款人签章：",font));
         cell.setFixedHeight(size);
         table.addCell(cell);
-        cell = new PdfPCell(new Phrase("备注",font));
+        cell = new PdfPCell(new Phrase("备注:"+goumairen,font));
         cell.setFixedHeight(size);
         table.addCell(cell);
         return table;

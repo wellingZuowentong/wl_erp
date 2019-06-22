@@ -51,7 +51,7 @@
         </div>
         <!-- 查询 end -->
         <table class="table table-hover table-bordered
-                                table-striped table-condensed">
+                                        table-striped table-condensed">
             <thead>
             <tr>
                 <th>
@@ -66,8 +66,6 @@
                 <th>退货时间</th>
                 <th>退货人</th>
                 <th>备注</th>
-                <th>状态</th>
-                <th>操作</th>
             </tr>
             </thead>
             <tbody id="data">
@@ -96,7 +94,7 @@
                             <div class="form-group">
                                 <label for="thrkuser" class="col-sm-2 control-label">入库人：</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="thrkuser" name="backuser">
+                                    <input type="text" class="form-control" id="thrkuser" name="okBackUser">
                                 </div>
                             </div>
 
@@ -131,22 +129,22 @@
             var dqy=1;
 
             $(function(){
-                //查询所有待退货列表
-                getAllBack(1,tj);
+                //查询所有销售列表
+                getAllOkBack(1,tj);
                 $("#first").on("click",function(){
-                    getAllBack(1,tj);
+                    getAllSell(1,tj);
                 });
                 $("#pre").on("click",function(){
                     if(pre==0){
                         pre=1;
                     }
-                    getAllBack(pre,tj)
+                    getAllOkBack(pre,tj)
                 });
                 $("#next").on("click",function(){
-                    getAllBack(next,tj)
+                    getAllOkBack(next,tj)
                 });
                 $("#end").on("click",function(){
-                    getAllBack(end,tj);
+                    getAllOkBack(end,tj);
                 });
             });
             //按条件分页查找
@@ -171,66 +169,29 @@
                 if(overtime!=null &&overtime!=""){
                     tj+="&overtime="+overtime;
                 }
-                getAllBack(1,tj);
+                getAllOkBack(1,tj);
             }
 
 
-            //分页查询所有待退货列表
-            function  getAllBack(num,con){
+            //分页查询所有销售表
+            function  getAllOkBack(num,con){
                 dqy=num;
                 $.ajax({
                     type:'Get',
-                    url:'getAllBack?pageNum='+num+con,
+                    url:'getAllOkBack?pageNum='+num+con,
                     dataType:'json',
                     success:function(msg){
                         $("#data").empty();
-                        var zt = "";
                         pre=msg.prePage;
                         next=msg.nextPage;
                         end=msg.lastPage;
                         var oldTime;
                         var newTime;
                         $.each(msg.list,function(i,msg) {
-
                             oldTime = new Date(msg.backtime).toJSON();
-
                             newTime = new Date(+new Date(oldTime) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '');
-
-                            if(msg.zhuangtai == 0) {
-                                zt = '待退货';
-                                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>" + msg.ordercode + "</th><th>" + msg.pname + "</th><th>" + msg.cname + "</th><th>" + msg.backnum + "</th><th>" + msg.backprice + "</th><th>" + newTime + "</th><th>" + msg.backuser + "</th><th>" + msg.beizhu + "</th><th><p style='color: dodgerblue'>"+zt+"</p></th><th><a href='#' onclick='thrk(" + msg.id + ")' style='text-decoration:none'>退货入库</a></th></tr>");
-                            }
-                            if(msg.zhuangtai == 1) {
-                                zt = '已退货';
-                                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>" + msg.ordercode + "</th><th>" + msg.pname + "</th><th>" + msg.cname + "</th><th>" + msg.backnum + "</th><th>" + msg.backprice + "</th><th>" + newTime + "</th><th>" + msg.backuser + "</th><th>" + msg.beizhu + "</th><th><p style='color: #3e8f3e'>"+zt+"</p></th><th></th></tr>");
-                            }
+                            $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>" + msg.ordercode + "</th><th>" + msg.pname + "</th><th>" + msg.cname + "</th><th>" + msg.backnum + "</th><th>" + msg.backprice + "</th><th>" + newTime + "</th><th>" + msg.backuser + "</th><th>" + msg.beizhu + "</th></tr>");
                         });
-                    }
-                });
-            }
-
-            //退货入库模态框展示
-            function thrk(flag) {
-                $("#thrkModal").modal("show");
-                $("#thrkuser").empty();
-                $("#thrkbeizhu").empty();
-                $("#thrkid").val(flag);
-            }
-
-            //提交退货入库
-            function backin() {
-                $.ajax({
-                    type: "POST",//方法类型
-                    dataType: "json",//预期服务器返回的数据类型
-                    url: "insertOkBack" ,//url
-                    data: $('#thrk_form').serialize(),
-                    success: function (result) {
-                        $("#thrkModal").modal("hide");
-                        alert("退货入库成功");
-                        getAllBack(dqy,tj);
-                    },
-                    error : function() {
-                        alert("异常！");
                     }
                 });
             }

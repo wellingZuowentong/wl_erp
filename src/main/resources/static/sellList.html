@@ -226,6 +226,45 @@
             </div>
         </div>
 
+        <!-- 打印模态框 -->
+        <div class="modal fade" id="dyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">打印</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="insertBack" method="post" class="form-horizontal" role="form" id="dy_form">
+                            <input type="hidden" name="id" id="dyid"/>
+
+                            <!-- 退货人 -->
+                            <div class="form-group">
+                                <label for="dygoumairen" class="col-sm-2 control-label">购买人：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="dygoumairen" name="goumairen">
+                                </div>
+                            </div>
+
+                            <!-- 备注 -->
+                            <div class="form-group">
+                                <label for="dybeizhu" class="col-sm-2 control-label">备注：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="dybeizhu" name="beizhu">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-10 col-sm-10">
+                                    <button type="button" class="btn btn-default" onclick="dy()">打印</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script src="js/jquery.js"></script>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="js/jquery.min.js"></script>
@@ -302,13 +341,13 @@
                             newTime = new Date(+new Date(oldTime)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'');
                             if(msg.zhuangtai==0){
                                 zt = '未出库';
-                                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg.ordercode+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.oksell+"</th><th>"+msg.sellprice+"</th><th>"+msg.guige+"</th><th>"+msg.overprice+"</th><th>"+msg.selluser+"</th><th>"+newTime+"</th><th><p style='color: dodgerblue'>"+zt+"</p></th><th>"+msg.beizhu+"</th><th><a href='#' onclick='chuku("+msg.id+")' style='text-decoration:none'>出库</a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='bohui("+msg.id+")' style='text-decoration:none'>驳回</a></th></tr>");
+                                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg.ordercode+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.oksell+"</th><th>"+msg.sellprice+"</th><th>"+msg.guige+"</th><th>"+msg.overprice+"</th><th>"+msg.selluser+"</th><th>"+newTime+"</th><th><p style='color: dodgerblue'>"+zt+"</p></th><th>"+msg.beizhu+"</th><th><a href='#' onclick='chuku("+msg.id+")' style='text-decoration:none'>出库</a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='bohui("+msg.id+")' style='text-decoration:none'>驳回</a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='showPrintSell("+msg.id+")' style='text-decoration:none'>打印</a></th></tr>");
                             }else if (msg.zhuangtai==1){
                                 zt = '已出库';
-                                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg.ordercode+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.oksell+"</th><th>"+msg.sellprice+"</th><th>"+msg.guige+"</th><th>"+msg.overprice+"</th><th>"+msg.selluser+"</th><th>"+newTime+"</th><th><p style='color: #3e8f3e'>"+zt+"</p></th><th>"+msg.beizhu+"</th><th><a href='#' onclick='tuihuo("+msg.id+")' style='text-decoration:none'>退货</a></th></tr>");
+                                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg.ordercode+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.oksell+"</th><th>"+msg.sellprice+"</th><th>"+msg.guige+"</th><th>"+msg.overprice+"</th><th>"+msg.selluser+"</th><th>"+newTime+"</th><th><p style='color: #3e8f3e'>"+zt+"</p></th><th>"+msg.beizhu+"</th><th><a href='#' onclick='tuihuo("+msg.id+")' style='text-decoration:none'>退货</a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='showPrintSell("+msg.id+")' style='text-decoration:none'>打印</a></th></tr>");
                             }else if (msg.zhuangtai==2){
                                 zt = '被驳回';
-                                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg.ordercode+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.oksell+"</th><th>"+msg.sellprice+"</th><th>"+msg.guige+"</th><th>"+msg.overprice+"</th><th>"+msg.selluser+"</th><th>"+newTime+"</th><th><p style='color: red'>"+zt+"</p></th><th>"+msg.beizhu+"</th><th></th></tr>");
+                                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg.ordercode+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.oksell+"</th><th>"+msg.sellprice+"</th><th>"+msg.guige+"</th><th>"+msg.overprice+"</th><th>"+msg.selluser+"</th><th>"+newTime+"</th><th><p style='color: red'>"+zt+"</p></th><th>"+msg.beizhu+"</th><th><a href='#' onclick='showPrintSell("+msg.id+")' style='text-decoration:none'>打印</a></th></tr>");
                             }
                         });
 
@@ -360,6 +399,36 @@
                     }
                 });
             }
+
+            //打印模态框展示
+            function showPrintSell(flag) {
+                $("#dyModal").modal("show");
+                $("#dygoumairen").empty();
+                $("#dybeizhu").empty();
+                $("#dyid").val(flag);
+            }
+
+            //提交打印
+            function dy() {
+                if($("#dygoumairen").val() == "" || $("#dygoumairen").val() == null){
+                    alert("购买人不能为空");
+                    return false;
+                }
+                $.ajax({
+                    type: "POST",//方法类型
+                    dataType: "json",//预期服务器返回的数据类型
+                    url: "printSell" ,//url
+                    data: $('#dy_form').serialize(),
+                    success: function (result) {
+                        $("#dyModal").modal("hide");
+                        getAllSell(dqy,tj);
+                    },
+                    error : function() {
+                        alert("异常！");
+                    }
+                });
+            }
+
             //提交出库
             function ck() {
                 $.ajax({

@@ -42,7 +42,7 @@ public class CeShiPDFController {
     @ResponseBody
     public int ssss(HttpServletRequest request) throws Exception{
         Integer id = Integer.parseInt(request.getParameter("id"));
-        Sell sell = sellService.findSellById(1);
+        Sell sell = sellService.findSellById(id);
         String goumairen = request.getParameter("goumairen");
         String beizhu = request.getParameter("beizhu");
         TestPdf.aaaa(request,sell,goumairen,beizhu);

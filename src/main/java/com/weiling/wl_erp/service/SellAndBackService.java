@@ -20,8 +20,8 @@ public class SellAndBackService {
     @Autowired
     private SellAndBackMapper sellAndBackMapper;
 
-    public List<SellAndBack> findAllSellAndBack(){
-        return sellAndBackMapper.findAllSellAndBack();
+    public List<SellAndBack> findAllSellAndBack(String pname,String cname,Date starttime,Date overtime){
+        return sellAndBackMapper.findAllSellAndBack(pname,cname,starttime,overtime);
     }
 
 }

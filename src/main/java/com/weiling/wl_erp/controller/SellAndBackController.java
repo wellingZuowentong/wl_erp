@@ -30,11 +30,32 @@ import java.util.List;
 public class SellAndBackController {
    @Autowired
     private SellAndBackService sellAndBackService;
+    /*分页查询所有销售表*/
+    @RequestMapping("/getAllSellAndBack")
+    @ResponseBody
+    public  PageInfo<SellAndBack> getAllShangPin(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum,HttpServletRequest request) throws ParseException {
+        Date starttime=null;
+        Date overtime=null;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String pname = request.getParameter("pname");
+        String cname = request.getParameter("cname");
+        String time = request.getParameter("starttime");
+        String otime = request.getParameter("overtime");
+        if(time!=null&&time!=""){
+            starttime = formatter.parse(time);
+        }
 
-   @RequestMapping("findAllSellAndBack")
-   @ResponseBody
-   public List<SellAndBack> findAllSellAndBack(){
-       return sellAndBackService.findAllSellAndBack();
-   }
+        if(otime!=null&&otime!=""){
+            overtime = formatter.parse(otime);
+        }else{
+            overtime =new Date();
+        }
+
+        PageHelper.startPage(pageNum,5);
+        List<SellAndBack> list = sellAndBackService.findAllSellAndBack(pname,cname,starttime,overtime);
+        PageInfo<SellAndBack> pageInfo = new PageInfo<SellAndBack>(list);
+        return pageInfo;
+    }
+
 
 }

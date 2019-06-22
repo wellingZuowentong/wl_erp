@@ -57,7 +57,6 @@ public class OkBackController {
        okBack.setBackuser(okBackUser);
        okBack.setBeizhu(beizhu);
         KuCun kuCun = kuCunService.findKuCunByName(back.getPname(),back.getCname());
-        System.out.println(back.getBacknum()+"!!!!!!!!!!!!!!!!!!!!!!!!!");
         kuCun.setVnum(back.getBacknum()+kuCun.getVnum());
         kuCunService.updateKuCunById(kuCun);
         return okBackService.insertOkBack(okBack);

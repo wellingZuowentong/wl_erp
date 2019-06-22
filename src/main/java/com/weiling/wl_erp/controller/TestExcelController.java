@@ -36,6 +36,8 @@ public class TestExcelController {
     private ShangPinService shangPinService;
     @Autowired
     private BackService backService;
+    @Autowired
+    private SellAndBackService sellAndBackService;
 
     @RequestMapping(value = "/excelsell", method = RequestMethod.GET)
     public void excelsell(HttpServletResponse response, HttpServletRequest request) throws Exception {
@@ -354,6 +356,7 @@ public class TestExcelController {
     }
     @RequestMapping(value = "/excelBack", method = RequestMethod.GET)
     public void excelBack(HttpServletResponse response, HttpServletRequest request) throws Exception {
+
         Date starttime=null;
         Date overtime=null;
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -399,7 +402,7 @@ public class TestExcelController {
             row.add(back.getBackprice());
             price = price.add(back.getBackprice());
             row.add(back.getBackuser());
-            row.add(back.getBacktime());
+            row.add(DateUtil.formatNormalDateString(back.getBacktime()));
             row.add(back.getBeizhu());
             rows.add(row);
         }
@@ -415,6 +418,131 @@ public class TestExcelController {
         data.setRows(rows);
         SimpleDateFormat fdate = new SimpleDateFormat("MMddHHmmss");
         String fileName = "待退货表"+fdate.format(new Date()) + ".xls";
+        ExcelUtils.exportExcel(response, fileName, data);
+    }
+
+    @RequestMapping(value = "/excelSellAndBack", method = RequestMethod.GET)
+    public void excelSellAndBack(HttpServletResponse response, HttpServletRequest request) throws Exception {
+        Integer xshj=0;
+        Integer thhi=0;
+        BigDecimal xszj = new BigDecimal("0");
+        BigDecimal thzj = new BigDecimal("0");
+        Date starttime=null;
+        Date overtime=null;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String pname = request.getParameter("pname");
+        String cname = request.getParameter("cname");
+        String time = request.getParameter("starttime");
+        String otime = request.getParameter("overtime");
+        if(time!=null&&time!=""){
+            starttime = formatter.parse(time);
+        }
+        if(otime!=null&&otime!=""){
+            overtime = formatter.parse(otime);
+        }else{
+            overtime =new Date();
+        }
+        ExcelData data = new ExcelData();
+        data.setName("销售退货表");
+        List<String> titles1 = new ArrayList();
+        titles1.add("订单编号");
+        titles1.add("商品名");
+        titles1.add("厂家");
+        titles1.add("销售数量");
+        titles1.add("销售总价");
+        titles1.add("销售人");
+        titles1.add("销售时间");
+        titles1.add("退货数量");
+        titles1.add("退货总价");
+        titles1.add("退货人");
+        titles1.add("退货时间");
+        data.setTitles(titles1);
+        List<List<Object>> rows = new ArrayList();
+        List<SellAndBack> list = sellAndBackService.findAllSellAndBack(pname,cname,starttime,overtime);
+        BigDecimal price = new BigDecimal("0");
+        for(SellAndBack sellAndBack:list) {
+            List<Back> list1 = sellAndBack.getBacklist();
+            List<Object> row = new ArrayList();
+            row.add(sellAndBack.getOrdercode());
+            row.add(sellAndBack.getPname());
+            row.add(sellAndBack.getCname());
+            row.add(sellAndBack.getOksell());
+            xshj = xshj+sellAndBack.getOksell();
+            row.add(sellAndBack.getOverprice());
+            xszj = xszj.add(sellAndBack.getOverprice());
+            row.add(sellAndBack.getSelluser());
+            row.add(DateUtil.formatNormalDateString(sellAndBack.getSelltime()));
+            if(list1.size()>0){
+            for(int i=0;i<1;i++){
+                row.add(list1.get(i).getBacknum());
+                thhi = thhi+list1.get(i).getBacknum();
+            }}else {
+                row.add("");
+            }
+            if(list1.size()>0){
+            for(int i=0;i<1;i++){
+                row.add(list1.get(i).getBackprice());
+                thzj = thzj.add(list1.get(i).getBackprice());
+            }}else {
+                row.add("");
+            }
+            if(list1.size()>0){
+            for(int i=0;i<1;i++){
+                row.add(list1.get(i).getBackuser());
+            }}else {
+                row.add("");
+            }
+            if(list1.size()>0){
+            for(int i=0;i<1;i++){
+                row.add(DateUtil.formatNormalDateString(list1.get(i).getBacktime()));
+            }}else {
+                row.add("");
+            }
+            rows.add(row);
+            if(list1.size()>1){
+            for(int i=1;i<list1.size();i++){
+                List<Object> row1= new ArrayList();
+                row1.add("");
+                row1.add("");
+                row1.add("");
+                row1.add("");
+                row1.add("");
+                row1.add("");
+                row1.add("");
+                row1.add(list1.get(i).getBacknum());
+                thhi = thhi+list1.get(i).getBacknum();
+                row1.add(list1.get(i).getBackprice());
+                thzj = thzj.add(list1.get(i).getBackprice());
+                row1.add(list1.get(i).getBackuser());
+                row1.add(DateUtil.formatNormalDateString(list1.get(i).getBacktime()));
+                rows.add(row1);
+            }}
+        }
+        List<Object> row2 = new ArrayList<>();
+        row2.add("销售合计：");
+        row2.add("销售数量：");
+        row2.add(xshj);
+        row2.add("销售总价：");
+        row2.add(xszj);
+        List<Object> row3 = new ArrayList<>();
+        row3.add("退货合计：");
+        row3.add("退货数量：");
+        row3.add(thhi);
+        row3.add("退货总价：");
+        row3.add(thzj);
+        List<Object> row4 = new ArrayList<>();
+        row4.add("总合计：");
+        row4.add("销售数量：");
+        row4.add(xshj-thhi);
+        row4.add("销售总价：");
+        row4.add(xszj.subtract(thzj));
+        rows.add(row2);
+        rows.add(row3);
+        rows.add(row4);
+
+        data.setRows(rows);
+        SimpleDateFormat fdate = new SimpleDateFormat("MMddHHmmss");
+        String fileName = "销售退货表"+fdate.format(new Date()) + ".xls";
         ExcelUtils.exportExcel(response, fileName, data);
     }
 

@@ -19,6 +19,7 @@
         <collection property="backlist" ofType="com.weiling.wl_erp.bean.Back">
             <result column="b_backnum" property="backnum"/>
             <result column="b_backprice" property="backprice"/>
+            <result column="b_backuser" property="backuser"/>
             <result column="b_backtime" property="backtime"/>
         </collection>
     </resultMap>
@@ -26,8 +27,19 @@
     <select id="findAllSellAndBack" resultMap="aa">
         select  s.ordercode s_ordercode,s.pname s_pname,s.cname s_cname,s.oksell s_oksell,s.overprice s_overprice,
         s.selluser s_selluser,s.selltime s_selltime,
-        b.backnum b_backnum,b.backprice b_backprice,b.backtime b_backtime
+        b.backnum b_backnum,b.backprice b_backprice,b.backuser b_backuser,b.backtime b_backtime
         from sell s left join back b on s.ordercode=b.ordercode
+        <where>
+            <if test="param1!=null">
+                and s.pname=#{param1}
+            </if>
+            <if test="param2!=null">
+                and s.cname=#{param2}
+            </if>
+            <if test="param3!=null">
+                and s.selltime between #{param3} and #{param4}
+            </if>
+        </where>
     </select>
 
 </mapper>

@@ -14,5 +14,5 @@ import java.util.List;
  */
 @Mapper
 public interface SellAndBackMapper {
-   public List<SellAndBack> findAllSellAndBack();
+   public List<SellAndBack> findAllSellAndBack(@Param("pname")String pname, @Param("cname")String cname, @Param("starttime") Date starttime, @Param("overtime")Date overtime);
 }

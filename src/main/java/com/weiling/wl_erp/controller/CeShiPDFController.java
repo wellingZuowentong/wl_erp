@@ -1,12 +1,20 @@
 package com.weiling.wl_erp.controller;
 
+import com.weiling.wl_erp.bean.Sell;
+import com.weiling.wl_erp.service.SellService;
+import com.weiling.wl_erp.util.TestPdf;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.printing.PDFPrintable;
 import org.apache.pdfbox.printing.Scaling;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.print.PrintService;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.standard.Sides;
+import javax.servlet.http.HttpServletRequest;
 import java.awt.print.Book;
 import java.awt.print.PageFormat;
 import java.awt.print.Paper;
@@ -20,13 +28,34 @@ import static jdk.nashorn.internal.objects.Global.print;
  * 作者：王怀朋
  * 日期：2019/6/20
  */
+@Controller
 public class CeShiPDFController {
-    public static void main(String[] args) throws Exception {
+    @Autowired
+    public SellService sellService;
+   /* public static void main(String[] args) throws Exception {
         String pdfFile = "D:\\tuhuo.pdf";//文件路径
         File file = new File(pdfFile);
         String printerName = "Brother DCP-7057 Printer (副本 1)";//打印机名包含字串
         PDFprint(file,printerName);
+    }*/
+    @RequestMapping("printSell")
+    @ResponseBody
+    public int ssss(HttpServletRequest request) throws Exception{
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        Sell sell = sellService.findSellById(1);
+        String goumairen = request.getParameter("goumairen");
+        String beizhu = request.getParameter("beizhu");
+        TestPdf.aaaa(request,sell,goumairen,beizhu);
+       String pdfFile =request.getSession().getServletContext().getRealPath("pdf")+"testTable3.pdf";
+        File file = new File(pdfFile);
+        System.out.println((file==null)+"#################################");
+        String printerName = "Brother DCP-7057 Printer (副本 1)";//打印机名包含字串
+        PDFprint(file,printerName);
+        return 1;
     }
+
+
+
     public static void PDFprint(File file ,String printerName) throws Exception {
         PDDocument document = null;
         try {

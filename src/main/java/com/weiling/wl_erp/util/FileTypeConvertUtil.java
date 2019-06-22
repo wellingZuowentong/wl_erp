@@ -1,14 +1,17 @@
 package com.weiling.wl_erp.util;
 
 import com.itextpdf.text.pdf.BaseFont;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.xhtmlrenderer.pdf.ITextFontResolver;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-
+@Controller
 public class FileTypeConvertUtil {
     /**
      * 文件格式转换工具类
@@ -55,11 +58,11 @@ public class FileTypeConvertUtil {
             return os;
         }
 
-
-        public static void main(String[] args) {
+    @RequestMapping("qqqq")
+    public static void qqqq(HttpServletRequest request) {
             //        String htmlFile = "/home/lbj/sign.jsp";
             //        String pdfFile = "/home/lbj/sign.pdf";
-            String htmlFile = "wl_erp/static/tuhuoList.html";
+            String htmlFile = "tuhuoList.html";
             File ff = new File(htmlFile);
             System.out.println(ff.exists() +","+ff.isDirectory());
             String pdfFile = "d:/tuhuo.pdf";

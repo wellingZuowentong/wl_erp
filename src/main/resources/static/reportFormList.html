@@ -8,7 +8,11 @@
 
         <!-- Bootstrap -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
-
+        <style type="text/css">
+            th{
+                text-align: center;
+            }
+        </style>
     </head>
     <body>
         <!-- 查询区域 -->
@@ -88,7 +92,13 @@
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="js/bootstrap.min.js"></script>
         <script src="js/ajaxfileupload.js"></script>
+
         <script>
+            var versionNo = '1.1.4';
+            if(!window.localStorage.getItem('update-version') || window.localStorage.getItem('update-version') !=versionNo){
+                window.localStorage.setItem('update-version',versionNo)
+                alert("重要更新通知\n修改功能，库存功能，商品功能页面。。。。。。")
+            }
             var pre,next,end;
             var tj="";//条件
             var dqy=1;
@@ -154,12 +164,13 @@
                         var backOldTime;
                         var backNewTime;
                         $.each(msg.list,function(i,msg){
+                            sellOldTime = new Date(msg.selltime).toJSON();
+                            sellNewTime = new Date(+new Date(sellOldTime) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '');
+                            $("#data").append("<tr id='list_tr'><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>" + msg.ordercode + "</th><th>" + msg.pname + "</th><th>" + msg.cname + "</th><th>" + msg.oksell + "</th><th>" + msg.overprice + "</th><th>" + msg.selluser + "</th></th><th>" + sellNewTime + "</th><th>"+"---"+"</th><th>"+"---"+"</th><th>" +"---"+ "</th><th>" +"---"+ "</th></tr>");
                             $.each(msg.backlist,function(i,backlist) {
-                                sellOldTime = new Date(msg.selltime).toJSON();
-                                sellNewTime = new Date(+new Date(sellOldTime) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '');
                                 backOldTime = new Date(backlist.backtime).toJSON();
                                 backNewTime = new Date(+new Date(backOldTime) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '');
-                                $("#data").append("<tr id='list_tr'><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>" + msg.ordercode + "</th><th>" + msg.pname + "</th><th>" + msg.cname + "</th><th>" + msg.oksell + "</th><th>" + msg.overprice + "</th><th>" + msg.selluser + "</th></th><th>" + sellNewTime + "</th><th>" + backlist.backnum + "</th><th>" + backlist.backprice + "</th><th>" + backlist.backuser + "</th><th>" + backNewTime + "</th></tr>");
+                                $("#data").append("<tr id='list_tr'><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+"->->->"+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+"---"+"</th><th>"+"---"+"</th><th>"+"---"+"</th>+msg.selluser+</th><th>"+"---"+"</th><th>" + backlist.backnum + "</th><th>" + backlist.backprice + "</th><th>" + backlist.backuser + "</th><th>" + backNewTime + "</th></tr>");
                             });
                         });
                     }

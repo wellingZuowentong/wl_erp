@@ -31,10 +31,10 @@
         from sell s left join okback b on s.ordercode=b.ordercode
         <where>
             <if test="param1!=null">
-                and pname like '%${param1}%'
+                and s.pname like '%${param1}%'
             </if>
             <if test="param2!=null">
-                and cname like '%${param2}%'
+                and s.cname like '%${param2}%'
             </if>
             <if test="param3!=null">
                 and s.selltime between #{param3} and #{param4}

@@ -89,17 +89,17 @@ public class BackController {
     public PageInfo<Back> getAllBack(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum, HttpServletRequest request) throws ParseException {
         Date starttime=null;
         Date overtime=null;
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String pname = request.getParameter("pname");
         String cname = request.getParameter("cname");
         String time = request.getParameter("starttime");
         String otime = request.getParameter("overtime");
         if(time!=null&&time!=""){
-            starttime = formatter.parse(time);
+            starttime = formatter.parse(time+" 00:00:01");
         }
 
         if(otime!=null&&otime!=""){
-            overtime = formatter.parse(otime);
+            overtime = formatter.parse(otime+" 23:59:59");
         }else{
             overtime =new Date();
         }

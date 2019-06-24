@@ -47,17 +47,17 @@ public class TestExcelController {
         Integer wout = 0;
         Date starttime=null;
         Date overtime=null;
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String pname = request.getParameter("pname");
         String cname = request.getParameter("cname");
         String time = request.getParameter("starttime");
         String otime = request.getParameter("overtime");
         if(time!=null&&time!=""){
-            starttime = formatter.parse(time);
+            starttime = formatter.parse(time+" 00:00:01");
         }
 
         if(otime!=null&&otime!=""){
-            overtime = formatter.parse(otime);
+            overtime = formatter.parse(otime+" 23:59:59");
         }else{
             overtime =new Date();
         }
@@ -141,17 +141,17 @@ public class TestExcelController {
         Integer zongshuliang = 0;
         Date starttime=null;
         Date overtime=null;
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String pname = request.getParameter("pname");
         String cname = request.getParameter("cname");
         String time = request.getParameter("starttime");
         String otime = request.getParameter("overtime");
         if(time!=null&&time!=""){
-            starttime = formatter.parse(time);
+            starttime = formatter.parse(time+" 00:00:01");
         }
 
         if(otime!=null&&otime!=""){
-            overtime = formatter.parse(otime);
+            overtime = formatter.parse(otime+" 23:59:59");
         }else{
             overtime =new Date();
         }
@@ -218,17 +218,17 @@ public class TestExcelController {
         BigDecimal zongjia = new BigDecimal("0");
         Date starttime=null;
         Date overtime=null;
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String pname = request.getParameter("pname");
         String cname = request.getParameter("cname");
         String time = request.getParameter("starttime");
         String otime = request.getParameter("overtime");
         if(time!=null&&time!=""){
-            starttime = formatter.parse(time);
+            starttime = formatter.parse(time+" 00:00:01");
         }
 
         if(otime!=null&&otime!=""){
-            overtime = formatter.parse(otime);
+            overtime = formatter.parse(otime+" 23:59:59");
         }else{
             overtime =new Date();
         }
@@ -359,17 +359,17 @@ public class TestExcelController {
 
         Date starttime=null;
         Date overtime=null;
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String pname = request.getParameter("pname");
         String cname = request.getParameter("cname");
         String time = request.getParameter("starttime");
         String otime = request.getParameter("overtime");
         if(time!=null&&time!=""){
-            starttime = formatter.parse(time);
+            starttime = formatter.parse(time+" 00:00:01");
         }
 
         if(otime!=null&&otime!=""){
-            overtime = formatter.parse(otime);
+            overtime = formatter.parse(otime+" 23:59:59");
         }else{
             overtime =new Date();
         }
@@ -429,16 +429,16 @@ public class TestExcelController {
         BigDecimal thzj = new BigDecimal("0");
         Date starttime=null;
         Date overtime=null;
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String pname = request.getParameter("pname");
         String cname = request.getParameter("cname");
         String time = request.getParameter("starttime");
         String otime = request.getParameter("overtime");
         if(time!=null&&time!=""){
-            starttime = formatter.parse(time);
+            starttime = formatter.parse(time+" 00:00:01");
         }
         if(otime!=null&&otime!=""){
-            overtime = formatter.parse(otime);
+            overtime = formatter.parse(otime+" 23:59:59");
         }else{
             overtime =new Date();
         }
@@ -461,7 +461,7 @@ public class TestExcelController {
         List<SellAndBack> list = sellAndBackService.findAllSellAndBack(pname,cname,starttime,overtime);
         BigDecimal price = new BigDecimal("0");
         for(SellAndBack sellAndBack:list) {
-            List<Back> list1 = sellAndBack.getBacklist();
+            List<OkBack> list1 = sellAndBack.getBacklist();
             List<Object> row = new ArrayList();
             row.add(sellAndBack.getOrdercode());
             row.add(sellAndBack.getPname());

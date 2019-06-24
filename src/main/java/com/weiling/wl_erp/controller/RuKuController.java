@@ -128,21 +128,22 @@ public class RuKuController {
     public PageInfo<RuKu> getAllRuKu(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum,HttpServletRequest request) throws ParseException {
         Date starttime=null;
         Date overtime=null;
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String pname = request.getParameter("pname");
         String cname = request.getParameter("cname");
         String time = request.getParameter("starttime");
         String otime = request.getParameter("overtime");
+        System.out.println(otime);
         if(time!=null&&time!=""){
-            starttime = formatter.parse(time);
+            starttime = formatter.parse(time+" 00:00:01");
         }
 
         if(otime!=null&&otime!=""){
-            overtime = formatter.parse(otime);
+            overtime = formatter.parse(otime+" 23:59:59");
         }else{
             overtime =new Date();
         }
-
+        System.out.println(overtime);
         PageHelper.startPage(pageNum,5);
         List<RuKu> list = ruKuService.findAllRuKu(pname,cname,starttime,overtime);
         PageInfo<RuKu> pageInfo = new PageInfo<RuKu>(list);

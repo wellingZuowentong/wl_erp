@@ -9,23 +9,19 @@ import java.util.List;
  * 日期：2019/6/21
  */
 public class SellAndBack extends Sell {
-    private List<Back> backlist;
+    private List<OkBack> backlist;
 
     public SellAndBack(){}
-    public SellAndBack(List<Back> backlist) {
+
+    public SellAndBack(List<OkBack> backlist) {
         this.backlist = backlist;
     }
 
-    public SellAndBack(Integer id, String ordercode, String pname, String cname, Integer oksell, BigDecimal sellprice, BigDecimal allprice, BigDecimal overprice, String guige, String selluser, Integer zhuangtai, Date selltime, String beizhu, List<Back> backlist) {
-        super(id, ordercode, pname, cname, oksell, sellprice, allprice, overprice, guige, selluser, zhuangtai, selltime, beizhu);
-        this.backlist = backlist;
-    }
-
-    public List<Back> getBacklist() {
+    public List<OkBack> getBacklist() {
         return backlist;
     }
 
-    public void setBacklist(List<Back> backlist) {
+    public void setBacklist(List<OkBack> backlist) {
         this.backlist = backlist;
     }
 

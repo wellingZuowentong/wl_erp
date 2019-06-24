@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>index</title>
+
+        <!-- Bootstrap -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    </head>
+    <body>
+        <!-- 查询区域 -->
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            条件查询
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+                        <form class="form-inline" role="form">
+                            <div class="form-group">
+                                <label  for="pname">商品名:</label>
+                                <input type="text" class="form-control" id="pname" name="pname"
+                                       placeholder="输入商品名">
+                            </div>
+                            <div class="form-group">
+                                <label  for="cname">厂家:</label>
+                                <input type="text" class="form-control" id="cname" name="cname"
+                                       placeholder="输入厂家名">
+                            </div>
+                            <div class="form-group">
+                                &nbsp;&nbsp;<label  for="starttime">起止时间:</label>
+                                <input type="date" class="form-control" id="starttime" name="starttime">
+                            </div>
+                            <div class="form-group">
+                                <label  for="starttime">-</label>
+                                <input type="date" class="form-control" id="overtime" name="starttime">
+                            </div>
+                            <button type="button" onclick="queryByTj()" class="btn btn-primary">查询</button>
+                            <button type="button" onclick="export2Excel()" class="btn btn-success">导出到EXCEL</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 查询 end -->
+        <table class="table table-hover table-bordered
+                        table-striped table-condensed">
+            <thead>
+            <tr>
+                <th>
+                    <input type="checkbox" id='checkall'>
+                    <label for='checkall'>全选</label>
+                </th>
+                <th>订单编号</th>
+                <th>商品名</th>
+                <th>厂家</th>
+                <th>销售数量</th>
+                <th>销售总价</th>
+                <th>销售人</th>
+                <th>销售时间</th>
+                <th>退货数量</th>
+                <th>退货总价</th>
+                <th>退货人</th>
+                <th>退货时间</th>
+            </tr>
+            </thead>
+            <tbody id="data">
+
+            </tbody>
+        </table>
+        <div style="text-align:center">
+            <button type='button' id="first" class="btn btn-primary">首页</button>
+            <button type='button' id="pre" class="btn btn-success">上一页</button>
+            <button type='button' id="next" class="btn btn-info">下一页</button>
+            <button type='button' id="end" class="btn btn-danger">尾页</button>
+        </div>
+
+        <script src="js/jquery.js"></script>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/ajaxfileupload.js"></script>
+        <script>
+            var pre,next,end;
+            var tj="";//条件
+            var dqy=1;
+
+            $(function(){
+                //查询所有销售列表
+                getAllSellAndBack(1,tj);
+                $("#first").on("click",function(){
+                    getAllSellAndBack(1,tj);
+                });
+                $("#pre").on("click",function(){
+                    if(pre==0){
+                        pre=1;
+                    }
+                    getAllSellAndBack(pre,tj)
+                });
+                $("#next").on("click",function(){
+                    getAllSellAndBack(next,tj)
+                });
+                $("#end").on("click",function(){
+                    getAllSellAndBack(end,tj);
+                });
+            });
+            //按条件分页查找
+            function queryByTj(){
+                //重置条件
+                tj="";
+
+                var pname=$("#pname").val();
+                var cname = $("#cname").val();
+                var starttime = $("#starttime").val();
+                var overtime = $("#overtime").val();
+
+                if(pname!=null && pname!=""){
+                    tj+="&pname="+pname;
+                }
+                if(cname!=null &&cname!=""){
+                    tj+="&cname="+cname;
+                }
+                if(starttime!=null &&starttime!=""){
+                    tj+="&starttime="+starttime;
+                }
+                if(overtime!=null &&overtime!=""){
+                    tj+="&overtime="+overtime;
+                }
+                getAllSellAndBack(1,tj);
+            }
+
+            //分页查询所有销售表
+            function  getAllSellAndBack(num,con){
+                dqy=num;
+                $.ajax({
+                    type:'Get',
+                    url:'getAllSellAndBack?pageNum='+num+con,
+                    dataType:'json',
+                    success:function(msg){
+                        $("#data").empty();
+                        pre=msg.prePage;
+                        next=msg.nextPage;
+                        end=msg.lastPage;
+                        var sellOldTime;
+                        var sellNewTime;
+                        var backOldTime;
+                        var backNewTime;
+                        $.each(msg.list,function(i,msg){
+                            $.each(msg.backlist,function(i,backlist) {
+                                sellOldTime = new Date(msg.selltime).toJSON();
+                                sellNewTime = new Date(+new Date(sellOldTime) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '');
+                                backOldTime = new Date(backlist.backtime).toJSON();
+                                backNewTime = new Date(+new Date(backOldTime) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '');
+                                $("#data").append("<tr id='list_tr'><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>" + msg.ordercode + "</th><th>" + msg.pname + "</th><th>" + msg.cname + "</th><th>" + msg.oksell + "</th><th>" + msg.overprice + "</th><th>" + msg.selluser + "</th></th><th>" + sellNewTime + "</th><th>" + backlist.backnum + "</th><th>" + backlist.backprice + "</th><th>" + backlist.backuser + "</th><th>" + backNewTime + "</th></tr>");
+                            });
+                        });
+                    }
+                });
+            }
+
+            function export2Excel() {
+                window.location.href="excelsell?"+tj;
+            }
+        </script>
+    </body>
+</html>

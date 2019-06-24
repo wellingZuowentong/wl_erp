@@ -42,7 +42,7 @@
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="index.html" class="dropdown-toggle">退出</a>
+                            <a class="dropdown-toggle" onclick="logout()">退出</a>
                         </li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
@@ -103,12 +103,18 @@
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="js/bootstrap.min.js"></script>
         <script>
+            var i = 1;
             $(function(){
                 qx();
+                if(i == 1){
+                    /*history.go(0);*/
+                    i++;
+                }
             });
             var myzidong=setInterval("dl()", 1000);
 
             function qx() {
+
 
                 $.ajax({
                     type: "POST",//方法类型
@@ -129,6 +135,7 @@
                     }
                 });
             }
+
 
             function dl() {
                 $.ajax({
@@ -176,7 +183,11 @@
                     }
                 });
             }
+            
+            //退出并清除页面缓存
+            function logout() {
 
+            }
 
         </script>
 

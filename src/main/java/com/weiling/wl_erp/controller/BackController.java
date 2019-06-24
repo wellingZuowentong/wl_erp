@@ -70,6 +70,18 @@ public class BackController {
         backService.insertBack(back);
         return 2;
     }
+    //退货驳回
+    @RequestMapping("backBoHui")
+    @ResponseBody
+    public int backBoHui(HttpServletRequest request){
+     Integer id = Integer.parseInt(request.getParameter("id"));
+     Back back = backService.findBackById(id);
+     back.setZhuangtai(3);
+     return backService.updateBack(back);
+
+    }
+
+
 
     /*分页查询所有退货*/
     @RequestMapping("/getAllBack")

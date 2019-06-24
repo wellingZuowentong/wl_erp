@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>index</title>
+
+        <!-- Bootstrap -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    </head>
+    <body>
+        <!--<div style="width: 100%">
+            <div style="width: 70%;margin: 0 auto">
+                <h1>修改密码</h1>
+
+                <div class="form-group has-success has-feedback" id="pwd" style="display: block">
+                    <label class="control-label" for="inputSuccess2">输入旧密码</label>
+                    <input type="text" class="form-control" id="inputSuccess" aria-describedby="inputSuccess2Status" onchange="yzPwd()">
+                    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                    <span id="inputSuccessStatus" class="sr-only">(success)</span>
+                </div>
+                &lt;!&ndash; ERR1 &ndash;&gt;
+                <div class="form-group has-error has-feedback" id="pwd_ERR" style="display: none">
+                    <label class="control-label" for="inputError2">输入旧密码</label>
+                    <input type="text" class="form-control" id="inputError2" aria-describedby="inputError2Status">
+                    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                    <span id="inputError2Status" class="sr-only">(error)</span>
+                </div>
+
+
+                <div class="form-group has-success has-feedback" id="pwd_1" style="display: block">
+                    <label class="control-label" for="inputSuccess2">输入新密码</label>
+                    <input type="text" class="form-control" id="inputSuccess2" aria-describedby="inputSuccess2Status" onchange="yznPwd()">
+                    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                    <span id="inputSuccess2Status" class="sr-only">(success)</span>
+                </div>
+                &lt;!&ndash; ERR2 &ndash;&gt;
+                <div class="form-group has-error has-feedback" id="npwd_ERR" style="display: none">
+                    <label class="control-label" for="inputError2">输入新密码</label>
+                    <input type="text" class="form-control" id="inputError" aria-describedby="inputError2Status" onchange="yznPwd()">
+                    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                    <span id="inputErrorStatus" class="sr-only">(error)</span>
+                </div>
+
+
+                <div class="form-group has-warning has-feedback" id="pwd_2" style="display: block">
+                    <label class="control-label" for="inputWarning2">再次输入新密码</label>
+                    <input type="text" class="form-control" id="inputWarning2" aria-describedby="inputWarning2Status" onchange="yznPwd()">
+                    <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
+                    <span id="inputWarning2Status" class="sr-only">(warning)</span>
+                </div>
+                &lt;!&ndash; ERR3 &ndash;&gt;
+                <div class="form-group has-error has-feedback" id="n2pwd_ERR" style="display: none">
+                    <label class="control-label" for="inputError2">再次输入新密码</label>
+                    <input type="text" class="form-control" id="inputError3" aria-describedby="inputError2Status" onchange="yznPwd()">
+                    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                    <span id="inputError3Status" class="sr-only">(error)</span>
+                </div>
+
+                <button type="button" class="btn btn-success" onclick="xiugai()">修改</button>
+
+                <button type="button" class="btn btn-danger">取消</button>
+            </div>
+        </div>-->
+
+
+        <form method="get" onsubmit="return checkAll()" id="mm_form">
+
+            <label for="opwd">请输入旧密码:<input type="text" name="opwd" id="opwd" onblur="yzPwd()"/></label>
+            <span id="opwd_msg"></span>
+            <br>
+
+            <label for="npwd1">请输入新密码:<input type="text" name="password" id="npwd1" onblur="yznPwd(this.value)"/></label>
+            <span id="npwd1_msg"></span>
+            <br>
+            <label for="npwd2">请再次输入新密码:<input type="text" name="password" id="npwd2" onblur="yznPwd(this.value)"/></label>
+            <span id="npwd2_msg"></span>
+            <br>
+            <input type="submit" onclick="xiugai()" value="提交" />
+            <input type="reset" value="取消" />
+        </form>
+
+        <script src="js/jquery.js"></script>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/ajaxfileupload.js"></script>
+        <script>
+
+            var oldPwd = false;
+            var newPwd1 = false;
+            var newPwd2 = false;
+
+            //旧密码验证
+            function yzPwd() {
+                oldP = $("#opwd").val();
+                $.ajax({
+                    type:"GET",
+                    dataType:"json",
+                    url:"checkqx",
+                    success:function (msg) {
+                        console.log(msg.password);
+                        console.log(oldP);
+                        if(oldP != msg.password){
+                            opwd = document.getElementById("opwd_msg");
+                            opwd.innerHTML = "<i color='red'><img src='img/wrong.png'>密码输入错误</i>";
+                            oldPwd = false;
+                            return;
+                        }
+                        opwd.innerHTML = "<i color='green'><img src='img/right.png'>正确</i>";
+                        oldPwd = true;
+                    }
+                });
+            }
+
+            //输入新密码验证
+            function yznPwd(flag) {
+                if($("#npwd1").val() != $("#npwd2").val() || $("#npwd2").val() != $("#npwd1").val()){
+                    npwd1_msg = document.getElementById("npwd1_msg");
+                    npwd2_msg = document.getElementById("npwd2_msg");
+                    npwd1_msg.innerHTML = "<i color='red'><img src='img/wrong.png'>两次密码输入必须一致</i>";
+                    npwd2_msg.innerHTML = "<i color='red'><img src='img/wrong.png'>两次密码输入必须一致</i>";
+                    newPwd1 = false;
+                    newPwd2 = false;
+                    return;
+                }else if($("#npwd1").val() == "" || $("#npwd1").val() == null){
+                    npwd1_msg = document.getElementById("npwd1_msg");
+                    npwd1_msg.innerHTML = "<i color='red'><img src='img/wrong.png'>密码不能为空</i>";
+                    newPwd1 = false;
+                    return;
+                }else if($("#npwd2").val() == "" ||  $("#npwd2").val() == null){
+                    npwd2_msg = document.getElementById("npwd2_msg");
+                    npwd2_msg.innerHTML = "<i color='red'><img src='img/wrong.png'>密码不能为空</i>";
+                    newPwd2 = false;
+                    return;
+                }
+                npwd1_msg.innerHTML = "<i color='green'><img src='img/right.png'>正确</i>";
+                npwd2_msg.innerHTML = "<i color='green'><img src='img/right.png'>正确</i>";
+                newPwd1 = true;
+                newPwd2 = true;
+            }
+
+            function checkAll(){
+                return oldPwd&&newPwd1&&newPwd2;
+            }
+            //修改密码提交
+            function xiugai() {
+                $.ajax({
+                    type:"Get",//方法类型
+                    dataType:"json",//预期服务器返回的数据类型
+                    url:"changePass",//url
+                    data: $('#mm_form').serialize(),
+                    success: function (result) {
+                        alert("修改成功");
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>

@@ -28,10 +28,10 @@
         SELECT <include refid="shangPin"/> FROM shangpin
         <where>
             <if test="param1!=null">
-                and pname=#{param1}
+                and pname like '%${param1}%'
             </if>
             <if test="param2!=null">
-                and cname=#{param2}
+                and cname like '%${param2}%'
             </if>
         </where>
     </select>

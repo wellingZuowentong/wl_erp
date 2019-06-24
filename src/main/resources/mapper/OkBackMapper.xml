@@ -18,10 +18,10 @@
         SELECT <include refid="okback"/> FROM okback
         <where>
             <if test="param1!=null">
-                and pname=#{param1}
+                and pname like '%${param1}%'
             </if>
             <if test="param2!=null">
-                and cname=#{param2}
+                and cname like '%${param2}%'
             </if>
             <if test="param3!=null">
                 and backtime between #{param3} and #{param4}

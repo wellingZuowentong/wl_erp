@@ -35,11 +35,14 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
+                        <!--<li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">设置 <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="#" onclick="showEditModul();">修改密码</a></li>
                             </ul>
+                        </li>-->
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" href="#" onclick="showEditModul()">修改密码</a>
                         </li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" href="index.html">退出</a>
@@ -132,18 +135,18 @@
                     //保证服务器状态正常
                     if(request.status==200){
                         //接受服务器返回的响应
-                        let value = request.response;
+                        var value = request.response;
                         if(value!=null){
                             var jsonObj = JSON.parse(value);
                            if(jsonObj.qx=="2"){
-                               let dd = document.getElementById("dd");
+                               var dd = document.getElementById("dd");
                                dd.remove();
-                               let bb = document.getElementById("bb");
+                               var bb = document.getElementById("bb");
                                bb.remove();
-                               let ee = document.getElementById("ee");
+                               var ee = document.getElementById("ee");
                                ee.remove();
                            } if(jsonObj.qx=="3"){
-                                let aa = document.getElementById("aa");
+                               var aa = document.getElementById("aa");
                                 aa.remove();
                             }
                         }

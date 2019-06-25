@@ -14,7 +14,7 @@
     <body style="background-image: url(img/2.gif);">
         <div style="margin-top: 20%;">
             <div class="row" style="width: 20%;margin: 0 auto;">
-                <form action="/checkNamePass" method="get" accept-charset="UTF-8" onsubmit="return check()">
+                <form accept-charset="UTF-8">
                     <div class="form-group">
                         <label for="exampleInputEmail1" style="color: #FFFFFF">用户名:</label>
                         <input type="text" class="form-control" name="username" id="exampleInputEmail1" placeholder="请输入用户名">
@@ -29,7 +29,7 @@
                         </label>
                     </div>
                     <span class="col-sm-2"></span>
-                    <button type="submit" class="btn btn-success col-sm-3">登陆</button>
+                    <button type="button" onclick="login()" class="btn btn-success col-sm-3">登陆</button>
                     <span class="col-sm-2"></span>
                     <button type="reset" class="btn btn-danger col-sm-3">取消</button>
                     <span class="col-sm-2"></span>
@@ -39,30 +39,27 @@
 
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="js/jquery.min.js"></script>
-
+        <script src="js/bootstrap.min.js"></script>
         <script>
-            $(document).ready(function(){
-                if($.cookie("password") != ''){
-                    $("#password").val($.cookie("password"));
-                }
-                if($.cookie("name") != ''){
-                    $("#username").val($.cookie("username"));
-                }
-            })
+            //登录
+            function login() {
+                var username =  $("#exampleInputEmail1").val();
+                var password = $("#exampleInputPassword1").val();
+                $.ajax({
+                    type: "POST",//方法类型
+                    dataType: "json",//预期服务器返回的数据类型
+                    url: "checkNamePass",//url
+                    /*data: $('#login_form').serialize(),*/
+                    /*data:{
+                      "username":username,
+                      "password":password
+                    },*/
+                    success: function (result) {
+                        if(result == "ERROR"){
 
-            function check() {
-                //记住我功能使用
-                //写入cookie
-                if ($("#remember-me").prop("checked") == true) {
-                    var name = $("#username").val();
-                    var password = $("#password").val();
-                    //alert(passWord);
-                    $.cookie("username", username);
-                    $.cookie("password", password, {expires: 7}); // 存储一个带7天期限的 cookie 如果{ expires: 7 } 不写则cookie只相当回话效果
-                } else {
-                    $.cookie("username", "");
-                    $.cookie("password", "");
-                }
+                        }
+                    }
+                });
             }
         </script>
     </body>

@@ -1,16 +1,15 @@
 package com.weiling.wl_erp.controller;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import com.weiling.wl_erp.bean.User;
 import com.weiling.wl_erp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,7 +27,7 @@ public class UserController {
     *参数：username,password
     *功能：校验用户名与密码
     */
-    @RequestMapping("/checkNamePass")
+    @RequestMapping(value = "/checkNamePass",method = RequestMethod.POST)
     public String checkNamePass(HttpServletRequest request, HttpSession session){
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -47,7 +46,7 @@ public class UserController {
             session.setAttribute("username",user1);
             return "main.html";
         }
-        return "error.html";
+        return "ERROR";
     }
     /*查询登陆人验证权限*/
     @RequestMapping("/checkqx")

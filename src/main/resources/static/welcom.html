@@ -23,28 +23,69 @@
               background-position: center 0;
             }
             th{
-                border:1px solid white;
+                border:1px solid black;
             }
             th{
                 color:white;
+                text-shadow: black 3px 3px 3px;
             }
             </style>
-        <!-- Bootstrap -->
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-        <style type="text/css">
-    
-        </style>
     </head>
-    <body id="web_bg" style="background-image:url(img/aaa.png);" >
-        <h1 style="color: white">欢迎您</h1>
-        <table style="border:2px solid white">
-            <tr><th><h1>公告：</h1></th></tr>
-            <tr><th>本次功能修改如下：</th><th>2019.05.30</th></tr>
-            <tr><th>密码更新问题</th></tr>
+    <body id="web_bg" style="background-color: #2b669a" >
+        <h1 id = "name" style="color: white"></h1>
+
+        <table style="border:2px solid black">
+            <tr><th><h1>更新通知：</h1></th></tr>
+            <tr><th>密码修改美化</th></tr>
             <tr><th>页面缓存问题</th></tr>
             <tr><th>时间查询问题</th></tr>
             
         </table>
 
     </body>
+    <script>
+        var request;
+        checkName();
+        function create(){
+            request = new XMLHttpRequest();
+            if(window.XMLHttpRequest){
+                request = new XMLHttpRequest();
+            }else{
+                request =
+                    new ActiveXObject("Microsoft.XMLHttp");
+            }
+        }
+
+        //2:此函数用来发送异步请求，并且声明回调函数
+        function checkName(){
+            create();
+            request.open("post","checkqx",true);
+            request.setRequestHeader("Content-Type",
+                "application/x-www-form-urlencoded");
+            request.onreadystatechange=callback;
+
+            request.send("key="+"");
+
+        }
+        //3:声明的回调函数
+        function callback(){
+            //保证接受到的响应数据是完整的
+            if(request.readyState==4){
+                //保证服务器状态正常
+                if(request.status==200){
+                    //接受服务器返回的响应
+                    var value = request.response;
+                    if(value!=null){
+                        var jsonObj = JSON.parse(value);
+                        document.getElementById("name").append("欢迎你："+jsonObj.username);
+                    }
+
+                }
+            }
+        }
+    </script>
+
+
+
+
 </html>

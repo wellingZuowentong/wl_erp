@@ -38,29 +38,84 @@
         </div>
 
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
         <script>
+
+            var request;
+
+            function create(){
+                request = new XMLHttpRequest();
+                if(window.XMLHttpRequest){
+                    request = new XMLHttpRequest();
+                }else{
+                    request =
+                        new ActiveXObject("Microsoft.XMLHttp");
+                }
+            }
+
+            //2:此函数用来发送异步请求，并且声明回调函数
+            function login(){
+                var username=document.getElementById("exampleInputEmail1").value;
+                var password=document.getElementById("exampleInputPassword1").value;
+                create();
+                request.open("post","checkNamePass",true);
+                request.setRequestHeader("Content-Type",
+                    "application/x-www-form-urlencoded");
+                request.onreadystatechange=callback;
+
+                request.send("username="+username+"&"+"password="+password);
+
+            }
+            //3:声明的回调函数
+            function callback(){
+                //保证接受到的响应数据是完整的
+                if(request.readyState==4){
+                    //保证服务器状态正常
+                    if(request.status==200){
+                        //接受服务器返回的响应
+                        var value = request.response;
+                        if(value!=null){
+                            var jsonObj = JSON.parse(value);
+                            if(jsonObj==1){
+                                window.location.href="main.html";
+                            }else{
+                                document.getElementById("exampleInputPassword1").value("");
+                                alert("您输入的密码不正确，请重新输入！");
+
+                            }
+
+                        }
+
+                    }
+                }
+            }
             //登录
-            function login() {
+            /*function login() {
                 var username =  $("#exampleInputEmail1").val();
-                var password = $("#exampleInputPassword1").val();
-                $.ajax({
+                var password = $("#exampleInputPassword1").val();*/
+                /*$.ajax({
                     type: "POST",//方法类型
                     dataType: "json",//预期服务器返回的数据类型
                     url: "checkNamePass",//url
-                    /*data: $('#login_form').serialize(),*/
-                    /*data:{
+                    /!*data: $('#login_form').serialize(),*!/
+                    /!*data:{
                       "username":username,
                       "password":password
-                    },*/
+                    },*!/
+                    data:{
+                      username:username,
+                      password:password,
+                    },
                     success: function (result) {
-                        if(result == "ERROR"){
+                        if(result==1){
+
+                        }else{
+                            $("#exampleInputPassword1").val("");
+                            alert("您输入的密码不正确，请重新输入");
 
                         }
                     }
                 });
-            }
+            }*/
         </script>
     </body>
 

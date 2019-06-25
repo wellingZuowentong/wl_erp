@@ -28,9 +28,11 @@ public class UserController {
     *功能：校验用户名与密码
     */
     @RequestMapping(value = "/checkNamePass",method = RequestMethod.POST)
-    public String checkNamePass(HttpServletRequest request, HttpSession session){
+    @ResponseBody
+    public int checkNamePass(HttpServletRequest request, HttpSession session){
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        System.out.println(username+"__________"+password);
 
         User user=new User();
         user.setUsername(username);
@@ -44,9 +46,9 @@ public class UserController {
             }
             userService.changeZhuangtai(user1);
             session.setAttribute("username",user1);
-            return "main.html";
+            return 1;
         }
-        return "ERROR";
+        return 0;
     }
     /*查询登陆人验证权限*/
     @RequestMapping("/checkqx")

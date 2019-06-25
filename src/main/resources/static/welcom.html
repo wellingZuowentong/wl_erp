@@ -7,6 +7,7 @@
         <title>index</title>
         <!-- Bootstrap -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
+
         <style type="text/css">
             #web_bg{
               position:fixed;
@@ -36,22 +37,152 @@
     <body id="web_bg" style="background-color: #2b669a" >
         <h1 id = "name" style="color: white"></h1>
 
-        <table style="border:2px solid black">
+        <table style="border:2px solid black" id="gonggao">
             <tr><th><h1>更新通知：</h1></th></tr>
-            <tr><th>密码修改美化</th></tr>
-            <tr><th>页面缓存问题</th></tr>
-            <tr><th>时间查询问题</th></tr>
             
         </table>
 
+
+
+        <!-- 修改库存列表模态框 -->
+        <div class="modal fade" id="MyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">修改库存商品</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="updateKuCunById" method="post" class="form-horizontal" role="form" id="xg_form">
+                            <input type="hidden" name="id" id="xgid"/>
+                            <div class="form-group">
+                                <label for="xgpname" class="col-sm-2 control-label">商品名：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="xgpname" name="pname">
+                                </div>
+                            </div>
+                            <!-- 厂家 -->
+                            <div class="form-group">
+                                <label for="xgcname" class="col-sm-2 control-label">厂家：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="xgcname" name="cname">
+                                </div>
+                            </div>
+                            <!-- 进货价 -->
+                            <div class="form-group">
+                                <label for="xginprice" class="col-sm-2 control-label">进货价：</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" id="xginprice" name="inprice">
+                                </div>
+                            </div>
+                            <!-- 出库价 -->
+                            <div class="form-group">
+                                <label for="xgoutprice" class="col-sm-2 control-label">出库价：</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" id="xgoutprice" name="outprice">
+                                </div>
+                            </div>
+
+                            <!-- 销售价 -->
+                            <div class="form-group">
+                                <label for="xgsellprice" class="col-sm-2 control-label">销售价：</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" id="xgsellprice" name="sellprice">
+                                </div>
+                            </div>
+                            <!-- 库存数量 -->
+                            <div class="form-group">
+                                <label for="xgvnum" class="col-sm-2 control-label">库存数量：</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" id="xgvnum" name="vnum" readonly="readonly">
+                                </div>
+                            </div>
+
+                            <!-- 预售数量 -->
+                            <div class="form-group">
+                                <label for="xgsellnum" class="col-sm-2 control-label">预售数量：</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" id="xgsellnum" name="sellnum" readonly="readonly">
+                                </div>
+                            </div>
+
+                            <!-- 规格 -->
+                            <div class="form-group">
+                                <label for="xgguige" class="col-sm-2 control-label">规格：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="xgguige" name="guige">
+                                </div>
+                            </div>
+
+                            <!-- 备注 -->
+                            <div class="form-group">
+                                <label for="xgbeizhu" class="col-sm-2 control-label">备注：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="xgbeizhu" name="beizhu">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-10 col-sm-10">
+                                    <button type="button" class="btn btn-default" onclick="xg()">修改</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
     </body>
+<<<<<<< HEAD
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+=======
+    <script src="js/jquery.js"></script>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/ajaxfileupload.js"></script>
+>>>>>>> 登陆验证
     <script>
+
+            checkName();
+            gg();
+
         var request;
-        checkName();
+
+        function gg() {
+            $.ajax({
+                type: "POST",//方法类型
+                dataType: "json",//预期服务器返回的数据类型
+                url: "findAllGongGao" ,//url
+                success: function (result) {
+                   $.each(result,function (i,gg) {
+                        $("#gonggao").append("<tr><th onclick='ggmtk("+gg.id+")'>"+gg.biaoti+"</th></tr>")
+                   })
+                },
+            });
+        }
+            function ggmtk(id){
+                $.ajax({
+                    type: "POST",//方法类型
+                    dataType: "json",//预期服务器返回的数据类型
+                    url: "findGongGaoById" ,//url
+                    data:{
+                        id:id,
+                    },
+                    success: function (result) {
+                        $("#MyModal").modal("show");
+                      alert(result.neirong);
+                    },
+                });
+            }
+        //创建ajax
         function create(){
             request = new XMLHttpRequest();
             if(window.XMLHttpRequest){

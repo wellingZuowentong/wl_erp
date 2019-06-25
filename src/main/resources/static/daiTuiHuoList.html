@@ -8,7 +8,7 @@
 
         <!-- Bootstrap -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
-
+        <link href="css/sweetalert.css" rel="stylesheet">
     </head>
     <body>
         <!-- 查询区域 -->
@@ -119,12 +119,51 @@
             </div>
         </div>
 
+        <!-- 退货驳回模态框 -->
+        <div class="modal fade" id="thrkOutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">退货驳回</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="insertOkBack" method="post" class="form-horizontal" role="form" id="thrkOut_form">
+                            <input type="hidden" name="id" id="thrkoutid"/>
+                            <!-- 出库人 -->
+                            <div class="form-group">
+                                <label for="thrkoutuser" class="col-sm-2 control-label">入库人：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="thrkoutuser" name="okBackUser">
+                                </div>
+                            </div>
+
+                            <!-- 备注 -->
+                            <div class="form-group">
+                                <label for="thrkoutbeizhu" class="col-sm-2 control-label">备注：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="thrkoutbeizhu" name="beizhu">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-10 col-sm-10">
+                                    <button type="button" class="btn btn-default" onclick="backOut()">退货驳回</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script src="js/jquery.js"></script>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="js/jquery.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="js/bootstrap.min.js"></script>
-        <script src="js/ajaxfileupload.js"></script>
+        <!-- Sweet alert -->
+        <script src="js/sweetalert.min.js"></script>
         <script>
             var pre,next,end;
             var tj="";//条件
@@ -198,11 +237,15 @@
 
                             if(msg.zhuangtai == 0) {
                                 zt = '待退货';
-                                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>" + msg.ordercode + "</th><th>" + msg.pname + "</th><th>" + msg.cname + "</th><th>" + msg.backnum + "</th><th>" + msg.backprice + "</th><th>" + newTime + "</th><th>" + msg.backuser + "</th><th>" + msg.beizhu + "</th><th><p style='color: dodgerblue'>"+zt+"</p></th><th><a href='#' onclick='thrk(" + msg.id + ")' style='text-decoration:none'>退货入库</a></th></tr>");
+                                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>" + msg.ordercode + "</th><th>" + msg.pname + "</th><th>" + msg.cname + "</th><th>" + msg.backnum + "</th><th>" + msg.backprice + "</th><th>" + newTime + "</th><th>" + msg.backuser + "</th><th>" + msg.beizhu + "</th><th><p style='color: dodgerblue'>"+zt+"</p></th><th><a href='#' onclick='thrk(" + msg.id + ")' style='text-decoration:none'>退货入库</a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='thrkOut("+msg.id+")' style='text-decoration:none'>退货驳回</a></th></tr>");
                             }
                             if(msg.zhuangtai == 1) {
                                 zt = '已退货';
                                 $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>" + msg.ordercode + "</th><th>" + msg.pname + "</th><th>" + msg.cname + "</th><th>" + msg.backnum + "</th><th>" + msg.backprice + "</th><th>" + newTime + "</th><th>" + msg.backuser + "</th><th>" + msg.beizhu + "</th><th><p style='color: #3e8f3e'>"+zt+"</p></th><th></th></tr>");
+                            }
+                            if(msg.zhuangtai == 3){
+                                zt = '被驳回';
+                                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>" + msg.ordercode + "</th><th>" + msg.pname + "</th><th>" + msg.cname + "</th><th>" + msg.backnum + "</th><th>" + msg.backprice + "</th><th>" + newTime + "</th><th>" + msg.backuser + "</th><th>" + msg.beizhu + "</th><th><p style='color: red'>"+zt+"</p></th><th></th></tr>");
                             }
                         });
                     }
@@ -215,6 +258,33 @@
                 $("#thrkuser").empty();
                 $("#thrkbeizhu").empty();
                 $("#thrkid").val(flag);
+            }
+
+            //退货驳回模态框展示
+            function thrkOut(flag) {
+                swal({
+                    title: "您确定驳回退货入库请求吗",
+                    text: "驳回后将无法恢复，请谨慎操作！",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "驳回",
+                    closeOnConfirm: false
+                },function () {
+                    $.ajax({
+                        type: "POST",//方法类型
+                        dataType: "json",//预期服务器返回的数据类型
+                        url: "backBoHui" ,//url
+                        data: {
+                            'id':flag
+                        },
+                        success: function (result) {
+                            swal("驳回成功","");
+                            getAllBack(dqy,tj);
+                        }
+                    });
+                });
+
             }
 
             //提交退货入库

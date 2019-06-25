@@ -32,8 +32,6 @@ public class UserController {
     public int checkNamePass(HttpServletRequest request, HttpSession session){
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        System.out.println(username+"__________"+password);
-
         User user=new User();
         user.setUsername(username);
         user.setPassword(password);

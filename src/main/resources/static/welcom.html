@@ -35,49 +35,14 @@
             </style>
     </head>
     <body id="web_bg">
-        <div class="panel panel-primary">
-            <div class="panel-heading row">
-                <h3 class="col-sm-11">更新通知</h3>
-                <h5 class="col-sm-1" id="name"></h5>
+        <div class="panel panel-primary" style="width: 90%;margin: 0 auto">
+            <div class="panel-heading row" style="margin: 0 auto">
+                <h3 class="col-sm-10">更新通知</h3>
+                <h3 class="col-sm-2" id="name" style="text-align: center"></h3>
             </div>
             <div class="panel-body" style="height: 700px">
                 <div class="panel-group" id="accordion">
-                    <!--<div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h5 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">标题 #1</a>
-                            </h5>
-                        </div>
-                        <div id="collapse1" class="panel-collapse collapse in">
-                            <div class="panel-body">
-                                Bootstrap相关优质项目推荐 这些项目或者是对Bootstrap进行了有益的补充，或者是基于Bootstrap开发的
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">标题 #2</a>
-                            </h4>
-                        </div>
-                        <div id="collapseTwo" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                Bootstrap相关优质项目推荐 这些项目或者是对Bootstrap进行了有益的补充，或者是基于Bootstrap开发的
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">标题 #3</a>
-                            </h4>
-                        </div>
-                        <div id="collapseThree" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                Bootstrap相关优质项目推荐 这些项目或者是对Bootstrap进行了有益的补充，或者是基于Bootstrap开发的
-                            </div>
-                        </div>
-                    </div>-->
+
                 </div>
             </div>
         </div>
@@ -106,8 +71,12 @@
                 url: "findAllGongGao" ,//url
                 success: function (result) {
                     var x = 1;
+                    var oldTime;
+                    var newTime;
                     $.each(result,function (i,gg) {
-                        $("#accordion").append("<div class='panel panel-default'><div class='panel-heading'><h5 class='panel-title'><a data-toggle='collapse' data-parent='#accordion' href='#collapse"+x+"'>"+gg.biaoti+"<p style='text-align: right'>"+gg.uptime+"</p></a></h5></div><div id='collapse"+x+"' class='panel-collapse collapse in'><div class='panel-body'>"+gg.neirong+"</div></div></div>");
+                        oldTime = new Date(gg.uptime).toJSON();
+                        newTime = new Date(+new Date(oldTime)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'');
+                        $("#accordion").append("<div class='panel panel-default'><div class='panel-heading'><h5 class='panel-title'><a data-toggle='collapse' data-parent='#accordion' href='#collapse"+x+"'>"+gg.biaoti+"<p style='text-align: right'>"+newTime+"</p></a></h5></div><div id='collapse"+x+"' class='panel-collapse collapse in'><div class='panel-body'>"+gg.neirong+"</div></div></div>");
                         x++;
                     });
                 },

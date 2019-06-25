@@ -11,76 +11,42 @@
 
     </head>
     <body>
-        <!--<div style="width: 100%">
-            <div style="width: 70%;margin: 0 auto">
-                <h1>修改密码</h1>
-
-                <div class="form-group has-success has-feedback" id="pwd" style="display: block">
-                    <label class="control-label" for="inputSuccess2">输入旧密码</label>
-                    <input type="text" class="form-control" id="inputSuccess" aria-describedby="inputSuccess2Status" onchange="yzPwd()">
-                    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-                    <span id="inputSuccessStatus" class="sr-only">(success)</span>
+        <div class="tabs-container">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">修改密码</a>
+                </li>
+                <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false">功能待定</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+                    <form method="get" onsubmit="return checkAll()" id="mm_form" style="width: 50%;margin: 0 auto">
+                        <br>
+                        <div class="form-group">
+                            <label for="opwd">请输入旧密码:</label>
+                            <input type="text" class="form-control" id="opwd" name="opwd" onblur="yzPwd()">
+                            <span id="opwd_msg"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="npwd1">输入新密码:</label>
+                            <input type="text" class="form-control" id="npwd1" name="password" onblur="yznPwd(this.value)">
+                            <span id="npwd1_msg"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="npwd2">再次输入新密码:</label>
+                            <input type="text" class="form-control" id="npwd2" name="password" onblur="yznPwd(this.value)">
+                            <span id="npwd2_msg"></span>
+                        </div>
+                        <button type="submit" onclick="xiugai()" class="btn btn-success">修改</button>
+                    </form>
                 </div>
-                &lt;!&ndash; ERR1 &ndash;&gt;
-                <div class="form-group has-error has-feedback" id="pwd_ERR" style="display: none">
-                    <label class="control-label" for="inputError2">输入旧密码</label>
-                    <input type="text" class="form-control" id="inputError2" aria-describedby="inputError2Status">
-                    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-                    <span id="inputError2Status" class="sr-only">(error)</span>
+                <div id="tab-2" class="tab-pane">
+                    <div class="panel-body">
+                        <strong>功能待定</strong>
+                    </div>
                 </div>
-
-
-                <div class="form-group has-success has-feedback" id="pwd_1" style="display: block">
-                    <label class="control-label" for="inputSuccess2">输入新密码</label>
-                    <input type="text" class="form-control" id="inputSuccess2" aria-describedby="inputSuccess2Status" onchange="yznPwd()">
-                    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-                    <span id="inputSuccess2Status" class="sr-only">(success)</span>
-                </div>
-                &lt;!&ndash; ERR2 &ndash;&gt;
-                <div class="form-group has-error has-feedback" id="npwd_ERR" style="display: none">
-                    <label class="control-label" for="inputError2">输入新密码</label>
-                    <input type="text" class="form-control" id="inputError" aria-describedby="inputError2Status" onchange="yznPwd()">
-                    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-                    <span id="inputErrorStatus" class="sr-only">(error)</span>
-                </div>
-
-
-                <div class="form-group has-warning has-feedback" id="pwd_2" style="display: block">
-                    <label class="control-label" for="inputWarning2">再次输入新密码</label>
-                    <input type="text" class="form-control" id="inputWarning2" aria-describedby="inputWarning2Status" onchange="yznPwd()">
-                    <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
-                    <span id="inputWarning2Status" class="sr-only">(warning)</span>
-                </div>
-                &lt;!&ndash; ERR3 &ndash;&gt;
-                <div class="form-group has-error has-feedback" id="n2pwd_ERR" style="display: none">
-                    <label class="control-label" for="inputError2">再次输入新密码</label>
-                    <input type="text" class="form-control" id="inputError3" aria-describedby="inputError2Status" onchange="yznPwd()">
-                    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-                    <span id="inputError3Status" class="sr-only">(error)</span>
-                </div>
-
-                <button type="button" class="btn btn-success" onclick="xiugai()">修改</button>
-
-                <button type="button" class="btn btn-danger">取消</button>
             </div>
-        </div>-->
-
-
-        <form method="get" onsubmit="return checkAll()" id="mm_form">
-
-            <label for="opwd">请输入旧密码:<input type="text" name="opwd" id="opwd" onblur="yzPwd()"/></label>
-            <span id="opwd_msg"></span>
-            <br>
-
-            <label for="npwd1">请输入新密码:<input type="text" name="password" id="npwd1" onblur="yznPwd(this.value)"/></label>
-            <span id="npwd1_msg"></span>
-            <br>
-            <label for="npwd2">请再次输入新密码:<input type="text" name="password" id="npwd2" onblur="yznPwd(this.value)"/></label>
-            <span id="npwd2_msg"></span>
-            <br>
-            <input type="submit" onclick="xiugai()" value="提交" />
-            <input type="reset" value="取消" />
-        </form>
+        </div>
 
         <script src="js/jquery.js"></script>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

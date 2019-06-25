@@ -5,6 +5,8 @@
         <title>登陆</title>
         <!-- Bootstrap -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!-- Sweet Alert -->
+        <link href="css/sweetalert.css" rel="stylesheet">
         <style>
             .page-header{
                 margin:2px 0px;
@@ -38,6 +40,10 @@
         </div>
 
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <!-- Sweet alert -->
+        <script src="js/sweetalert.min.js"></script>
         <script>
 
             var request;
@@ -56,6 +62,22 @@
             function login(){
                 var username=document.getElementById("exampleInputEmail1").value;
                 var password=document.getElementById("exampleInputPassword1").value;
+                if(username == "" || username == null){
+                    swal({
+                        title: "用户名不能为空",
+                        type: "warning",
+                        closeOnConfirm: false
+                    });
+                    return false;
+                }
+                if(password == "" || password == null){
+                    swal({
+                        title: "密码不能为空",
+                        type: "warning",
+                        closeOnConfirm: false
+                    });
+                    return false;
+                }
                 create();
                 request.open("post","checkNamePass",true);
                 request.setRequestHeader("Content-Type",
@@ -78,9 +100,12 @@
                             if(jsonObj==1){
                                 window.location.href="main.html";
                             }else{
-                                document.getElementById("exampleInputPassword1").value="";
-                                alert("您输入的密码不正确，请重新输入！");
-
+                                swal({
+                                    title: "密码错误,请重新输入",
+                                    type: "warning",
+                                    closeOnConfirm: false
+                                });
+                                document.getElementById("exampleInputPassword1").value("");
                             }
 
                         }

@@ -178,7 +178,14 @@
 
 
             function dl() {
-                $.ajax({
+                create();
+                request.open("get","checkZhuangTai",true);
+                request.setRequestHeader("Content-Type",
+                    "application/x-www-form-urlencoded");
+                request.onreadystatechange=callback2;
+
+                request.send("key="+"");
+                /*$.ajax({
                     type: "Get",//方法类型
                     dataType: "json",//预期服务器返回的数据类型
                     url: "/checkZhuangTai" ,//url
@@ -194,7 +201,31 @@
                             window.location.href="index.html";
                         }
                     }
-                });
+                });*/
+            }
+            function callback2(){
+                //保证接受到的响应数据是完整的
+                if(request.readyState==4){
+                    //保证服务器状态正常
+                    if(request.status==200){
+                        //接受服务器返回的响应
+                        var value = request.response;
+                        if(value!=null){
+                            var result = JSON.parse(value);
+                            if(result==0){
+                                clearInterval(myzidong);
+                                alert("该账号再另一个窗口打开，请退出或重新登陆!");
+                                window.location.href="index.html";
+                            }
+                            if(result==3){
+                                clearInterval(myzidong);
+                                alert("长时间未操作，请重新登陆");
+                                window.location.href="index.html";
+                            }
+                        }
+
+                    }
+                }
             }
 
         </script>

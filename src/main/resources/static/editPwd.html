@@ -60,6 +60,10 @@
             var newPwd1 = false;
             var newPwd2 = false;
 
+            window.onload = function(){
+                yzPwd();
+            };
+
             //旧密码验证
             function yzPwd() {
                 oldP = $("#opwd").val();

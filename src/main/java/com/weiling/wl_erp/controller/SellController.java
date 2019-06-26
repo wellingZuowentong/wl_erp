@@ -176,7 +176,7 @@ public class SellController {
             overtime =new Date();
         }
 
-        PageHelper.startPage(pageNum,5);
+        PageHelper.startPage(pageNum,10);
         List<Sell> list = sellService.findAllSell(pname,cname,starttime,overtime);
         PageInfo<Sell> pageInfo = new PageInfo<Sell>(list);
         return pageInfo;

@@ -296,6 +296,7 @@
 
     //分页查询所有商品
     function getAllShangPin(num,con){
+        var z=num*10-9;
         dqy=num;
         $.ajax({
             type:'Get',
@@ -307,7 +308,7 @@
                    next=msg.nextPage;
                    end=msg.pages;
                    $.each(msg.list,function(i,msg){
-                       $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg.id+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.sellprice+"</th><th>"+msg.sellnum+"</th><th>"+msg.guige+"</th><th>"+msg.beizhu+"</th><th><a href='#' onclick='showSellModul("+msg.id+")' style='text-decoration:none'>出售</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href='#' onclick='xiugai("+msg.id+")' style='text-decoration:none'>修改</a></th></tr>");
+                       $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+z+++"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.sellprice+"</th><th>"+msg.sellnum+"</th><th>"+msg.guige+"</th><th>"+msg.beizhu+"</th><th><a href='#' onclick='showSellModul("+msg.id+")' style='text-decoration:none'>出售</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href='#' onclick='xiugai("+msg.id+")' style='text-decoration:none'>修改</a></th></tr>");
                    });
             }
         });

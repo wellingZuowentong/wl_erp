@@ -85,7 +85,7 @@ public class OkBackController {
             overtime =new Date();
         }
 
-        PageHelper.startPage(pageNum,5);
+        PageHelper.startPage(pageNum,10);
         List<OkBack> list = okBackService.getAllOkBack(pname,cname,starttime,overtime);
         PageInfo<OkBack> pageInfo = new PageInfo<OkBack>(list);
         return pageInfo;

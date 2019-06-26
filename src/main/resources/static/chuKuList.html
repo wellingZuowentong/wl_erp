@@ -141,6 +141,7 @@
             }
 
             function queryAllChuKu(num,con) {
+                var z=num*10-9;
                 dqy=num;
                 $.ajax({
                     type:'Get',
@@ -156,7 +157,7 @@
                         $.each(msg.list,function(i,msg) {
                             oldTime = new Date(msg.outtime).toJSON();
                             newTime = new Date(+new Date(oldTime)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'');
-                            $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg.id+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.outnum+"</th><th>"+msg.outprice+"</th><th>"+msg.guige+"</th><th>"+msg.outallprice+"</th><th>"+msg.outuser+"</th><th>"+newTime+"</th><th>"+msg.beizhu+"</th></tr>");
+                            $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+z+++"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.outnum+"</th><th>"+msg.outprice+"</th><th>"+msg.guige+"</th><th>"+msg.outallprice+"</th><th>"+msg.outuser+"</th><th>"+newTime+"</th><th>"+msg.beizhu+"</th></tr>");
                             //$("#caid").append("<option value='"+msg[i].cname+"'>"+msg[i].cname+"</option>");
                         });
                     }

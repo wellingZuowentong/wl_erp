@@ -57,7 +57,7 @@ public class ChuKuController {
         }else{
             overtime =new Date();
         }
-        PageHelper.startPage(pageNum,5);
+        PageHelper.startPage(pageNum,10);
         List<ChuKu> list = chuKuService.findAllChuKu(pname,cname,starttime,overtime);
         PageInfo<ChuKu> pageInfo = new PageInfo<ChuKu>(list);
         return pageInfo;

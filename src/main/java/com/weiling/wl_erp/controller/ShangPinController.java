@@ -138,7 +138,7 @@ public class ShangPinController {
     public PageInfo<ShangPin> getAllShangPin(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum,HttpServletRequest request){
         String pname = request.getParameter("pname");
         String cname = request.getParameter("cname");
-        PageHelper.startPage(pageNum,5);
+        PageHelper.startPage(pageNum,10);
         List<ShangPin> list = shangPinService.findAllShangPin(pname,cname);
         PageInfo<ShangPin> pageInfo = new PageInfo<ShangPin>(list);
         return pageInfo;

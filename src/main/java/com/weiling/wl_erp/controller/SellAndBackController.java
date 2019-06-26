@@ -51,7 +51,7 @@ public class SellAndBackController {
             overtime =new Date();
         }
 
-        PageHelper.startPage(pageNum,5);
+        PageHelper.startPage(pageNum,10);
         List<SellAndBack> list = sellAndBackService.findAllSellAndBack(pname,cname,starttime,overtime);
         PageInfo<SellAndBack> pageInfo = new PageInfo<SellAndBack>(list);
         return pageInfo;

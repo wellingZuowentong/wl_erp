@@ -97,7 +97,7 @@ public class RuKuController {
 
     @RequestMapping("findRuKuById")
     @ResponseBody
-    public KuCun findKuCunById(HttpServletRequest request){
+    public RuKu findKuCunById(HttpServletRequest request){
         Integer id=Integer.parseInt(request.getParameter("id"));
         return ruKuService.findRuKuById(id);
     }
@@ -118,6 +118,12 @@ public class RuKuController {
     @ResponseBody
     public int deleteKuCunById(HttpServletRequest request){
         Integer id = Integer.parseInt(request.getParameter("id"));
+        RuKu ruKu = ruKuService.findRuKuById(id);
+        KuCun kuCun = kuCunService.findKuCunByName(ruKu.getPname(),ruKu.getCname());
+        if(kuCun!=null) {
+            kuCun.setVnum(kuCun.getVnum() - ruKu.getVnum());
+            kuCunService.updateKuCunById(kuCun);
+        }
         return ruKuService.deleteRuKuById(id);
     }
 
@@ -133,7 +139,7 @@ public class RuKuController {
         String cname = request.getParameter("cname");
         String time = request.getParameter("starttime");
         String otime = request.getParameter("overtime");
-        System.out.println(otime);
+
         if(time!=null&&time!=""){
             starttime = formatter.parse(time+" 00:00:01");
         }
@@ -143,8 +149,8 @@ public class RuKuController {
         }else{
             overtime =new Date();
         }
-        System.out.println(overtime);
-        PageHelper.startPage(pageNum,5);
+
+        PageHelper.startPage(pageNum,10);
         List<RuKu> list = ruKuService.findAllRuKu(pname,cname,starttime,overtime);
         PageInfo<RuKu> pageInfo = new PageInfo<RuKu>(list);
         return pageInfo;

@@ -28,7 +28,7 @@ public class RuKuService {
         return ruKuMapper.findAllRuKu(pname,cname,starttime,overtime);
     }
 
-    public KuCun findRuKuById(Integer id){
+    public RuKu findRuKuById(Integer id){
         return ruKuMapper.findRuKuById(id);
     }
 

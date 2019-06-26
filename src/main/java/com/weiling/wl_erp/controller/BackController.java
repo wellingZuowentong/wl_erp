@@ -104,7 +104,7 @@ public class BackController {
             overtime =new Date();
         }
 
-        PageHelper.startPage(pageNum,5);
+        PageHelper.startPage(pageNum,10);
         List<Back> list = backService.getAllBack(pname,cname,starttime,overtime);
         PageInfo<Back> pageInfo = new PageInfo<Back>(list);
         return pageInfo;

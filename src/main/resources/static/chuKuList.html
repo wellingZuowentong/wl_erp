@@ -99,10 +99,15 @@
                 $("#pre").on("click",function(){
                     if(pre==0){
                         pre=1;
+                        alert("这是首页");
                     }
                     queryAllChuKu(pre,tj)
                 });
                 $("#next").on("click",function(){
+                    if(next==0){
+                        next=end;
+                        alert("这是最后一页");
+                    }
                     queryAllChuKu(next,tj)
                 });
                 $("#end").on("click",function(){
@@ -145,7 +150,7 @@
                         $("#data").empty();
                         pre=msg.prePage;
                         next=msg.nextPage;
-                        end=msg.lastPage;
+                        end=msg.pages;
                         var oldTime;
                         var newTime;
                         $.each(msg.list,function(i,msg) {

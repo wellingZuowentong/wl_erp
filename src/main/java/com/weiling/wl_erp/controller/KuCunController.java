@@ -9,6 +9,7 @@ import com.weiling.wl_erp.service.*;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -56,6 +57,7 @@ public class KuCunController {
     /*根据ID修改库存表*/
     @RequestMapping("updateKuCunById")
     @ResponseBody
+    @Transactional
     public  Map<String,String> updateKuCunById(HttpServletRequest request){
         Map<String,String> map = new HashMap<>();
         Integer id = Integer.parseInt(request.getParameter("id"));
@@ -99,6 +101,7 @@ public class KuCunController {
     /*根据ID删除库存*/
     @RequestMapping("deleteKuCunById")
     @ResponseBody
+    @Transactional
     public int deleteKuCunById(HttpServletRequest request){
         Integer id = Integer.parseInt(request.getParameter("id"));
         KuCun kuCun = kuCunService.findKuCunById(id);
@@ -119,6 +122,7 @@ public class KuCunController {
     /*根据库存ID添加预售商品表*/
     @RequestMapping("addShangPin")
     @ResponseBody
+    @Transactional
     public Map<String,String> addShangPin(Integer id, Integer sellnum, String beizhu){
         Map<String,String> map = new HashMap<>();
         KuCun kuCun = kuCunService.findKuCunById(id);
@@ -157,7 +161,7 @@ public class KuCunController {
     public PageInfo<KuCun> getAllKuCun(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum,HttpServletRequest request){
         String pname = request.getParameter("pname");
         String cname = request.getParameter("cname");
-        PageHelper.startPage(pageNum,5);
+        PageHelper.startPage(pageNum,10);
         List<KuCun> list = kuCunService.findAllKuCun(pname,cname);
         PageInfo<KuCun> pageInfo = new PageInfo<KuCun>(list);
         return pageInfo;

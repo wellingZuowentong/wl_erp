@@ -11,6 +11,7 @@ import com.weiling.wl_erp.service.KuCunService;
 import com.weiling.wl_erp.service.SellService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -37,6 +38,7 @@ public class BackController {
 
     @RequestMapping("insertBack")
     @ResponseBody
+    @Transactional
     public int insertBack(HttpServletRequest request){
         String ordercode = request.getParameter("ordercode");
         Sell sell = sellService.findSellByOrder(ordercode);

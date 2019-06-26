@@ -12,6 +12,7 @@ import com.weiling.wl_erp.service.SellService;
 import com.weiling.wl_erp.service.ShangPinService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -83,6 +84,7 @@ public class SellController {
     /*销售驳回操作*/
     @RequestMapping("backsell")
     @ResponseBody
+    @Transactional
     public int backsell(Integer id,String outuser,String beizhu){
         Sell sell = sellService.findSellById(id);
         sell.setZhuangtai(2);
@@ -96,6 +98,7 @@ public class SellController {
     /*销售出库操作*/
     @RequestMapping("outsell")
     @ResponseBody
+    @Transactional
     public int outsell(Integer id,String outuser,String beizhu){
         Sell sell = sellService.findSellById(id);
         String pname = sell.getPname();
@@ -120,6 +123,7 @@ public class SellController {
     /*修改销售信息*/
     @RequestMapping("updateSellById")
     @ResponseBody
+    @Transactional
     public int updateSellById(HttpServletRequest request){
         Integer id=Integer.parseInt(request.getParameter("id"));
         Sell oldSell = sellService.findSellById(id);

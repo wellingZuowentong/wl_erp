@@ -58,10 +58,6 @@
                         table-striped table-condensed">
             <thead>
             <tr>
-                <th>
-                    <input type="checkbox" id='checkall'>
-                    <label for='checkall'>全选</label>
-                </th>
                 <th>订单编号</th>
                 <th>商品名</th>
                 <th>厂家</th>
@@ -166,11 +162,11 @@
                         $.each(msg.list,function(i,msg){
                             sellOldTime = new Date(msg.selltime).toJSON();
                             sellNewTime = new Date(+new Date(sellOldTime) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '');
-                            $("#data").append("<tr id='list_tr'><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>" + msg.ordercode + "</th><th>" + msg.pname + "</th><th>" + msg.cname + "</th><th>" + msg.oksell + "</th><th>" + msg.overprice + "</th><th>" + msg.selluser + "</th></th><th>" + sellNewTime + "</th><th>"+"---"+"</th><th>"+"---"+"</th><th>" +"---"+ "</th><th>" +"---"+ "</th></tr>");
+                            $("#data").append("<tr id='list_tr'><th>" + msg.ordercode + "</th><th>" + msg.pname + "</th><th>" + msg.cname + "</th><th>" + msg.oksell + "</th><th>" + msg.overprice + "</th><th>" + msg.selluser + "</th></th><th>" + sellNewTime + "</th><th>"+"---"+"</th><th>"+"---"+"</th><th>" +"---"+ "</th><th>" +"---"+ "</th></tr>");
                             $.each(msg.backlist,function(i,backlist) {
                                 backOldTime = new Date(backlist.backtime).toJSON();
                                 backNewTime = new Date(+new Date(backOldTime) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '');
-                                $("#data").append("<tr id='list_tr'><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+"->->->"+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+"---"+"</th><th>"+"---"+"</th><th>"+"---"+"</th>+msg.selluser+</th><th>"+"---"+"</th><th>" + backlist.backnum + "</th><th>" + backlist.backprice + "</th><th>" + backlist.backuser + "</th><th>" + backNewTime + "</th></tr>");
+                                $("#data").append("<tr id='list_tr'><th>"+"->->->"+"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+"---"+"</th><th>"+"---"+"</th><th>"+"---"+"</th>+msg.selluser+</th><th>"+"---"+"</th><th>" + backlist.backnum + "</th><th>" + backlist.backprice + "</th><th>" + backlist.backuser + "</th><th>" + backNewTime + "</th></tr>");
                             });
                         });
                     }

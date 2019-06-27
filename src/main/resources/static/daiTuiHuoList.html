@@ -242,15 +242,15 @@
 
                             if(msg.zhuangtai == 0) {
                                 zt = '待退货';
-                                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>" + msg.ordercode + "</th><th>" + msg.pname + "</th><th>" + msg.cname + "</th><th>" + msg.backnum + "</th><th>" + msg.backprice + "</th><th>" + newTime + "</th><th>" + msg.backuser + "</th><th>" + msg.beizhu + "</th><th><p style='color: dodgerblue'>"+zt+"</p></th><th><a href='#' onclick='thrk(" + msg.id + ")' style='text-decoration:none'>退货入库</a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='thrkOut("+msg.id+")' style='text-decoration:none'>退货驳回</a></th></tr>");
+                                $("#data").append("<tr><th><input type='checkbox' name='ckbx' value='"+msg.id+"'><label for='checkall'></label></th><th>" + msg.ordercode + "</th><th>" + msg.pname + "</th><th>" + msg.cname + "</th><th>" + msg.backnum + "</th><th>" + msg.backprice + "</th><th>" + newTime + "</th><th>" + msg.backuser + "</th><th>" + msg.beizhu + "</th><th><p style='color: dodgerblue'>"+zt+"</p></th><th><a href='#' onclick='thrk(" + msg.id + ")' style='text-decoration:none'>退货入库</a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='thrkOut("+msg.id+")' style='text-decoration:none'>退货驳回</a></th></tr>");
                             }
                             if(msg.zhuangtai == 1) {
                                 zt = '已退货';
-                                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>" + msg.ordercode + "</th><th>" + msg.pname + "</th><th>" + msg.cname + "</th><th>" + msg.backnum + "</th><th>" + msg.backprice + "</th><th>" + newTime + "</th><th>" + msg.backuser + "</th><th>" + msg.beizhu + "</th><th><p style='color: #3e8f3e'>"+zt+"</p></th><th></th></tr>");
+                                $("#data").append("<tr><th><input type='checkbox' name='ckbx' value='"+msg.id+"'><label for='checkall'></label></th><th>" + msg.ordercode + "</th><th>" + msg.pname + "</th><th>" + msg.cname + "</th><th>" + msg.backnum + "</th><th>" + msg.backprice + "</th><th>" + newTime + "</th><th>" + msg.backuser + "</th><th>" + msg.beizhu + "</th><th><p style='color: #3e8f3e'>"+zt+"</p></th><th></th></tr>");
                             }
                             if(msg.zhuangtai == 3){
                                 zt = '被驳回';
-                                $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>" + msg.ordercode + "</th><th>" + msg.pname + "</th><th>" + msg.cname + "</th><th>" + msg.backnum + "</th><th>" + msg.backprice + "</th><th>" + newTime + "</th><th>" + msg.backuser + "</th><th>" + msg.beizhu + "</th><th><p style='color: red'>"+zt+"</p></th><th></th></tr>");
+                                $("#data").append("<tr><th><input type='checkbox' name='ckbx' value='"+msg.id+"'><label for='checkall'></label></th><th>" + msg.ordercode + "</th><th>" + msg.pname + "</th><th>" + msg.cname + "</th><th>" + msg.backnum + "</th><th>" + msg.backprice + "</th><th>" + newTime + "</th><th>" + msg.backuser + "</th><th>" + msg.beizhu + "</th><th><p style='color: red'>"+zt+"</p></th><th></th></tr>");
                             }
                         });
                     }
@@ -311,7 +311,35 @@
             }
 
             function export2Excel() {
-                window.location.href="excelBack?"+tj;
+                obj = document.getElementsByName("ckbx");
+                check_val ="";
+                for(k in obj){
+                    if(obj[k].checked)
+                        check_val=check_val+obj[k].value+",";
+                }
+                window.location.href="excelBack?"+tj+"&allid="+check_val;
+            }
+
+            var btn = document.getElementById("checkall");
+            btn.onclick = function() {
+                var flag = this.checked;
+                var items = document.getElementsByName("ckbx");
+                for (var i = 0; i < items.length; i++) {
+                    items[i].checked = flag;//将所有item的状态设为全选按钮的状态
+                }
+
+                var items = document.getElementsByName("ckbx");
+                for (var i = 0; i < items.length; i++) {
+                    items[i].onclick = function() {//对每个item设置点击
+                        var number = 0;//记录选中的个数
+                        for (var j = 0; j < items.length; j++) {
+                            if (items[j].checked) {
+                                number++;
+                            }
+                        }
+                        document.getElementById("checkall").checked = (items.length == number);
+                    }
+                }
             }
         </script>
     </body>

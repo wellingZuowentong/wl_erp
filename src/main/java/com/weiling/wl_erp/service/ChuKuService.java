@@ -27,13 +27,13 @@ public class ChuKuService {
    public List<ChuKu> findAllChuKu(String pname,String cname,Date starttime,Date overtime){
         return chuKuMapper.findAllChuKu(pname,cname,starttime,overtime);
     }
-    public KuCun findChuKuById(Integer id){
+    public ChuKu findChuKuById(Integer id){
         return chuKuMapper.findChuKuById(id);
     }
     public int updateChuKuById(ChuKu chuKu){
         return chuKuMapper.updateChuKuById(chuKu);
     }
-    public KuCun findChuKuByName(String pname,String cname){
+    public ChuKu findChuKuByName(String pname,String cname){
         return chuKuMapper.findChuKuByName(pname,cname);
     }
     public int deleteChuKuById(Integer id){

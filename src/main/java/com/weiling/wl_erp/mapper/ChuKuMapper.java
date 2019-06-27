@@ -17,9 +17,9 @@ import java.util.List;
 public interface ChuKuMapper {
     public int insertChuKu(ChuKu chuKu);
     public List<ChuKu> findAllChuKu(@Param("pname")String pname, @Param("cname")String cname, @Param("starttime") Date starttime, @Param("overtime")Date overtime);
-    public KuCun findChuKuById(Integer id);
+    public ChuKu findChuKuById(Integer id);
     public int updateChuKuById(ChuKu chuKu);
-    public KuCun findChuKuByName(@Param("pname") String pname, @Param("cname") String cname);
+    public ChuKu findChuKuByName(@Param("pname") String pname, @Param("cname") String cname);
     public int deleteChuKuById(Integer id);
     public int updateChuKuName(@Param("pname")String pname, @Param("cname")String cname,@Param("odpname")String odpname, @Param("odcname")String odcname);
 }

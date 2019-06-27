@@ -80,51 +80,106 @@ public class TestExcelController {
         data.setTitles(titles1);
 
         List<List<Object>> rows = new ArrayList();
-        List<Sell> list = sellService.findAllSell(pname,cname,starttime,overtime);
-        for(Sell sell:list) {
-            List<Object> row = new ArrayList();
-            row.add(sell.getPname());
-            row.add(sell.getCname());
-            row.add(sell.getOksell());
-            row.add(sell.getSellprice());
-            row.add(sell.getGuige());
-            row.add(sell.getAllprice());
-            row.add(sell.getOverprice());
-            row.add(sell.getSelluser());
-            row.add(DateUtil.formatNormalDateString(sell.getSelltime()));
-            if(sell.getZhuangtai()==0){
-                wzongjia = wzongjia.add(sell.getOverprice());
-                wout = wout+sell.getOksell();
-                row.add("未出库");
-            }
-            if(sell.getZhuangtai()==1){
-                yzongjia = yzongjia.add(sell.getOverprice());
-                yout = yout+sell.getOksell();
-                row.add("已出库");
-            }
-            if(sell.getZhuangtai()==2){
-                row.add("被驳回");
-            }
 
-            row.add(sell.getBeizhu());
-            rows.add(row);
+        String allid = request.getParameter("allid");
+        List<Sell> allSell = new ArrayList<>();
+        if(allid!=null&&allid!="") {
+            String[] newid = allid.split(",");
+            for (String cid : newid) {
+                Integer id = Integer.parseInt(cid);
+                Sell osell = sellService.findSellById(id);
+                allSell.add(osell);
+            }
+            for (Sell sell : allSell) {
+                List<Object> row = new ArrayList();
+                row.add(sell.getPname());
+                row.add(sell.getCname());
+                row.add(sell.getOksell());
+                row.add(sell.getSellprice());
+                row.add(sell.getGuige());
+                row.add(sell.getAllprice());
+                row.add(sell.getOverprice());
+                row.add(sell.getSelluser());
+                row.add(DateUtil.formatNormalDateString(sell.getSelltime()));
+                if (sell.getZhuangtai() == 0) {
+                    wzongjia = wzongjia.add(sell.getOverprice());
+                    wout = wout + sell.getOksell();
+                    row.add("未出库");
+                }
+                if (sell.getZhuangtai() == 1) {
+                    yzongjia = yzongjia.add(sell.getOverprice());
+                    yout = yout + sell.getOksell();
+                    row.add("已出库");
+                }
+                if (sell.getZhuangtai() == 2) {
+                    row.add("被驳回");
+                }
+
+                row.add(sell.getBeizhu());
+                rows.add(row);
+            }
+            List<Object> row1 = new ArrayList<>();
+            row1.add("合计:");
+            List<Object> row2 = new ArrayList<>();
+            row2.add("未出库数量");
+            row2.add(wout);
+            row2.add("未出库总价");
+            row2.add(wzongjia);
+            List<Object> row3 = new ArrayList<>();
+            row3.add("已出库数量");
+            row3.add(yout);
+            row3.add("已出库总价");
+            row3.add(yzongjia);
+            rows.add(row1);
+            rows.add(row2);
+            rows.add(row3);
+
+        }else {
+            List<Sell> list = sellService.findAllSell(pname, cname, starttime, overtime);
+            for (Sell sell : list) {
+                List<Object> row = new ArrayList();
+                row.add(sell.getPname());
+                row.add(sell.getCname());
+                row.add(sell.getOksell());
+                row.add(sell.getSellprice());
+                row.add(sell.getGuige());
+                row.add(sell.getAllprice());
+                row.add(sell.getOverprice());
+                row.add(sell.getSelluser());
+                row.add(DateUtil.formatNormalDateString(sell.getSelltime()));
+                if (sell.getZhuangtai() == 0) {
+                    wzongjia = wzongjia.add(sell.getOverprice());
+                    wout = wout + sell.getOksell();
+                    row.add("未出库");
+                }
+                if (sell.getZhuangtai() == 1) {
+                    yzongjia = yzongjia.add(sell.getOverprice());
+                    yout = yout + sell.getOksell();
+                    row.add("已出库");
+                }
+                if (sell.getZhuangtai() == 2) {
+                    row.add("被驳回");
+                }
+
+                row.add(sell.getBeizhu());
+                rows.add(row);
+            }
+            List<Object> row1 = new ArrayList<>();
+            row1.add("合计:");
+            List<Object> row2 = new ArrayList<>();
+            row2.add("未出库数量");
+            row2.add(wout);
+            row2.add("未出库总价");
+            row2.add(wzongjia);
+            List<Object> row3 = new ArrayList<>();
+            row3.add("已出库数量");
+            row3.add(yout);
+            row3.add("已出库总价");
+            row3.add(yzongjia);
+            rows.add(row1);
+            rows.add(row2);
+            rows.add(row3);
         }
-        List<Object> row1 = new ArrayList<>();
-        row1.add("合计:");
-        List<Object> row2 = new ArrayList<>();
-        row2.add("未出库数量");
-        row2.add(wout);
-        row2.add("未出库总价");
-        row2.add(wzongjia);
-        List<Object> row3 = new ArrayList<>();
-        row3.add("已出库数量");
-        row3.add(yout);
-        row3.add("已出库总价");
-        row3.add(yzongjia);
-        rows.add(row1);
-        rows.add(row2);
-        rows.add(row3);
-
         data.setRows(rows);
 
         SimpleDateFormat fdate = new SimpleDateFormat("MMddHHmmss");
@@ -173,38 +228,80 @@ public class TestExcelController {
         data.setTitles(titles1);
 
         List<List<Object>> rows = new ArrayList();
-        List<RuKu> list = ruKuService.findAllRuKu(pname,cname,starttime,overtime);
-        for(RuKu ruKu:list) {
-            List<Object> row = new ArrayList();
-            zongjinjia = zongjinjia.add(ruKu.getInprice().multiply(new BigDecimal(ruKu.getVnum())));
-            zongchujia = zongchujia.add(ruKu.getOutprice().multiply(new BigDecimal(ruKu.getVnum())));
-            zongmaijia = zongmaijia.add(ruKu.getSellprice().multiply(new BigDecimal(ruKu.getVnum())));
-            zongshuliang = zongshuliang+ruKu.getVnum();
-            row.add(ruKu.getPname());
-            row.add(ruKu.getCname());
-            row.add(ruKu.getInprice());
-            row.add(ruKu.getOutprice());
-            row.add(ruKu.getSellprice());
-            row.add(ruKu.getVnum());
-            row.add(ruKu.getGuige());
-            row.add(DateUtil.formatNormalDateString(ruKu.getRukutime()));
-            row.add(ruKu.getUsername());
-            row.add(ruKu.getBeizhu());
-            rows.add(row);
+        String allid = request.getParameter("allid");
+        List<RuKu> allRuKu= new ArrayList<>();
+        if(allid!=null&&allid!="") {
+            String[] newid = allid.split(",");
+            for (String cid : newid) {
+                Integer id = Integer.parseInt(cid);
+                RuKu oruku = ruKuService.findRuKuById(id);
+                allRuKu.add(oruku);
+            }
+            for (RuKu ruKu : allRuKu) {
+                List<Object> row = new ArrayList();
+                zongjinjia = zongjinjia.add(ruKu.getInprice().multiply(new BigDecimal(ruKu.getVnum())));
+                zongchujia = zongchujia.add(ruKu.getOutprice().multiply(new BigDecimal(ruKu.getVnum())));
+                zongmaijia = zongmaijia.add(ruKu.getSellprice().multiply(new BigDecimal(ruKu.getVnum())));
+                zongshuliang = zongshuliang + ruKu.getVnum();
+                row.add(ruKu.getPname());
+                row.add(ruKu.getCname());
+                row.add(ruKu.getInprice());
+                row.add(ruKu.getOutprice());
+                row.add(ruKu.getSellprice());
+                row.add(ruKu.getVnum());
+                row.add(ruKu.getGuige());
+                row.add(DateUtil.formatNormalDateString(ruKu.getRukutime()));
+                row.add(ruKu.getUsername());
+                row.add(ruKu.getBeizhu());
+                rows.add(row);
+            }
+            List<Object> row1 = new ArrayList<>();
+            row1.add("合计：");
+            List<Object> row2 = new ArrayList<>();
+            row2.add("总进货价：");
+            row2.add(zongjinjia);
+            row2.add("总出库价：");
+            row2.add(zongchujia);
+            row2.add("总销售价：");
+            row2.add(zongmaijia);
+            row2.add("进货总数量：");
+            row2.add(zongshuliang);
+            rows.add(row1);
+            rows.add(row2);
+        }else {
+            List<RuKu> list = ruKuService.findAllRuKu(pname, cname, starttime, overtime);
+            for (RuKu ruKu : list) {
+                List<Object> row = new ArrayList();
+                zongjinjia = zongjinjia.add(ruKu.getInprice().multiply(new BigDecimal(ruKu.getVnum())));
+                zongchujia = zongchujia.add(ruKu.getOutprice().multiply(new BigDecimal(ruKu.getVnum())));
+                zongmaijia = zongmaijia.add(ruKu.getSellprice().multiply(new BigDecimal(ruKu.getVnum())));
+                zongshuliang = zongshuliang + ruKu.getVnum();
+                row.add(ruKu.getPname());
+                row.add(ruKu.getCname());
+                row.add(ruKu.getInprice());
+                row.add(ruKu.getOutprice());
+                row.add(ruKu.getSellprice());
+                row.add(ruKu.getVnum());
+                row.add(ruKu.getGuige());
+                row.add(DateUtil.formatNormalDateString(ruKu.getRukutime()));
+                row.add(ruKu.getUsername());
+                row.add(ruKu.getBeizhu());
+                rows.add(row);
+            }
+            List<Object> row1 = new ArrayList<>();
+            row1.add("合计：");
+            List<Object> row2 = new ArrayList<>();
+            row2.add("总进货价：");
+            row2.add(zongjinjia);
+            row2.add("总出库价：");
+            row2.add(zongchujia);
+            row2.add("总销售价：");
+            row2.add(zongmaijia);
+            row2.add("进货总数量：");
+            row2.add(zongshuliang);
+            rows.add(row1);
+            rows.add(row2);
         }
-        List<Object> row1 = new ArrayList<>();
-        row1.add("合计：");
-        List<Object> row2 = new ArrayList<>();
-        row2.add("总进货价：");
-        row2.add(zongjinjia);
-        row2.add("总出库价：");
-        row2.add(zongchujia);
-        row2.add("总销售价：");
-        row2.add(zongmaijia);
-        row2.add("进货总数量：");
-        row2.add(zongshuliang);
-        rows.add(row1);
-        rows.add(row2);
         data.setRows(rows);
 
         SimpleDateFormat fdate = new SimpleDateFormat("MMddHHmmss");
@@ -249,31 +346,66 @@ public class TestExcelController {
         data.setTitles(titles1);
 
         List<List<Object>> rows = new ArrayList();
-        List<ChuKu> list = chuKuService.findAllChuKu(pname,cname,starttime,overtime);
-        for(ChuKu chuKu:list) {
-            List<Object> row = new ArrayList();
-            zongnum = zongnum+chuKu.getOutnum();
-            zongjia = zongjia.add(chuKu.getOutallprice());
-            row.add(chuKu.getPname());
-            row.add(chuKu.getCname());
-            row.add(chuKu.getOutnum());
-            row.add(chuKu.getOutprice());
-            row.add(chuKu.getGuige());
-            row.add(chuKu.getOutallprice());
-            row.add(chuKu.getOutuser());
-            row.add(DateUtil.formatNormalDateString(chuKu.getOuttime()));
-            row.add(chuKu.getBeizhu());
-            rows.add(row);
+        String allid = request.getParameter("allid");
+        List<ChuKu> allChuKu= new ArrayList<>();
+        if(allid!=null&&allid!="") {
+            String[] newid = allid.split(",");
+            for (String cid : newid) {
+                Integer id = Integer.parseInt(cid);
+                ChuKu ochuku = chuKuService.findChuKuById(id);
+                allChuKu.add(ochuku);
+            }
+            for (ChuKu chuKu : allChuKu) {
+                List<Object> row = new ArrayList();
+                zongnum = zongnum + chuKu.getOutnum();
+                zongjia = zongjia.add(chuKu.getOutallprice());
+                row.add(chuKu.getPname());
+                row.add(chuKu.getCname());
+                row.add(chuKu.getOutnum());
+                row.add(chuKu.getOutprice());
+                row.add(chuKu.getGuige());
+                row.add(chuKu.getOutallprice());
+                row.add(chuKu.getOutuser());
+                row.add(DateUtil.formatNormalDateString(chuKu.getOuttime()));
+                row.add(chuKu.getBeizhu());
+                rows.add(row);
+            }
+            List<Object> row1 = new ArrayList<>();
+            row1.add("合计：");
+            List<Object> row2 = new ArrayList<>();
+            row2.add("总出库数量：");
+            row2.add(zongnum);
+            row2.add("出库总价：");
+            row2.add(zongjia);
+            rows.add(row1);
+            rows.add(row2);
+        }else {
+            List<ChuKu> list = chuKuService.findAllChuKu(pname, cname, starttime, overtime);
+            for (ChuKu chuKu : list) {
+                List<Object> row = new ArrayList();
+                zongnum = zongnum + chuKu.getOutnum();
+                zongjia = zongjia.add(chuKu.getOutallprice());
+                row.add(chuKu.getPname());
+                row.add(chuKu.getCname());
+                row.add(chuKu.getOutnum());
+                row.add(chuKu.getOutprice());
+                row.add(chuKu.getGuige());
+                row.add(chuKu.getOutallprice());
+                row.add(chuKu.getOutuser());
+                row.add(DateUtil.formatNormalDateString(chuKu.getOuttime()));
+                row.add(chuKu.getBeizhu());
+                rows.add(row);
+            }
+            List<Object> row1 = new ArrayList<>();
+            row1.add("合计：");
+            List<Object> row2 = new ArrayList<>();
+            row2.add("总出库数量：");
+            row2.add(zongnum);
+            row2.add("出库总价：");
+            row2.add(zongjia);
+            rows.add(row1);
+            rows.add(row2);
         }
-        List<Object> row1 = new ArrayList<>();
-        row1.add("合计：");
-        List<Object> row2 = new ArrayList<>();
-        row2.add("总出库数量：");
-        row2.add(zongnum);
-        row2.add("出库总价：");
-        row2.add(zongjia);
-        rows.add(row1);
-        rows.add(row2);
         data.setRows(rows);
 
         SimpleDateFormat fdate = new SimpleDateFormat("MMddHHmmss");
@@ -297,16 +429,37 @@ public class TestExcelController {
         data.setTitles(titles1);
 
         List<List<Object>> rows = new ArrayList();
-        List<ShangPin> list = shangPinService.findAllShangPin(pname,cname);
-        for(ShangPin shangPin:list) {
-            List<Object> row = new ArrayList();
-            row.add(shangPin.getPname());
-            row.add(shangPin.getCname());
-            row.add(shangPin.getSellprice());
-            row.add(shangPin.getSellnum());
-            row.add(shangPin.getGuige());
-            row.add(shangPin.getBeizhu());
-            rows.add(row);
+        String allid = request.getParameter("allid");
+        List<ShangPin> allShangPin= new ArrayList<>();
+        if(allid!=null&&allid!="") {
+            String[] newid = allid.split(",");
+            for (String cid : newid) {
+                Integer id = Integer.parseInt(cid);
+                ShangPin oShangPin = shangPinService.findShangPinById(id);
+                allShangPin.add(oShangPin);
+            }
+            for (ShangPin shangPin : allShangPin) {
+                List<Object> row = new ArrayList();
+                row.add(shangPin.getPname());
+                row.add(shangPin.getCname());
+                row.add(shangPin.getSellprice());
+                row.add(shangPin.getSellnum());
+                row.add(shangPin.getGuige());
+                row.add(shangPin.getBeizhu());
+                rows.add(row);
+            }
+        }else {
+            List<ShangPin> list = shangPinService.findAllShangPin(pname, cname);
+            for (ShangPin shangPin : list) {
+                List<Object> row = new ArrayList();
+                row.add(shangPin.getPname());
+                row.add(shangPin.getCname());
+                row.add(shangPin.getSellprice());
+                row.add(shangPin.getSellnum());
+                row.add(shangPin.getGuige());
+                row.add(shangPin.getBeizhu());
+                rows.add(row);
+            }
         }
         data.setRows(rows);
 
@@ -414,32 +567,68 @@ public class TestExcelController {
         data.setTitles(titles1);
 
         List<List<Object>> rows = new ArrayList();
-        List<Back> list = backService.getAllBack(pname,cname,starttime,overtime);
-        Integer num=0;
-        BigDecimal price = new BigDecimal("0");
-        for(Back back:list) {
-            List<Object> row = new ArrayList();
-            row.add(back.getOrdercode());
-            row.add(back.getPname());
-            row.add(back.getCname());
-            row.add(back.getBacknum());
-            num = num+back.getBacknum();
-            row.add(back.getBackprice());
-            price = price.add(back.getBackprice());
-            row.add(back.getBackuser());
-            row.add(DateUtil.formatNormalDateString(back.getBacktime()));
-            row.add(back.getBeizhu());
-            rows.add(row);
+        String allid = request.getParameter("allid");
+        List<Back> allBack= new ArrayList<>();
+        if(allid!=null&&allid!="") {
+            String[] newid = allid.split(",");
+            for (String cid : newid) {
+                Integer id = Integer.parseInt(cid);
+                Back oBack = backService.findBackById(id);
+                allBack.add(oBack);
+            }
+            Integer num = 0;
+            BigDecimal price = new BigDecimal("0");
+            for (Back back : allBack) {
+                List<Object> row = new ArrayList();
+                row.add(back.getOrdercode());
+                row.add(back.getPname());
+                row.add(back.getCname());
+                row.add(back.getBacknum());
+                num = num + back.getBacknum();
+                row.add(back.getBackprice());
+                price = price.add(back.getBackprice());
+                row.add(back.getBackuser());
+                row.add(DateUtil.formatNormalDateString(back.getBacktime()));
+                row.add(back.getBeizhu());
+                rows.add(row);
+            }
+            List<Object> row1 = new ArrayList<>();
+            row1.add("合计：");
+            List<Object> row2 = new ArrayList<>();
+            row2.add("总退货数量：");
+            row2.add(num);
+            row2.add("总退货价：");
+            row2.add(price);
+            rows.add(row1);
+            rows.add(row2);
+        }else {
+            List<Back> list = backService.getAllBack(pname, cname, starttime, overtime);
+            Integer num = 0;
+            BigDecimal price = new BigDecimal("0");
+            for (Back back : list) {
+                List<Object> row = new ArrayList();
+                row.add(back.getOrdercode());
+                row.add(back.getPname());
+                row.add(back.getCname());
+                row.add(back.getBacknum());
+                num = num + back.getBacknum();
+                row.add(back.getBackprice());
+                price = price.add(back.getBackprice());
+                row.add(back.getBackuser());
+                row.add(DateUtil.formatNormalDateString(back.getBacktime()));
+                row.add(back.getBeizhu());
+                rows.add(row);
+            }
+            List<Object> row1 = new ArrayList<>();
+            row1.add("合计：");
+            List<Object> row2 = new ArrayList<>();
+            row2.add("总退货数量：");
+            row2.add(num);
+            row2.add("总退货价：");
+            row2.add(price);
+            rows.add(row1);
+            rows.add(row2);
         }
-        List<Object> row1 = new ArrayList<>();
-        row1.add("合计：");
-        List<Object> row2 = new ArrayList<>();
-        row2.add("总退货数量：");
-        row2.add(num);
-        row2.add("总退货价：");
-        row2.add(price);
-        rows.add(row1);
-        rows.add(row2);
         data.setRows(rows);
         SimpleDateFormat fdate = new SimpleDateFormat("MMddHHmmss");
         String fileName = "待退货表"+fdate.format(new Date()) + ".xls";

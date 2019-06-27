@@ -252,13 +252,6 @@
 
             //按条件分页查找
             function queryByTj(){
-                obj = document.getElementsByName("ckbx");
-                check_val = [];
-                for(k in obj){
-                    if(obj[k].checked)
-                        check_val.push(obj[k].value);
-                }
-                alert(check_val);
                 //重置条件
                 tj="";
                 var pname=$("#pname").val();
@@ -456,7 +449,13 @@
                 });
             }
             function export2Excel() {
-                window.location.href="excelkucun?"+tj;
+                obj = document.getElementsByName("ckbx");
+                check_val ="";
+                for(k in obj){
+                    if(obj[k].checked)
+                        check_val=check_val+obj[k].value+",";
+                }
+                window.location.href="excelkucun?"+tj+"&allid="+check_val;
             }
 
                 var btn = document.getElementById("checkall");

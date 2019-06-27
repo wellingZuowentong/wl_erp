@@ -334,19 +334,44 @@ public class TestExcelController {
         data.setTitles(titles1);
 
         List<List<Object>> rows = new ArrayList();
-        List<KuCun> list = kuCunService.findAllKuCun(pname,cname);
-        for(KuCun kuCun:list) {
-            List<Object> row = new ArrayList();
-            row.add(kuCun.getPname());
-            row.add(kuCun.getCname());
-            row.add(kuCun.getInprice());
-            row.add(kuCun.getOutprice());
-            row.add(kuCun.getSellprice());
-            row.add(kuCun.getVnum());
-            row.add(kuCun.getSellnum());
-            row.add(kuCun.getGuige());
-            row.add(kuCun.getBeizhu());
-            rows.add(row);
+
+        String allid = request.getParameter("allid");
+        List<KuCun> allKuCun = new ArrayList<>();
+        if(allid!=null&&allid!="") {
+            String[] newid = allid.split(",");
+            for (String cid : newid) {
+                Integer id = Integer.parseInt(cid);
+                KuCun okuCun = kuCunService.findKuCunById(id);
+                allKuCun.add(okuCun);
+            }
+            for(KuCun kuCun:allKuCun) {
+                List<Object> row = new ArrayList();
+                row.add(kuCun.getPname());
+                row.add(kuCun.getCname());
+                row.add(kuCun.getInprice());
+                row.add(kuCun.getOutprice());
+                row.add(kuCun.getSellprice());
+                row.add(kuCun.getVnum());
+                row.add(kuCun.getSellnum());
+                row.add(kuCun.getGuige());
+                row.add(kuCun.getBeizhu());
+                rows.add(row);
+            }
+        }else {
+            List<KuCun> list = kuCunService.findAllKuCun(pname, cname);
+            for (KuCun kuCun : list) {
+                List<Object> row = new ArrayList();
+                row.add(kuCun.getPname());
+                row.add(kuCun.getCname());
+                row.add(kuCun.getInprice());
+                row.add(kuCun.getOutprice());
+                row.add(kuCun.getSellprice());
+                row.add(kuCun.getVnum());
+                row.add(kuCun.getSellnum());
+                row.add(kuCun.getGuige());
+                row.add(kuCun.getBeizhu());
+                rows.add(row);
+            }
         }
         data.setRows(rows);
 

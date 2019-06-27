@@ -128,7 +128,6 @@ public class KuCunController {
         KuCun kuCun = kuCunService.findKuCunById(id);
         if(kuCun!=null) {
             int notout = sellService.findSellByZhuangtai(kuCun.getPname(), kuCun.getCname());
-            System.out.println(notout);
             kuCun.setVnum(kuCun.getVnum() + kuCun.getSellnum() - sellnum);
             kuCun.setSellnum(sellnum);
             kuCunService.updateKuCunById(kuCun);
@@ -141,7 +140,7 @@ public class KuCunController {
             shangPin.setBeizhu(beizhu);
             ShangPin newshangpin = shangPinService.findShangPinByName(shangPin.getPname(), shangPin.getCname());
             if (newshangpin != null) {
-                newshangpin.setSellnum(kuCun.getSellnum() - notout);
+                newshangpin.setSellnum(kuCun.getSellnum());
                 newshangpin.setBeizhu(beizhu);
                 shangPinService.updateShangPinById(newshangpin);
             } else {

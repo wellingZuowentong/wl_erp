@@ -252,6 +252,13 @@
 
             //按条件分页查找
             function queryByTj(){
+                obj = document.getElementsByName("ckbx");
+                check_val = [];
+                for(k in obj){
+                    if(obj[k].checked)
+                        check_val.push(obj[k].value);
+                }
+                alert(check_val);
                 //重置条件
                 tj="";
                 var pname=$("#pname").val();
@@ -282,7 +289,7 @@
                         next=msg.nextPage;
                         end=msg.pages;
                         $.each(msg.list,function(i,msg){
-                            $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+z+++"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.inprice+"</th><th>"+msg.outprice+"</th><th>"+msg.sellprice+"</th><th>"+msg.vnum+"</th><th>"+msg.sellnum+"</th><th>"+msg.guige+"</th><th>"+msg.beizhu+"</th><th><a href='#' onclick='modify("+msg.id+")' style='text-decoration:none'>修改</a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='yushou("+msg.id+")' style='text-decoration:none'>预售</a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='shanchu("+msg.id+")' style='text-decoration:none'>删除</a></th></tr>");
+                            $("#data").append("<tr><th><input type='checkbox' name='ckbx' value='"+msg.id+"'><label for='checkall'></label></th><th>"+z+++"</th><th>"+msg.pname+"</th><th>"+msg.cname+"</th><th>"+msg.inprice+"</th><th>"+msg.outprice+"</th><th>"+msg.sellprice+"</th><th>"+msg.vnum+"</th><th>"+msg.sellnum+"</th><th>"+msg.guige+"</th><th>"+msg.beizhu+"</th><th><a href='#' onclick='modify("+msg.id+")' style='text-decoration:none'>修改</a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='yushou("+msg.id+")' style='text-decoration:none'>预售</a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='shanchu("+msg.id+")' style='text-decoration:none'>删除</a></th></tr>");
                         });
 
                     }
@@ -299,7 +306,7 @@
                     success:function(msg){
                         $("#data").empty();
                         for(var i = 0;i < msg.length;i++){
-                            $("#data").append("<tr><th><input type='checkbox' id='checkall'><label for='checkall'></label></th><th>"+msg[i].id+"</th><th>"+msg[i].pname+"</th><th>"+msg[i].cname+"</th><th>"+msg[i].inprice+"</th><th>"+msg[i].outprice+"</th><th>"+msg[i].sellprice+"</th><th>"+msg[i].vnum+"</th><th>"+msg[i].sellnum+"</th><th>"+msg[i].guige+"</th><th>"+msg[i].beizhu+"</th><th><a href='#' onclick='modify("+msg[i].id+")' style='text-decoration:none'>修改</a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='yushou("+msg[i].id+")' style='text-decoration:none'>预售</a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='shanchu("+msg[i].id+")' style='text-decoration:none'>删除</a></th></tr>");
+                            $("#data").append("<tr><th><input type='checkbox' name='ckbx'><label for='ckbx'></label></th><th>"+msg[i].id+"</th><th>"+msg[i].pname+"</th><th>"+msg[i].cname+"</th><th>"+msg[i].inprice+"</th><th>"+msg[i].outprice+"</th><th>"+msg[i].sellprice+"</th><th>"+msg[i].vnum+"</th><th>"+msg[i].sellnum+"</th><th>"+msg[i].guige+"</th><th>"+msg[i].beizhu+"</th><th><a href='#' onclick='modify("+msg[i].id+")' style='text-decoration:none'>修改</a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='yushou("+msg[i].id+")' style='text-decoration:none'>预售</a><label>&nbsp;&nbsp;|&nbsp;&nbsp;</label><a href='#' onclick='shanchu("+msg[i].id+")' style='text-decoration:none'>删除</a></th></tr>");
                             //$("#caid").append("<option value='"+msg[i].cname+"'>"+msg[i].cname+"</option>");
                         }
                     }
@@ -450,6 +457,28 @@
             }
             function export2Excel() {
                 window.location.href="excelkucun?"+tj;
+            }
+
+                var btn = document.getElementById("checkall");
+                btn.onclick = function() {
+                    var flag = this.checked;
+                    var items = document.getElementsByName("ckbx");
+                    for (var i = 0; i < items.length; i++) {
+                        items[i].checked = flag;//将所有item的状态设为全选按钮的状态
+                    }
+
+                var items = document.getElementsByName("ckbx");
+                for (var i = 0; i < items.length; i++) {
+                    items[i].onclick = function() {//对每个item设置点击
+                        var number = 0;//记录选中的个数
+                        for (var j = 0; j < items.length; j++) {
+                            if (items[j].checked) {
+                                number++;
+                            }
+                        }
+                        document.getElementById("checkall").checked = (items.length == number);
+                    }
+                }
             }
         </script>
     </body>

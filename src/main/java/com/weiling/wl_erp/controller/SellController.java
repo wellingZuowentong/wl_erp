@@ -89,9 +89,12 @@ public class SellController {
         Sell sell = sellService.findSellById(id);
         sell.setZhuangtai(2);
         sellService.updateSellById(sell);
-        ShangPin shangPin = shangPinService.findShangPinByName(sell.getPname(),sell.getCname());
-        shangPin.setSellnum(shangPin.getSellnum()+sell.getOksell());
-        return shangPinService.updateShangPinById(shangPin);
+        String pname=sell.getPname();
+        String cname=sell.getCname();
+        KuCun kuCun = kuCunService.findKuCunByName(pname,cname);
+        kuCun.setVnum(kuCun.getVnum()+sell.getOksell());
+        return kuCunService.updateKuCunById(kuCun);
+
     }
 
 
@@ -103,9 +106,6 @@ public class SellController {
         Sell sell = sellService.findSellById(id);
         String pname = sell.getPname();
         String cname = sell.getCname();
-        KuCun kuCun = kuCunService.findKuCunByName(pname,cname);
-        kuCun.setSellnum(kuCun.getSellnum()-sell.getOksell());
-        kuCunService.updateKuCunById(kuCun);
         ChuKu chuKu = new ChuKu();
         chuKu.setPname(pname);
         chuKu.setCname(cname);

@@ -2,8 +2,10 @@ package com.weiling.wl_erp.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.weiling.wl_erp.bean.KuCun;
 import com.weiling.wl_erp.bean.Sell;
 import com.weiling.wl_erp.bean.ShangPin;
+import com.weiling.wl_erp.service.KuCunService;
 import com.weiling.wl_erp.service.SellService;
 import com.weiling.wl_erp.service.ShangPinService;
 import com.weiling.wl_erp.util.DateUtil;
@@ -32,6 +34,8 @@ public class ShangPinController {
     private ShangPinService shangPinService;
     @Autowired
     private SellService sellService;
+    @Autowired
+    private KuCunService kuCunService;
 
    /* @RequestMapping("insertShangPin")
     @ResponseBody
@@ -103,6 +107,11 @@ public class ShangPinController {
         String selluser = request.getParameter("selluser");
         String beizhu = request.getParameter("beizhu");
         ShangPin shangpin = shangPinService.findShangPinById(id);
+        KuCun kuCun = kuCunService.findKuCunByName(pname,cname);
+        if(kuCun!=null){
+            kuCun.setSellnum(kuCun.getSellnum()-oksell);
+            kuCunService.updateKuCunById(kuCun);
+        }
         if(shangpin==null){
             return 0;
         }

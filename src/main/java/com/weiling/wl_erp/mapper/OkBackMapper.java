@@ -20,5 +20,5 @@ public interface OkBackMapper {
     public List<OkBack> getAllOkBack(@Param("pname") String pname, @Param("cname") String cname, @Param("starttime") Date starttime, @Param("overtime") Date overtime);
     public List<OkBack> findOkBackByPnameCname(@Param("pname") String pname, @Param("cname") String cname);
     public int updateOkBackName(@Param("pname") String pname, @Param("cname") String cname, @Param("odpname") String odpname, @Param("odcname") String odcname);
-    public Back findOkBackById(Integer id);
+    public OkBack findOkBackById(Integer id);
 }

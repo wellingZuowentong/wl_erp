@@ -45,7 +45,7 @@ public class OkBackService {
         return okMapper.updateOkBackName(pname,cname,odpname,odcname);
     }
 
-    public Back findOkBackById(Integer id){
+    public OkBack findOkBackById(Integer id){
         return okMapper.findOkBackById(id);
     }
 }

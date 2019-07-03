@@ -18,7 +18,7 @@ public interface KuCunMapper {
     public List<KuCun> findAllKuCun(@Param("pname")String pname, @Param("cname")String cname);
     public KuCun findKuCunById(Integer id);
     public int updateKuCunById(KuCun kuCun);
-    public KuCun findKuCunByName(@Param("pname") String pname, @Param("cname") String cname);
+    public KuCun findKuCunByName(@Param("pname") String pname, @Param("cname") String cname,@Param("guige") String guige);
     public int deleteKuCunById(Integer id);
 
 

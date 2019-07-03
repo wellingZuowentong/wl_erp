@@ -34,8 +34,8 @@ public class KuCunService {
 
     }
 
-    public KuCun findKuCunByName(String pname,String cname){
-        return kuCunMapper.findKuCunByName(pname,cname);
+    public KuCun findKuCunByName(String pname,String cname,String guige){
+        return kuCunMapper.findKuCunByName(pname,cname,guige);
     }
 
     public int deleteKuCunById(Integer id){

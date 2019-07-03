@@ -17,7 +17,7 @@ public interface BackMapper {
     public int deleteBack(Integer id);
     public int updateBack(Back back);
     public List<Back> getAllBack(@Param("pname")String pname, @Param("cname")String cname, @Param("starttime") Date starttime, @Param("overtime")Date overtime);
-    public List<Back> findBackByPnameCname(@Param("pname")String pname, @Param("cname")String cname);
+    public List<Back> findBackByPnameCname(@Param("pname")String pname, @Param("cname")String cname,@Param("guige")String guige);
     public int updateBackName(@Param("pname")String pname, @Param("cname")String cname,@Param("odpname")String odpname, @Param("odcname")String odcname);
     public Back findBackById(Integer id);
 }

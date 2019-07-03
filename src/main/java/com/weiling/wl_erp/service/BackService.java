@@ -35,9 +35,9 @@ public class BackService {
          return backMapper.getAllBack(pname,cname,starttime,overtime);
     }
 
-    public List<Back> findBackByPnameCname(String pname,String cname){
+    public List<Back> findBackByPnameCname(String pname,String cname,String guige){
 
-        return backMapper.findBackByPnameCname(pname,cname);
+        return backMapper.findBackByPnameCname(pname,cname,guige);
     }
 
     public int updateBackName(@Param("pname")String pname, @Param("cname")String cname,@Param("odpname")String odpname, @Param("odcname")String odcname){

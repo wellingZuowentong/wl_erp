@@ -15,11 +15,12 @@ public class OkBack {
     private BigDecimal backprice;
     private String ordercode;
     private Date backtime;
+    private String guige;
     private String backuser;
     private String beizhu;
     public OkBack(){}
 
-    public OkBack(Integer id, String pname, String cname, Integer backnum, BigDecimal backprice, String ordercode, Date backtime, String backuser,String beizhu) {
+    public OkBack(Integer id, String pname, String cname, Integer backnum, BigDecimal backprice, String ordercode, Date backtime, String guige, String backuser, String beizhu) {
         this.id = id;
         this.pname = pname;
         this.cname = cname;
@@ -27,6 +28,7 @@ public class OkBack {
         this.backprice = backprice;
         this.ordercode = ordercode;
         this.backtime = backtime;
+        this.guige = guige;
         this.backuser = backuser;
         this.beizhu = beizhu;
     }
@@ -87,6 +89,14 @@ public class OkBack {
         this.backtime = backtime;
     }
 
+    public String getGuige() {
+        return guige;
+    }
+
+    public void setGuige(String guige) {
+        this.guige = guige;
+    }
+
     public String getBackuser() {
         return backuser;
     }
@@ -94,8 +104,6 @@ public class OkBack {
     public void setBackuser(String backuser) {
         this.backuser = backuser;
     }
-
-
 
     public String getBeizhu() {
         return beizhu;
@@ -107,7 +115,7 @@ public class OkBack {
 
     @Override
     public String toString() {
-        return "Back{" +
+        return "OkBack{" +
                 "id=" + id +
                 ", pname='" + pname + '\'' +
                 ", cname='" + cname + '\'' +
@@ -115,6 +123,7 @@ public class OkBack {
                 ", backprice=" + backprice +
                 ", ordercode='" + ordercode + '\'' +
                 ", backtime=" + backtime +
+                ", guige='" + guige + '\'' +
                 ", backuser='" + backuser + '\'' +
                 ", beizhu='" + beizhu + '\'' +
                 '}';

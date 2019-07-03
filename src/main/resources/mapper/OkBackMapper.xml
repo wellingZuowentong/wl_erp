@@ -5,12 +5,12 @@
 <mapper namespace="com.weiling.wl_erp.mapper.OkBackMapper">
 
     <sql id="okback">
-        id,pname,cname,backnum,backprice,ordercode,backtime,backuser,beizhu
+        id,pname,cname,backnum,backprice,ordercode,backtime,guige,backuser,beizhu
     </sql>
 
     <!--新增退货-->
     <insert id="insertOkBack" parameterType="com.weiling.wl_erp.bean.OkBack">
-        insert into okback(<include refid="okback" />)values(#{id},#{pname},#{cname},#{backnum},#{backprice},#{ordercode},#{backtime},#{backuser},#{beizhu})
+        insert into okback(<include refid="okback" />)values(#{id},#{pname},#{cname},#{backnum},#{backprice},#{ordercode},#{backtime},#{guige},#{backuser},#{beizhu})
     </insert>
 
     <!--查询所有退货-->
@@ -36,12 +36,12 @@
 
     <!--根据商品名和厂家名查询退货-->
     <select id="findOkBackByPnameCname" parameterType="String" resultType="com.weiling.wl_erp.bean.OkBack">
-        SELECT <include refid="okback"/> FROM okback where pname=#{pname} and cname=#{cname}
+        SELECT <include refid="okback"/> FROM okback where pname=#{pname} and cname=#{cname} and guige=#{guige}
     </select>
 
     <!--根据id和库存信息修改退货-->
     <update id="updateOkBack" parameterType="com.weiling.wl_erp.bean.OkBack">
-        update okback set pname=#{pname},cname=#{cname},backnum=#{backnum},backprice=#{backprice},ordercode=#{ordercode},backtime=#{backtime},backuser=#{backuser},beizhu=#{beizhu} where id=#{id}
+        update okback set pname=#{pname},cname=#{cname},backnum=#{backnum},backprice=#{backprice},ordercode=#{ordercode},backtime=#{backtime},guige=#{guige},backuser=#{backuser},beizhu=#{beizhu} where id=#{id}
     </update>
 
     <!--根据id删除退货信息-->

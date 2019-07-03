@@ -91,7 +91,8 @@ public class SellController {
         sellService.updateSellById(sell);
         String pname=sell.getPname();
         String cname=sell.getCname();
-        KuCun kuCun = kuCunService.findKuCunByName(pname,cname);
+        String guige=sell.getGuige();
+        KuCun kuCun = kuCunService.findKuCunByName(pname,cname,guige);
         kuCun.setVnum(kuCun.getVnum()+sell.getOksell());
         return kuCunService.updateKuCunById(kuCun);
 
@@ -148,7 +149,7 @@ public class SellController {
         sell.setBeizhu(beizhu);
         if(oldSell.getOksell()!=oksell){
             Integer newoksell = oldSell.getOksell()-oksell;
-            ShangPin shangPin = shangPinService.findShangPinByName(pname,cname);
+            ShangPin shangPin = shangPinService.findShangPinByName(pname,cname,guige);
             shangPin.setSellnum(shangPin.getSellnum()+newoksell);
             shangPinService.updateShangPinById(shangPin);
         }

@@ -17,10 +17,10 @@ public interface SellMapper {
     public int insertSell(Sell sell);
     public List<Sell> findAllSell(@Param("pname")String pname, @Param("cname")String cname,@Param("starttime")Date starttime,@Param("overtime")Date overtime);
     public Sell findSellById(Integer id);
-    public List<Sell> findSellByName(@Param("pname")String pname, @Param("cname")String cname);
+    public List<Sell> findSellByName(@Param("pname")String pname, @Param("cname")String cname,@Param("guige")String guige);
     public int updateZhuangTai(@Param("id")Integer id,@Param("zhuangtai")Integer zhuangtai);
     public int updateSellById(Sell sell);
-    public Integer findSellByZhuangtai(@Param("pname")String pname, @Param("cname")String cname);
+    public Integer findSellByZhuangtai(@Param("pname")String pname, @Param("cname")String cname,@Param("guige")String guige);
     public int updateSellName(@Param("pname")String pname, @Param("cname")String cname,@Param("odpname")String odpname, @Param("odcname")String odcname);
     public Sell findSellByOrder(String ordercode);
 }

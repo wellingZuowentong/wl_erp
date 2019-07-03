@@ -80,7 +80,7 @@ public class KuCunController {
             kuCun.setGuige(guige);
             kuCun.setBeizhu(beizhu);
             kuCunService.updateKuCunById(kuCun);
-            ShangPin shangpin = shangPinService.findShangPinByName(odpname, odcname);
+            ShangPin shangpin = shangPinService.findShangPinByName(odpname, odcname,guige);
             if(shangpin!=null){
                 shangpin.setPname(pname);
                 shangpin.setCname(cname);
@@ -108,7 +108,8 @@ public class KuCunController {
         if(kuCun!=null) {
             String pname = kuCun.getPname();
             String cname = kuCun.getCname();
-            ShangPin shangPin = shangPinService.findShangPinByName(pname, cname);
+            String guige = kuCun.getGuige();
+            ShangPin shangPin = shangPinService.findShangPinByName(pname, cname,guige);
             if (shangPin != null) {
                 Integer sid = shangPin.getId();
                 shangPinService.deleteShangPinById(sid);
@@ -127,7 +128,6 @@ public class KuCunController {
         Map<String,String> map = new HashMap<>();
         KuCun kuCun = kuCunService.findKuCunById(id);
         if(kuCun!=null) {
-            int notout = sellService.findSellByZhuangtai(kuCun.getPname(), kuCun.getCname());
             kuCun.setVnum(kuCun.getVnum() + kuCun.getSellnum() - sellnum);
             kuCun.setSellnum(sellnum);
             kuCunService.updateKuCunById(kuCun);
@@ -138,7 +138,7 @@ public class KuCunController {
             shangPin.setGuige(kuCun.getGuige());
             shangPin.setSellprice(kuCun.getSellprice());
             shangPin.setBeizhu(beizhu);
-            ShangPin newshangpin = shangPinService.findShangPinByName(shangPin.getPname(), shangPin.getCname());
+            ShangPin newshangpin = shangPinService.findShangPinByName(shangPin.getPname(), shangPin.getCname(),shangPin.getGuige());
             if (newshangpin != null) {
                 newshangpin.setSellnum(kuCun.getSellnum());
                 newshangpin.setBeizhu(beizhu);

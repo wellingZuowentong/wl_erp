@@ -43,7 +43,7 @@
 
     <!--根据商品名和厂家名查询商品-->
     <select id="findShangPinByName" resultType="com.weiling.wl_erp.bean.ShangPin">
-        SELECT <include refid="shangPin"/> FROM shangpin where pname=#{param1} and cname=#{param2}
+        SELECT <include refid="shangPin"/> FROM shangpin where pname=#{param1} and cname=#{param2} and guige=#{param2}
     </select>
 
     <!--根据id和商品信息修改商品-->

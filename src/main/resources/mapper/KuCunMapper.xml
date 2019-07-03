@@ -46,7 +46,7 @@
 
     <!--根据商品名和厂家名查询库存-->
     <select id="findKuCunByName" parameterType="String" resultType="com.weiling.wl_erp.bean.KuCun">
-        SELECT <include refid="kuCun"/> FROM kucun where pname=#{pname} and cname=#{cname}
+        SELECT <include refid="kuCun"/> FROM kucun where pname=#{pname} and cname=#{cname} and guige=#{guige}
     </select>
 
     <!--根据id和库存信息修改库存-->

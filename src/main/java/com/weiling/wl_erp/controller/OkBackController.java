@@ -55,10 +55,11 @@ public class OkBackController {
        okBack.setBacknum(back.getBacknum());
        okBack.setBackprice(back.getBackprice());
        okBack.setOrdercode(back.getOrdercode());
+       okBack.setGuige(back.getGuige());
        okBack.setBacktime(new Date());
        okBack.setBackuser(okBackUser);
        okBack.setBeizhu(beizhu);
-        KuCun kuCun = kuCunService.findKuCunByName(back.getPname(),back.getCname());
+        KuCun kuCun = kuCunService.findKuCunByName(back.getPname(),back.getCname(),back.getGuige());
         kuCun.setVnum(back.getBacknum()+kuCun.getVnum());
         kuCunService.updateKuCunById(kuCun);
         return okBackService.insertOkBack(okBack);

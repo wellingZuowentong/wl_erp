@@ -36,8 +36,8 @@ public class RuKuService {
         return ruKuMapper.updateRuKuById(ruKu);
     }
 
-    public List<RuKu> findRuKuByName(String pname,String cname){
-        return ruKuMapper.findRuKuByName(pname,cname);
+    public List<RuKu> findRuKuByName(String pname,String cname,String guige){
+        return ruKuMapper.findRuKuByName(pname,cname,guige);
     }
 
     public int deleteRuKuById(Integer id){

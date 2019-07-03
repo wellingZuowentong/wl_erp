@@ -16,11 +16,12 @@ public class Back {
     private String ordercode;
     private Date backtime;
     private String backuser;
+    private String guige;
     private Integer zhuangtai;
     private String beizhu;
     public Back(){}
 
-    public Back(Integer id, String pname, String cname, Integer backnum, BigDecimal backprice, String ordercode, Date backtime, String backuser, Integer zhuangtai, String beizhu) {
+    public Back(Integer id, String pname, String cname, Integer backnum, BigDecimal backprice, String ordercode, Date backtime, String backuser, String guige, Integer zhuangtai, String beizhu) {
         this.id = id;
         this.pname = pname;
         this.cname = cname;
@@ -29,6 +30,7 @@ public class Back {
         this.ordercode = ordercode;
         this.backtime = backtime;
         this.backuser = backuser;
+        this.guige = guige;
         this.zhuangtai = zhuangtai;
         this.beizhu = beizhu;
     }
@@ -97,6 +99,14 @@ public class Back {
         this.backuser = backuser;
     }
 
+    public String getGuige() {
+        return guige;
+    }
+
+    public void setGuige(String guige) {
+        this.guige = guige;
+    }
+
     public Integer getZhuangtai() {
         return zhuangtai;
     }
@@ -124,6 +134,7 @@ public class Back {
                 ", ordercode='" + ordercode + '\'' +
                 ", backtime=" + backtime +
                 ", backuser='" + backuser + '\'' +
+                ", guige='" + guige + '\'' +
                 ", zhuangtai=" + zhuangtai +
                 ", beizhu='" + beizhu + '\'' +
                 '}';

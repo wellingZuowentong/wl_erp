@@ -36,12 +36,12 @@ public class OkBackService {
         return okMapper.getAllOkBack(pname,cname,starttime,overtime);
     }
 
-    public List<OkBack> findOkBackByPnameCname(String pname,String cname){
+    public List<OkBack> findOkBackByPnameCname(String pname,String cname,String guige){
 
-        return okMapper.findOkBackByPnameCname(pname,cname);
+        return okMapper.findOkBackByPnameCname(pname,cname,guige);
     }
 
-    public int updateOkBackName(@Param("pname")String pname, @Param("cname")String cname,@Param("odpname")String odpname, @Param("odcname")String odcname){
+    public int updateOkBackName(String pname,String cname,String odpname,String odcname){
         return okMapper.updateOkBackName(pname,cname,odpname,odcname);
     }
 

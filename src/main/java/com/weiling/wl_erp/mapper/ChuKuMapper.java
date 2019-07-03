@@ -19,7 +19,7 @@ public interface ChuKuMapper {
     public List<ChuKu> findAllChuKu(@Param("pname")String pname, @Param("cname")String cname, @Param("starttime") Date starttime, @Param("overtime")Date overtime);
     public ChuKu findChuKuById(Integer id);
     public int updateChuKuById(ChuKu chuKu);
-    public ChuKu findChuKuByName(@Param("pname") String pname, @Param("cname") String cname);
+    public ChuKu findChuKuByName(@Param("pname") String pname, @Param("cname") String cname,@Param("guige") String guige);
     public int deleteChuKuById(Integer id);
     public int updateChuKuName(@Param("pname")String pname, @Param("cname")String cname,@Param("odpname")String odpname, @Param("odcname")String odcname);
 }

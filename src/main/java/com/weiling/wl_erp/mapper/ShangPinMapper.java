@@ -16,7 +16,7 @@ public interface ShangPinMapper {
     public List<ShangPin> findAllShangPin(@Param("pname")String pname, @Param("cname")String cname);
     public ShangPin findShangPinById(Integer id);
     public int updateShangPinById(ShangPin shangPin);
-    public ShangPin findShangPinByName(@Param("pname")String pname,@Param("cname")String cname);
+    public ShangPin findShangPinByName(@Param("pname")String pname,@Param("cname")String cname,@Param("guige")String guige);
     public int deleteShangPinById(Integer id);
 
 

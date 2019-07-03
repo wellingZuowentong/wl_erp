@@ -55,7 +55,7 @@
 
     <!--根据商品名和厂家名定位销售列-->
     <select id="findSellByName" resultType="com.weiling.wl_erp.bean.Sell">
-        SELECT <include refid="sell"/> FROM sell where pname=#{pname} and cname=#{cname}
+        SELECT <include refid="sell"/> FROM sell where pname=#{pname} and cname=#{cname} and guige=#{guige}
     </select>
 
     <!--&lt;!&ndash;根据商品名和厂家名查询库存&ndash;&gt;

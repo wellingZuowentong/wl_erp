@@ -78,12 +78,12 @@ public class ShangPinController {
         return shangPinService.deleteShangPinById(id);
     }
 
-    /*根据商品名和厂家名查找商品*/
+   /* *//*根据商品名和厂家名查找商品*//*
     @RequestMapping(value = "/findShangPinByName",method = RequestMethod.GET)
     @ResponseBody
     public ShangPin findShangPinByName(String pname, String cname){
             return shangPinService.findShangPinByName(pname,cname);
-    }
+    }*/
 
     /*出售商品*/
     @RequestMapping("/saleShangPinById")
@@ -107,7 +107,7 @@ public class ShangPinController {
         String selluser = request.getParameter("selluser");
         String beizhu = request.getParameter("beizhu");
         ShangPin shangpin = shangPinService.findShangPinById(id);
-        KuCun kuCun = kuCunService.findKuCunByName(pname,cname);
+        KuCun kuCun = kuCunService.findKuCunByName(pname,cname,guige);
         if(kuCun!=null){
             kuCun.setSellnum(kuCun.getSellnum()-oksell);
             kuCunService.updateKuCunById(kuCun);

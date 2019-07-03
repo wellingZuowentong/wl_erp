@@ -52,7 +52,7 @@
 
     <!--根据商品名和厂家名查询库存-->
     <select id="findRuKuByName" parameterType="String" resultType="com.weiling.wl_erp.bean.RuKu">
-        SELECT <include refid="ruKu"/> FROM ruku where pname=#{pname} and cname=#{cname}
+        SELECT <include refid="ruKu"/> FROM ruku where pname=#{pname} and cname=#{cname} and guige=#{guige}
     </select>
 
     <!--根据id和库存信息修改库存-->

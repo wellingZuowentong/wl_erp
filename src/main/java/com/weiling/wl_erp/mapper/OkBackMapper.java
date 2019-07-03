@@ -18,7 +18,7 @@ public interface OkBackMapper {
     public int deleteOkBack(Integer id);
     public int updateOkBack(OkBack okBack);
     public List<OkBack> getAllOkBack(@Param("pname") String pname, @Param("cname") String cname, @Param("starttime") Date starttime, @Param("overtime") Date overtime);
-    public List<OkBack> findOkBackByPnameCname(@Param("pname") String pname, @Param("cname") String cname);
+    public List<OkBack> findOkBackByPnameCname(@Param("pname") String pname, @Param("cname") String cname,@Param("guige") String guige);
     public int updateOkBackName(@Param("pname") String pname, @Param("cname") String cname, @Param("odpname") String odpname, @Param("odcname") String odcname);
     public OkBack findOkBackById(Integer id);
 }

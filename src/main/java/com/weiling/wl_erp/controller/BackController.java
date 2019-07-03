@@ -64,6 +64,7 @@ public class BackController {
         back.setBackprice(backprice);
         back.setBacktime(backtime);
         back.setOrdercode(ordercode);
+        back.setGuige(sell.getGuige());
         back.setBackuser(backuser);
         back.setZhuangtai(0);
         back.setBeizhu(beizhu);

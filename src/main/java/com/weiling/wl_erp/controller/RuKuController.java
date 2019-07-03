@@ -64,7 +64,7 @@ public class RuKuController {
         ruKu.setRukutime(rukutime);
         ruKu.setUsername(username);
         ruKuService.insertRuKu(ruKu);
-        KuCun kuCun1 = kuCunService.findKuCunByName(pname,cname);
+        KuCun kuCun1 = kuCunService.findKuCunByName(pname,cname,guige);
         KuCun kuCun = new KuCun();
         if(kuCun1!=null){
             kuCun1.setVnum(kuCun1.getVnum()+vnum);
@@ -112,14 +112,14 @@ public class RuKuController {
     }
 
 
-/*根据ID删除库存*/
+/*根据ID删除入库*/
 
     @RequestMapping("deleteRuKuById")
     @ResponseBody
     public int deleteKuCunById(HttpServletRequest request){
         Integer id = Integer.parseInt(request.getParameter("id"));
         RuKu ruKu = ruKuService.findRuKuById(id);
-        KuCun kuCun = kuCunService.findKuCunByName(ruKu.getPname(),ruKu.getCname());
+        KuCun kuCun = kuCunService.findKuCunByName(ruKu.getPname(),ruKu.getCname(),ruKu.getGuige());
         if(kuCun!=null) {
             kuCun.setVnum(kuCun.getVnum() - ruKu.getVnum());
             kuCunService.updateKuCunById(kuCun);

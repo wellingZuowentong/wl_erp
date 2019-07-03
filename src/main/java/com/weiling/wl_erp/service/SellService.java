@@ -29,8 +29,8 @@ public class SellService {
     public Sell findSellById(Integer id){
         return sellMapper.findSellById(id);
     }
-    public List<Sell> findByNameAndTime(String pname,String cname){
-        return sellMapper.findSellByName(pname,cname);
+    public List<Sell> findByNameAndTime(String pname,String cname,String guige){
+        return sellMapper.findSellByName(pname,cname,guige);
     }
     public int updateZhuangTai(Integer id,Integer zhuangtai){
         return sellMapper.updateZhuangTai(id,zhuangtai);
@@ -38,8 +38,8 @@ public class SellService {
     public int updateSellById(Sell sell){
         return sellMapper.updateSellById(sell);
     }
-    public int findSellByZhuangtai(String pname,String cname){
-        return sellMapper.findSellByZhuangtai(pname,cname)==null?0:sellMapper.findSellByZhuangtai(pname,cname);
+    public int findSellByZhuangtai(String pname,String cname,String guige){
+        return sellMapper.findSellByZhuangtai(pname,cname,guige)==null?0:sellMapper.findSellByZhuangtai(pname,cname,guige);
     }
     public int updateSellName(String pname,String cname,String odpname,String odcname){
         return sellMapper.updateSellName(pname,cname,odpname,odcname);

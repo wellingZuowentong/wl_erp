@@ -19,7 +19,7 @@ public interface RuKuMapper {
     public List<RuKu> findAllRuKu(@Param("pname")String pname, @Param("cname")String cname, @Param("starttime") Date starttime, @Param("overtime")Date overtime);
     public RuKu findRuKuById(Integer id);
     public int updateRuKuById(RuKu ruKu);
-    public List<RuKu> findRuKuByName(@Param("pname") String pname, @Param("cname") String cname);
+    public List<RuKu> findRuKuByName(@Param("pname") String pname, @Param("cname") String cname,@Param("guige")String guige);
     public int deleteRuKuById(Integer id);
     public int updateRuKuName(@Param("pname")String pname, @Param("cname")String cname,@Param("odpname")String odpname, @Param("odcname")String odcname);
 

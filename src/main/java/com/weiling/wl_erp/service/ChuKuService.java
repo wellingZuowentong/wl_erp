@@ -33,8 +33,8 @@ public class ChuKuService {
     public int updateChuKuById(ChuKu chuKu){
         return chuKuMapper.updateChuKuById(chuKu);
     }
-    public ChuKu findChuKuByName(String pname,String cname){
-        return chuKuMapper.findChuKuByName(pname,cname);
+    public ChuKu findChuKuByName(String pname,String cname,String guige){
+        return chuKuMapper.findChuKuByName(pname,cname,guige);
     }
     public int deleteChuKuById(Integer id){
         return chuKuMapper.deleteChuKuById(id);

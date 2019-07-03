@@ -15,6 +15,7 @@
         <result column="s_selluser" property="selluser"/>
         <result column="s_selluser" property="selluser"/>
         <result column="s_selltime" property="selltime"/>
+        <result column="s_zhuangtai" property="zhuangtai"/>
 
         <collection property="backlist" ofType="com.weiling.wl_erp.bean.OkBack">
             <result column="b_backnum" property="backnum"/>
@@ -26,7 +27,7 @@
 
     <select id="findAllSellAndBack" resultMap="aa">
         select  s.ordercode s_ordercode,s.pname s_pname,s.cname s_cname,s.oksell s_oksell,s.overprice s_overprice,
-        s.selluser s_selluser,s.selltime s_selltime,
+        s.zhuangtai s_zhuangtai,s.selluser s_selluser,s.selltime s_selltime,
         b.backnum b_backnum,b.backprice b_backprice,b.backuser b_backuser,b.backtime b_backtime
         from sell s left join okback b on s.ordercode=b.ordercode
         <where>

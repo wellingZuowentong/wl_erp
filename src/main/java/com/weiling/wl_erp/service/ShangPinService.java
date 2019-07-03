@@ -35,8 +35,8 @@ public class ShangPinService {
 
     }
 
-    public ShangPin findShangPinByName(String pname,String cname){
-        return shangPinMapper.findShangPinByName(pname,cname);
+    public ShangPin findShangPinByName(String pname,String cname,String guige){
+        return shangPinMapper.findShangPinByName(pname,cname,guige);
     }
 
     public int deleteShangPinById(Integer id){
